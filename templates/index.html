@@ -4,14 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eléctrica PRO</title>
+    <!-- CSS de Bootstrap -->
     <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
-        body { background-color: #000; color: #fff; }
+        body { background-color: #000; color: #fff; font-family: sans-serif; }
         .card-main { background: #111; border: 1px solid #333; border-radius: 15px; }
         .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 15px; cursor: pointer; height: 100%; transition: 0.2s; }
         .menu-item:active { background: #333; transform: scale(0.95); }
         .modal-content { background-color: #111; color: white; border: 1px solid #00bcff; }
         .img-esquema { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #444; }
+        .btn-close { filter: invert(1); } /* Hace que la X de cerrar sea blanca */
     </style>
 </head>
 <body class="p-3">
@@ -58,27 +60,48 @@
     </div>
 
     <!-- VENTANAS EMERGENTES (MODALES) -->
-    <div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
-        <h5>Conexión Medidor</h5>
-        <img src="https://googleusercontent.com" class="img-esquema">
-    </div></div></div>
+    <div class="modal fade" id="m1" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 text-center">
+                <div class="modal-header border-0"><h5 class="modal-title">Conexión Medidor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <img src="https://googleusercontent.com" class="img-esquema">
+            </div>
+        </div>
+    </div>
 
-    <div class="modal fade" id="m2" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
-        <h5>Tablero: Térmica + Disyuntor</h5>
-        <img src="https://ytimg.com" class="img-esquema">
-    </div></div></div>
+    <div class="modal fade" id="m2" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 text-center">
+                <div class="modal-header border-0"><h5 class="modal-title">Térmica + Disyuntor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <img src="https://ytimg.com" class="img-esquema">
+            </div>
+        </div>
+    </div>
 
-    <div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
-        <h5>Fotocélula (3 cables)</h5>
-        <p class="small mt-2">Negro: Fase | Blanco: Neutro | Rojo: Lámpara</p>
-        <img src="https://vskit.tv" class="img-esquema">
-    </div></div></div>
+    <div class="modal fade" id="m3" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 text-center">
+                <div class="modal-header border-0"><h5 class="modal-title">Fotocélula (3 cables)</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <p class="small mt-2">Negro: Fase | Blanco: Neutro | Rojo: Lámpara</p>
+                <img src="https://vskit.tv" class="img-esquema">
+            </div>
+        </div>
+    </div>
 
-    <div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
-        <h5>Automático de Tanque</h5>
-        <p class="small mt-2 text-warning">Recomendado usar Contactor 24V</p>
-        <img src="https://cursodeelectricidad.top" class="img-esquema">
-    </div></div></div>
+    <div class="modal fade" id="m4" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content p-3 text-center">
+                <div class="modal-header border-0"><h5 class="modal-title">Automático de Tanque</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
+                <p class="small mt-2 text-warning">Recomendado usar Contactor 24V</p>
+                <img src="https://cursodeelectricidad.top" class="img-esquema">
+            </div>
+        </div>
+    </div>
+
+    <!-- SCRIPT DE BOOTSTRAP (Mantiene vivos los botones) -->
+    <script src="https://jsdelivr.net"></script>
+</body>
+</html>
 
     <script src="https://jsdelivr.net"></script>
 </body>
