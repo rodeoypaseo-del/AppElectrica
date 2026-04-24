@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eléctrica PRO</title>
-    <!-- CSS de Bootstrap -->
     <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; }
         .card-main { background: #111; border: 1px solid #333; border-radius: 15px; }
-        .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 15px; cursor: pointer; height: 100%; transition: 0.2s; }
+        .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 15px; cursor: pointer; transition: 0.2s; height: 100%; }
         .menu-item:active { background: #333; transform: scale(0.95); }
         .modal-content { background-color: #111; color: white; border: 1px solid #00bcff; }
         .img-esquema { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #444; }
@@ -20,8 +19,7 @@
 
     <h3 class="text-center text-info mb-4">⚡ ELÉCTRICA PRO</h3>
 
-    <!-- CALCULADORA -->
-    <div class="card-main p-3 mb-4 shadow">
+    <div class="card-main p-3 mb-4 shadow text-center">
         <form method="POST">
             <input type="text" name="cliente" class="form-control bg-dark text-white mb-2" placeholder="Nombre Cliente">
             <div class="row g-2">
@@ -30,75 +28,22 @@
             </div>
             <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">CALCULAR</button>
         </form>
-        {% if resultado %}
-        <div class="alert alert-primary mt-3 py-2 text-center"><b>{{ resultado }}</b></div>
-        {% endif %}
+        {% if resultado %}<div class="alert alert-primary mt-3 py-2"><b>{{ resultado }}</b></div>{% endif %}
     </div>
 
-    <!-- MENÚ MANUAL -->
     <div class="row g-2">
-        <div class="col-6">
-            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m1">
-                <span style="font-size: 2rem;">🔌</span><br><small>MEDIDOR</small>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m2">
-                <span style="font-size: 2rem;">⚡</span><br><small>TABLERO</small>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m3">
-                <span style="font-size: 2rem;">🌑</span><br><small>FOTOCÉLULA</small>
-            </div>
-        </div>
-        <div class="col-6">
-            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m4">
-                <span style="font-size: 2rem;">💧</span><br><small>TANQUE</small>
-            </div>
-        </div>
+        <div class="col-6"><div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m1"><span>🔌</span><br><small>MEDIDOR</small></div></div>
+        <div class="col-6"><div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m2"><span>⚡</span><br><small>TABLERO</small></div></div>
+        <div class="col-6"><div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m3"><span>🌑</span><br><small>FOTOCÉLULA</small></div></div>
+        <div class="col-6"><div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m4"><span>💧</span><br><small>TANQUE</small></div></div>
     </div>
 
-    <!-- VENTANAS EMERGENTES (MODALES) -->
-    <div class="modal fade" id="m1" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 text-center">
-                <div class="modal-header border-0"><h5 class="modal-title">Conexión Medidor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <img src="https://googleusercontent.com" class="img-esquema">
-            </div>
-        </div>
-    </div>
+    <!-- VENTANAS (MODALES) -->
+    <div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5>Medidor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://googleusercontent.com" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m2" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5>Tablero</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://ytimg.com" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5>Fotocélula</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://vskit.tv" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5>Tanque</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://cursodeelectricidad.top" class="img-esquema"></div></div></div>
 
-    <div class="modal fade" id="m2" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 text-center">
-                <div class="modal-header border-0"><h5 class="modal-title">Térmica + Disyuntor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <img src="https://ytimg.com" class="img-esquema">
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m3" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 text-center">
-                <div class="modal-header border-0"><h5 class="modal-title">Fotocélula (3 cables)</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <p class="small mt-2">Negro: Fase | Blanco: Neutro | Rojo: Lámpara</p>
-                <img src="https://vskit.tv" class="img-esquema">
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="m4" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content p-3 text-center">
-                <div class="modal-header border-0"><h5 class="modal-title">Automático de Tanque</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-                <p class="small mt-2 text-warning">Recomendado usar Contactor 24V</p>
-                <img src="https://cursodeelectricidad.top" class="img-esquema">
-            </div>
-        </div>
-    </div>
-
-    <!-- SCRIPT DE BOOTSTRAP (ESTE ES EL SECRETO) -->
     <script src="https://jsdelivr.net"></script>
 </body>
 </html>
