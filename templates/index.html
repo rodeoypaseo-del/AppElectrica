@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eléctrica PRO</title>
+    <link href="https://jsdelivr.net" rel="stylesheet">
+    <style>
+        body { background-color: #000; color: #fff; }
+        .card-main { background: #111; border: 1px solid #333; border-radius: 15px; }
+        .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 15px; cursor: pointer; height: 100%; transition: 0.2s; }
+        .menu-item:active { background: #333; transform: scale(0.95); }
+        .modal-content { background-color: #111; color: white; border: 1px solid #00bcff; }
+        .img-esquema { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #444; }
+    </style>
+</head>
+<body class="p-3">
+
+    <h3 class="text-center text-info mb-4">⚡ ELÉCTRICA PRO</h3>
+
+    <!-- CALCULADORA -->
+    <div class="card-main p-3 mb-4 shadow">
+        <form method="POST">
+            <input type="text" name="cliente" class="form-control bg-dark text-white mb-2" placeholder="Nombre Cliente">
+            <div class="row g-2">
+                <div class="col-6"><input type="number" name="voltaje" class="form-control bg-dark text-white" value="220"></div>
+                <div class="col-6"><input type="number" name="potencia" class="form-control bg-dark text-white" placeholder="Watts (W)"></div>
+            </div>
+            <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">CALCULAR</button>
+        </form>
+        {% if resultado %}
+        <div class="alert alert-primary mt-3 py-2 text-center"><b>{{ resultado }}</b></div>
+        {% endif %}
+    </div>
+
+    <!-- MENÚ MANUAL -->
+    <div class="row g-2">
+        <div class="col-6">
+            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m1">
+                <span style="font-size: 2rem;">🔌</span><br><small>MEDIDOR</small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m2">
+                <span style="font-size: 2rem;">⚡</span><br><small>TABLERO</small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m3">
+                <span style="font-size: 2rem;">🌑</span><br><small>FOTOCÉLULA</small>
+            </div>
+        </div>
+        <div class="col-6">
+            <div class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m4">
+                <span style="font-size: 2rem;">💧</span><br><small>TANQUE</small>
+            </div>
+        </div>
+    </div>
+
+    <!-- VENTANAS EMERGENTES (MODALES) -->
+    <div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
+        <h5>Conexión Medidor</h5>
+        <img src="https://googleusercontent.com" class="img-esquema">
+    </div></div></div>
+
+    <div class="modal fade" id="m2" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
+        <h5>Tablero: Térmica + Disyuntor</h5>
+        <img src="https://ytimg.com" class="img-esquema">
+    </div></div></div>
+
+    <div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
+        <h5>Fotocélula (3 cables)</h5>
+        <p class="small mt-2">Negro: Fase | Blanco: Neutro | Rojo: Lámpara</p>
+        <img src="https://vskit.tv" class="img-esquema">
+    </div></div></div>
+
+    <div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3">
+        <h5>Automático de Tanque</h5>
+        <p class="small mt-2 text-warning">Recomendado usar Contactor 24V</p>
+        <img src="https://cursodeelectricidad.top" class="img-esquema">
+    </div></div></div>
+
+    <script src="https://jsdelivr.net"></script>
+</body>
+</html>
