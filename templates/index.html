@@ -4,12 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Eléctrica PRO</title>
-    <!-- CSS de Bootstrap -->
     <link href="https://jsdelivr.net" rel="stylesheet">
     <style>
         body { background-color: #000; color: #fff; font-family: sans-serif; padding-bottom: 50px; }
         .card-main { background: #111; border: 1px solid #333; border-radius: 15px; }
-        .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 20px; cursor: pointer; transition: 0.2s; height: 100%; width: 100%; color: white; display: block; text-decoration: none; }
+        .menu-item { background: #1a1a1a; border: 1px solid #444; border-radius: 10px; padding: 20px; cursor: pointer; transition: 0.2s; height: 100%; width: 100%; color: white; display: block; text-decoration: none; border: none; }
         .menu-item:active { background: #333; transform: scale(0.95); }
         .modal-content { background-color: #111; color: white; border: 1px solid #00bcff; }
         .img-esquema { width: 100%; border-radius: 10px; margin-top: 10px; border: 1px solid #444; }
@@ -20,7 +19,6 @@
 
     <h3 class="text-center text-info mb-4">⚡ ELÉCTRICA PRO</h3>
 
-    <!-- 1. CALCULADORA -->
     <div class="card-main p-3 mb-4 shadow">
         <form method="POST">
             <input type="text" name="cliente" class="form-control bg-dark text-white mb-2" placeholder="Nombre Cliente">
@@ -30,64 +28,21 @@
             </div>
             <button type="submit" class="btn btn-success w-100 mt-3 fw-bold">CALCULAR AMPERES</button>
         </form>
-        {% if resultado %}
-        <div class="alert alert-primary mt-3 py-2 text-center"><b>{{ resultado }}</b></div>
-        {% endif %}
+        {% if resultado %}<div class="alert alert-primary mt-3 py-2 text-center"><b>{{ resultado }}</b></div>{% endif %}
     </div>
 
-    <h5 class="mb-3 text-secondary">📘 MANUAL VISUAL</h5>
-
-    <!-- 2. BOTONES DEL MANUAL -->
     <div class="row g-2">
-        <div class="col-6">
-            <button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m1">
-                <span style="font-size: 2rem;">🔌</span><br><small>MEDIDOR</small>
-            </button>
-        </div>
-        <div class="col-6">
-            <button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m2">
-                <span style="font-size: 2rem;">⚡</span><br><small>TABLERO</small>
-            </button>
-        </div>
-        <div class="col-6">
-            <button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m3">
-                <span style="font-size: 2rem;">🌑</span><br><small>FOTOCÉLULA</small>
-            </button>
-        </div>
-        <div class="col-6">
-            <button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m4">
-                <span style="font-size: 2rem;">💧</span><br><small>TANQUE</small>
-            </button>
-        </div>
+        <div class="col-6"><button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m1"><span style="font-size: 2rem;">🔌</span><br><small>MEDIDOR</small></button></div>
+        <div class="col-6"><button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m2"><span style="font-size: 2rem;">⚡</span><br><small>TABLERO</small></button></div>
+        <div class="col-6"><button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m3"><span style="font-size: 2rem;">🌑</span><br><small>FOTOCÉLULA</small></button></div>
+        <div class="col-6"><button class="menu-item text-center" data-bs-toggle="modal" data-bs-target="#m4"><span style="font-size: 2rem;">💧</span><br><small>TANQUE</small></button></div>
     </div>
 
-    <!-- 3. VENTANAS EMERGENTES (MODALES) -->
-    
-    <!-- Medidor -->
-    <div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center">
-        <div class="modal-header border-0"><h5 class="modal-title">Esquema Medidor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-        <img src="https://pinimg.com" class="img-esquema">
-    </div></div></div>
+    <div class="modal fade" id="m1" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5 class="modal-title text-info">Medidor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://pinimg.com" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m2" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5 class="modal-title text-info">Tablero</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://pinimg.com" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5 class="modal-title text-info">Fotocélula</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://elektrosol.cl" class="img-esquema"></div></div></div>
+    <div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center"><div class="modal-header border-0"><h5 class="modal-title text-info">Tanque</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div><img src="https://widencdn.net" class="img-esquema"></div></div></div>
 
-    <!-- Tablero -->
-    <div class="modal fade" id="m2" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center">
-        <div class="modal-header border-0"><h5 class="modal-title">Térmica y Disyuntor</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-        <img src="https://pinimg.com" class="img-esquema">
-    </div></div></div>
-
-    <!-- Fotocélula -->
-    <div class="modal fade" id="m3" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center">
-        <div class="modal-header border-0"><h5 class="modal-title">Fotocélula (3 cables)</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-        <img src="https://elektrosol.cl" class="img-esquema">
-    </div></div></div>
-
-    <!-- Tanque -->
-    <div class="modal fade" id="m4" tabindex="-1"><div class="modal-dialog modal-dialog-centered"><div class="modal-content p-3 text-center">
-        <div class="modal-header border-0"><h5 class="modal-title">Automático de Tanque</h5><button type="button" class="btn-close" data-bs-dismiss="modal"></button></div>
-        <img src="https://widencdn.net" class="img-esquema">
-    </div></div></div>
-
-    <!-- SCRIPT DE BOOTSTRAP (Mantiene vivos los botones) -->
     <script src="https://jsdelivr.net"></script>
 </body>
 </html>
