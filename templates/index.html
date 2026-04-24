@@ -3,32 +3,40 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>App Eléctrica</title>
+    <title>Manual PRO</title>
+    <!-- CSS reforzado de Bootstrap -->
     <link href="https://jsdelivr.net" rel="stylesheet">
-    <style>
-        body { background-color: #000; color: #fff; padding: 20px; text-align: center; }
-        .btn-manual { background: #1a1a1a; border: 1px solid #00bcff; border-radius: 10px; padding: 20px; width: 100%; color: white; margin-bottom: 10px; font-weight: bold; }
-        .img-esquema { width: 100%; border-radius: 10px; }
-    </style>
 </head>
-<body>
-    <h3>⚡ ELÉCTRICA PRO</h3>
-    <br>
-    <!-- BOTÓN MEDIDOR -->
-    <button class="btn-manual" data-bs-toggle="modal" data-bs-target="#m1">🔌 VER MEDIDOR</button>
+<body style="background-color: #000; color: #fff; text-align: center; padding-top: 50px;">
 
-    <!-- VENTANA EMERGENTE -->
-    <div class="modal fade" id="m1" tabindex="-1">
+    <h3>⚡ ELÉCTRICA PRO</h3>
+    <p>Manual Técnico de Obra</p>
+
+    <br>
+
+    <!-- BOTÓN MEDIDOR -->
+    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#m1" style="width: 80%; padding: 20px;">
+        🔌 ABRIR ESQUEMA MEDIDOR
+    </button>
+
+    <!-- VENTANA EMERGENTE (MODAL) -->
+    <div class="modal fade" id="m1" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content bg-dark border-info">
-                <div class="modal-header"><h5 class="modal-title">Esquema Medidor</h5><button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button></div>
+            <div class="modal-content" style="background-color: #222; border: 2px solid #00bcff;">
+                <div class="modal-header" style="border-bottom: 1px solid #444;">
+                    <h5 class="modal-title">Conexión de Medidor</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
                 <div class="modal-body">
-                    <img src="https://pinimg.com" class="img-esquema">
+                    <p style="font-size: 0.8rem; color: #aaa;">Cargando esquema reglamentario...</p>
+                    <img src="https://pinimg.com" style="width: 100%; border-radius: 10px;" alt="Medidor">
                 </div>
             </div>
         </div>
     </div>
 
+    <!-- SCRIPT FUNDAMENTAL (La llave de paso) -->
     <script src="https://jsdelivr.net"></script>
+
 </body>
 </html>
