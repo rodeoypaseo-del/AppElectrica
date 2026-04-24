@@ -10,33 +10,30 @@
 <body style="background-color: #000; color: #fff; text-align: center; padding-top: 50px;">
 
     <h3 style="color: #00bcff;">⚡ ELÉCTRICA PRO</h3>
-    <p>Manual Técnico de Obra</p>
-
     <br>
 
-    <!-- BOTÓN MEDIDOR -->
-    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#m1" style="width: 85%; padding: 20px; font-weight: bold;">
-        🔌 ABRIR ESQUEMA MEDIDOR
+    <!-- BOTÓN -->
+    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#m1" style="width: 85%;">
+        🔌 ABRIR ESQUEMA
     </button>
 
-    <!-- VENTANA EMERGENTE (MODAL) -->
+    <!-- VENTANA (MODAL) -->
     <div class="modal fade" id="m1" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: #222; border: 2px solid #00bcff; color: white;">
-                <div class="modal-header" style="border-bottom: 1px solid #444;">
-                    <h5 class="modal-title">Conexión de Medidor</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            <div class="modal-content" style="background-color: #222; color: white;">
+                <div class="modal-header">
+                    <h5 class="modal-title">Esquema Técnico</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
                 </div>
-                <div class="modal-body text-center">
-                    <p style="font-size: 0.8rem; color: #aaa;">Esquema monofásico reglamentario</p>
-                    <!-- IMAGEN CON LINK DIRECTO -->
-                    <img src="https://ibb.co" style="width: 100%; border-radius: 10px;" alt="Esquema Medidor">
+                <div class="modal-body">
+                    <!-- Imagen de prueba (reemplaza por la tuya) -->
+                    <img src="https://placeholder.com" class="img-fluid" alt="Cargando...">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT DE BOOTSTRAP (La llave de paso) -->
+    <!-- JS de Bootstrap (INDISPENSABLE PARA ABRIR) -->
     <script src="https://jsdelivr.net"></script>
 
 </body>
