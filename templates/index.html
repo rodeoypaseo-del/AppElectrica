@@ -4,38 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Manual PRO</title>
-    <!-- CSS reforzado de Bootstrap -->
+    <!-- CSS de Bootstrap -->
     <link href="https://jsdelivr.net" rel="stylesheet">
 </head>
 <body style="background-color: #000; color: #fff; text-align: center; padding-top: 50px;">
 
-    <h3>⚡ ELÉCTRICA PRO</h3>
+    <h3 style="color: #00bcff;">⚡ ELÉCTRICA PRO</h3>
     <p>Manual Técnico de Obra</p>
 
     <br>
 
     <!-- BOTÓN MEDIDOR -->
-    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#m1" style="width: 80%; padding: 20px;">
+    <button type="button" class="btn btn-primary btn-lg" data-bs-toggle="modal" data-bs-target="#m1" style="width: 85%; padding: 20px; font-weight: bold;">
         🔌 ABRIR ESQUEMA MEDIDOR
     </button>
 
     <!-- VENTANA EMERGENTE (MODAL) -->
     <div class="modal fade" id="m1" tabindex="-1" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content" style="background-color: #222; border: 2px solid #00bcff;">
+            <div class="modal-content" style="background-color: #222; border: 2px solid #00bcff; color: white;">
                 <div class="modal-header" style="border-bottom: 1px solid #444;">
                     <h5 class="modal-title">Conexión de Medidor</h5>
                     <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body">
-                    <p style="font-size: 0.8rem; color: #aaa;">Cargando esquema reglamentario...</p>
+                <div class="modal-body text-center">
+                    <p style="font-size: 0.8rem; color: #aaa;">Esquema reglamentario monofásico</p>
+                    <!-- IMAGEN VERIFICADA -->
                     <img src="https://ibb.co" style="width: 100%; border-radius: 10px;" alt="Medidor">
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- SCRIPT FUNDAMENTAL (La llave de paso) -->
+    <!-- SCRIPT DE BOOTSTRAP (La llave de paso) -->
     <script src="https://jsdelivr.net"></script>
 
 </body>
