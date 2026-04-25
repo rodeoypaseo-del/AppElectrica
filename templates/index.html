@@ -12,7 +12,6 @@ body {background:#000;color:#fff;text-align:center;}
 .btn-pro {width:85%; margin:10px; font-size:18px;}
 .resultado {color:#00eaff; font-size:22px; margin-top:15px;}
 .lista {text-align:left; margin:20px;}
-img {margin:10px 0;}
 </style>
 </head>
 
@@ -20,130 +19,93 @@ img {margin:10px 0;}
 
 <h2 style="color:#00bcff; margin-top:20px;">⚡ ELÉCTRICA PRO</h2>
 
-<!-- BOTONES -->
-<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
-<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
-<button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
-<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
-
 <hr>
 
 <!-- CALCULADORA -->
-<h4>CALCULADORA ELÉCTRICA</h4>
+<h4>CALCULADORA + PRESUPUESTO</h4>
 
 <input id="cliente" class="form-control w-75 mx-auto" placeholder="Nombre del cliente">
 <br>
-<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje (ej: 220)">
+<input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo (ej: instalación enchufe)">
+<br>
+<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje (220)">
 <br>
 <input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia (W)">
 <br>
+<input id="materiales" class="form-control w-75 mx-auto" placeholder="Costo materiales ($)">
+<br>
+<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra ($)">
+<br>
 
-<button class="btn btn-primary btn-pro" onclick="calcular()">⚙ CALCULAR Y GUARDAR</button>
+<button class="btn btn-success btn-pro" onclick="calcular()">⚙ CALCULAR TODO</button>
 
 <div id="resultado" class="resultado"></div>
 
 <hr>
 
-<h4>📂 HISTORIAL DE TRABAJOS</h4>
+<h4>📄 PRESUPUESTO</h4>
+<div id="presupuesto" class="lista"></div>
+
+<button class="btn btn-primary btn-pro" onclick="guardar()">💾 GUARDAR TRABAJO</button>
+
+<hr>
+
+<h4>📂 HISTORIAL</h4>
 <div id="historial" class="lista"></div>
 
 <button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">🗑 BORRAR TODO</button>
 
-<!-- MODAL ENCHUFE -->
-<div class="modal fade" id="enchufe">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Esquemas Enchufe</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Schuko_plug_and_socket.svg" class="img-fluid">
-<img src="https://via.placeholder.com/300">
-</div>
-</div>
-</div>
-</div>
-
-<!-- MODAL LLAVE -->
-<div class="modal fade" id="llave">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Esquemas Llave</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<img src="https://via.placeholder.com/300">
-<img src="https://via.placeholder.com/300">
-</div>
-</div>
-</div>
-</div>
-
-<!-- MODAL TABLERO -->
-<div class="modal fade" id="tablero">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Esquemas Tablero</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<img src="https://via.placeholder.com/300">
-<img src="https://via.placeholder.com/300">
-</div>
-</div>
-</div>
-</div>
-
-<!-- MODAL TANQUE -->
-<div class="modal fade" id="tanque">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Automático de Tanque</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body">
-<p>Controla la bomba según el nivel de agua</p>
-<img src="https://via.placeholder.com/300">
-<img src="https://via.placeholder.com/300">
-</div>
-</div>
-</div>
-</div>
-
 <script>
+let ultimoPresupuesto = "";
+
 window.onload = function(){
 mostrarHistorial();
 }
 
 function calcular(){
 let cliente = document.getElementById("cliente").value;
+let trabajo = document.getElementById("trabajo").value;
 let v = parseFloat(document.getElementById("voltaje").value);
 let p = parseFloat(document.getElementById("potencia").value);
+let mat = parseFloat(document.getElementById("materiales").value) || 0;
+let mano = parseFloat(document.getElementById("mano").value) || 0;
 
-if(cliente=="" || isNaN(v) || isNaN(p) || v <= 0){
-document.getElementById("resultado").innerHTML="⚠️ Completar datos correctamente";
+if(cliente=="" || trabajo=="" || isNaN(v) || isNaN(p)){
+document.getElementById("resultado").innerHTML="⚠️ Completar datos";
 return;
 }
 
 let i = p / v;
+let total = mat + mano;
 let fecha = new Date().toLocaleDateString();
-let texto = fecha + " | " + cliente + " → " + i.toFixed(2) + " A";
 
 document.getElementById("resultado").innerHTML = "Corriente: " + i.toFixed(2) + " A";
 
+let texto = `
+📅 ${fecha}<br>
+👤 Cliente: ${cliente}<br>
+🔧 Trabajo: ${trabajo}<br>
+⚡ Corriente: ${i.toFixed(2)} A<br>
+💰 Materiales: $${mat}<br>
+👷 Mano de obra: $${mano}<br>
+💵 TOTAL: $${total}
+`;
+
+document.getElementById("presupuesto").innerHTML = texto;
+ultimoPresupuesto = texto;
+}
+
+function guardar(){
+if(ultimoPresupuesto == ""){
+alert("Primero calcular");
+return;
+}
+
 let datos = JSON.parse(localStorage.getItem("trabajos")) || [];
-datos.push(texto);
+datos.push(ultimoPresupuesto);
 localStorage.setItem("trabajos", JSON.stringify(datos));
 
 mostrarHistorial();
-
-document.getElementById("cliente").value = "";
-document.getElementById("voltaje").value = "";
-document.getElementById("potencia").value = "";
 }
 
 function mostrarHistorial(){
@@ -151,7 +113,7 @@ let lista = JSON.parse(localStorage.getItem("trabajos")) || [];
 let html = "";
 
 lista.forEach((item)=>{
-html += "<div>🔧 " + item + "</div>";
+html += "<div style='border-bottom:1px solid #555;padding:10px;'>" + item + "</div>";
 });
 
 document.getElementById("historial").innerHTML = html;
@@ -166,4 +128,4 @@ mostrarHistorial();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
+</html>>
