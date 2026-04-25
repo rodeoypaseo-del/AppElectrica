@@ -12,6 +12,7 @@ body {background:#000;color:#fff;text-align:center;}
 .btn-pro {width:85%; margin:10px; font-size:18px;}
 .resultado {color:#00eaff; font-size:22px; margin-top:15px;}
 .lista {text-align:left; margin:20px;}
+img {margin:10px 0;}
 </style>
 </head>
 
@@ -19,25 +20,31 @@ body {background:#000;color:#fff;text-align:center;}
 
 <h2 style="color:#00bcff; margin-top:20px;">⚡ ELÉCTRICA PRO</h2>
 
+<!-- 🔌 BOTONES ESQUEMAS -->
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
+<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
+<button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
+
 <hr>
 
-<!-- CALCULADORA -->
+<!-- ⚙ CALCULADORA + PRESUPUESTO -->
 <h4>CALCULADORA + PRESUPUESTO</h4>
 
 <input id="cliente" class="form-control w-75 mx-auto" placeholder="Nombre del cliente">
 <br>
-<input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo (ej: instalación enchufe)">
+<input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo">
 <br>
 <input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje (220)">
 <br>
 <input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia (W)">
 <br>
-<input id="materiales" class="form-control w-75 mx-auto" placeholder="Costo materiales ($)">
+<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales ($)">
 <br>
 <input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra ($)">
 <br>
 
-<button class="btn btn-success btn-pro" onclick="calcular()">⚙ CALCULAR TODO</button>
+<button class="btn btn-primary btn-pro" onclick="calcular()">⚙ CALCULAR</button>
 
 <div id="resultado" class="resultado"></div>
 
@@ -46,7 +53,7 @@ body {background:#000;color:#fff;text-align:center;}
 <h4>📄 PRESUPUESTO</h4>
 <div id="presupuesto" class="lista"></div>
 
-<button class="btn btn-primary btn-pro" onclick="guardar()">💾 GUARDAR TRABAJO</button>
+<button class="btn btn-success btn-pro" onclick="guardar()">💾 GUARDAR</button>
 
 <hr>
 
@@ -54,6 +61,69 @@ body {background:#000;color:#fff;text-align:center;}
 <div id="historial" class="lista"></div>
 
 <button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">🗑 BORRAR TODO</button>
+
+<!-- 🔌 MODALES -->
+
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Enchufe</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Schuko_plug_and_socket.svg" class="img-fluid">
+</div>
+</div>
+</div>
+</div>
+
+<!-- LLAVE -->
+<div class="modal fade" id="llave">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Llave</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Switch_symbol.svg" class="img-fluid">
+</div>
+</div>
+</div>
+</div>
+
+<!-- TABLERO -->
+<div class="modal fade" id="tablero">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Tablero</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Electrical_panel.jpg" class="img-fluid">
+</div>
+</div>
+</div>
+</div>
+
+<!-- TANQUE -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Tanque + Bomba</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Float_switch_diagram.svg" class="img-fluid">
+<p>Flotante controla la bomba automáticamente</p>
+</div>
+</div>
+</div>
+</div>
 
 <script>
 let ultimoPresupuesto = "";
@@ -83,9 +153,9 @@ document.getElementById("resultado").innerHTML = "Corriente: " + i.toFixed(2) + 
 
 let texto = `
 📅 ${fecha}<br>
-👤 Cliente: ${cliente}<br>
-🔧 Trabajo: ${trabajo}<br>
-⚡ Corriente: ${i.toFixed(2)} A<br>
+👤 ${cliente}<br>
+🔧 ${trabajo}<br>
+⚡ ${i.toFixed(2)} A<br>
 💰 Materiales: $${mat}<br>
 👷 Mano de obra: $${mano}<br>
 💵 TOTAL: $${total}
@@ -96,7 +166,7 @@ ultimoPresupuesto = texto;
 }
 
 function guardar(){
-if(ultimoPresupuesto == ""){
+if(ultimoPresupuesto==""){
 alert("Primero calcular");
 return;
 }
@@ -128,4 +198,4 @@ mostrarHistorial();
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>>
+</html>
