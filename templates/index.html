@@ -27,6 +27,7 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
 <button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#triangulo">📐 TRIÁNGULO</button>
 <button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
+<button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#reversible">🔄 REVERSIBLE</button>
 
 <hr>
 
@@ -142,26 +143,14 @@ NEUTRO ───────────────→ BOMBA
 
 </div></div></div></div>
 
-<!-- 🏭 MOTOR PRO -->
+<!-- 🏭 MOTOR -->
 <div class="modal fade" id="motor">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 
-<div class="modal-header">
-<h5>🏭 Motor Tablero Real</h5>
-</div>
+<div class="modal-header"><h5>Motor Tablero</h5></div>
 
 <div class="modal-body text-center">
-
-<pre style="text-align:left;">
-FASE ──[PARO NC]──[MARCHA NO]──(KM)
-             │
-             └──[KM AUX]
-
-FASE → TÉRMICA → CONTACTOR → RELÉ → MOTOR
-</pre>
-
-<h5>🔘 TABLERO</h5>
 
 <div>
 <span id="luzVerde" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
@@ -172,6 +161,28 @@ FASE → TÉRMICA → CONTACTOR → RELÉ → MOTOR
 <button class="btn btn-danger btn-pro" onclick="apagarMotor()">PARO</button>
 
 <div id="estadoMotor" class="resultado">🔴 APAGADO</div>
+
+</div></div></div></div>
+
+<!-- 🔄 REVERSIBLE -->
+<div class="modal fade" id="reversible">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+
+<div class="modal-header"><h5>Motor Reversible</h5></div>
+
+<div class="modal-body text-center">
+
+<div>
+<span id="luzAdelante" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
+<span id="luzAtras" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
+</div>
+
+<button class="btn btn-success btn-pro" onclick="adelante()">ADELANTE</button>
+<button class="btn btn-warning btn-pro" onclick="atras()">ATRÁS</button>
+<button class="btn btn-danger btn-pro" onclick="paro()">PARO</button>
+
+<div id="estadoRev" class="resultado">🔴 PARADO</div>
 
 </div></div></div></div>
 
@@ -255,6 +266,24 @@ function apagarMotor(){
 document.getElementById("estadoMotor").innerHTML="🔴 APAGADO";
 document.getElementById("luzVerde").style.background="#003300";
 document.getElementById("luzRoja").style.background="red";
+}
+
+function adelante(){
+document.getElementById("estadoRev").innerHTML="🟢 ADELANTE";
+document.getElementById("luzAdelante").style.background="lime";
+document.getElementById("luzAtras").style.background="#003300";
+}
+
+function atras(){
+document.getElementById("estadoRev").innerHTML="🔵 ATRÁS";
+document.getElementById("luzAdelante").style.background="#003300";
+document.getElementById("luzAtras").style.background="blue";
+}
+
+function paro(){
+document.getElementById("estadoRev").innerHTML="🔴 PARADO";
+document.getElementById("luzAdelante").style.background="#003300";
+document.getElementById("luzAtras").style.background="#003300";
 }
 
 window.onload=mostrarHistorial;
