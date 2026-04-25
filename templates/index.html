@@ -28,265 +28,104 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#triangulo">📐 TRIÁNGULO</button>
 <button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
 <button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#reversible">🔄 REVERSIBLE</button>
+<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#estrella">⚡ ESTRELLA-TRIÁNGULO</button>
 
 <hr>
 
-<!-- CALCULADORA -->
-<h4>⚙ CALCULADORA + PRESUPUESTO</h4>
-
-<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
-<input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo"><br>
+<h4>⚙ CALCULADORA</h4>
 <input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
-<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
-<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales ($)"><br>
-<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra ($)"><br>
-
+<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
 <button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
-
 <div id="resultado" class="resultado"></div>
 
 <hr>
 
-<h4>📄 PRESUPUESTO</h4>
-<div id="presupuesto" class="lista"></div>
-<button class="btn btn-success btn-pro" onclick="guardar()">GUARDAR</button>
+<!-- MODAL ESTRELLA -->
+<div class="modal fade" id="estrella">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+
+<div class="modal-header">
+<h5>⚡ Arranque Estrella - Triángulo</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body text-start">
+
+<pre>
+ETAPA 1 (ARRANQUE):
+Motor en ESTRELLA ⭐
+→ Baja corriente
+→ Arranque suave
+
+ETAPA 2 (TRABAJO):
+Motor en TRIÁNGULO 🔺
+→ Potencia normal
+
+CONTACTORES:
+KM1 = Principal
+KM2 = Estrella
+KM3 = Triángulo
+
+TIEMPO:
+⏱ Cambia automático (3-10 seg)
+</pre>
 
 <hr>
 
-<h4>📂 HISTORIAL</h4>
-<div id="historial" class="lista"></div>
-<button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">BORRAR TODO</button>
+<h5>🔘 SIMULACIÓN</h5>
 
-<hr>
+<div class="text-center">
 
-<!-- CONSUMO -->
-<h4>💡 CONSUMO (REFSA)</h4>
+<span id="luzEstrella" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
+<span id="luzTriangulo" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
 
-<input id="potenciaConsumo" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
-<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
-<input id="dias" class="form-control w-75 mx-auto" placeholder="Días"><br>
-
-<select id="tarifa" class="form-control w-75 mx-auto">
-<option value="80">Bajo ($80)</option>
-<option value="120">Medio ($120)</option>
-<option value="180">Alto ($180)</option>
-</select><br>
-
-<button class="btn btn-warning btn-pro" onclick="calcularConsumo()">CALCULAR COSTO</button>
-<div id="resultadoConsumo" class="resultado"></div>
-
-<!-- 🔌 ENCHUFE -->
-<div class="modal fade" id="enchufe">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header"><h5>Enchufe</h5></div>
-<div class="modal-body"><pre>
-FASE ────┐
-         │
-      [TOMA]
-         │
-NEUTRO ──┘
-TIERRA → ⏚
-</pre></div></div></div></div>
-
-<!-- 💡 LLAVE -->
-<div class="modal fade" id="llave">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header"><h5>Llave</h5></div>
-<div class="modal-body"><pre>
-FASE ──[LLAVE]──💡
-NEUTRO ─────────💡
-</pre></div></div></div></div>
-
-<!-- ⚡ TABLERO -->
-<div class="modal fade" id="tablero">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header"><h5>Tablero</h5></div>
-<div class="modal-body"><pre>
-RED → TÉRMICA → DISYUNTOR → LUCES
-                              → TOMAS
-                              → AIRE
-</pre></div></div></div></div>
-
-<!-- 💧 TANQUE -->
-<div class="modal fade" id="tanque">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header"><h5>Tanque</h5></div>
-<div class="modal-body"><pre>
-FASE → FLOTANTE → CONTACTOR → BOMBA
-NEUTRO ───────────────→ BOMBA
-</pre></div></div></div></div>
-
-<!-- 📐 TRIANGULO -->
-<div class="modal fade" id="triangulo">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-<div class="modal-header"><h5>Triángulo PVI</h5></div>
-
-<div class="modal-body">
-
-<select id="tipo" class="form-control">
-<option value="i">Corriente (A)</option>
-<option value="v">Voltaje (V)</option>
-<option value="p">Potencia (W)</option>
-</select><br>
-
-<input id="dato1" class="form-control" placeholder="Dato 1"><br>
-<input id="dato2" class="form-control" placeholder="Dato 2"><br>
-
-<button class="btn btn-success btn-pro" onclick="calcularTriangulo()">CALCULAR</button>
-
-<div id="resultadoTri" class="resultado"></div>
-
-</div></div></div></div>
-
-<!-- 🏭 MOTOR -->
-<div class="modal fade" id="motor">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-
-<div class="modal-header"><h5>Motor Tablero</h5></div>
-
-<div class="modal-body text-center">
-
-<div>
-<span id="luzVerde" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
-<span id="luzRoja" style="width:40px;height:40px;border-radius:50%;background:red;display:inline-block;margin:10px;"></span>
 </div>
 
-<button class="btn btn-success btn-pro" onclick="encenderMotor()">MARCHA</button>
-<button class="btn btn-danger btn-pro" onclick="apagarMotor()">PARO</button>
+<p>
+⭐ Estrella (arranque)<br>
+🔺 Triángulo (trabajo)
+</p>
 
-<div id="estadoMotor" class="resultado">🔴 APAGADO</div>
+<button class="btn btn-success btn-pro" onclick="arrancarEstrella()">ARRANCAR</button>
+<button class="btn btn-danger btn-pro" onclick="detenerEstrella()">PARO</button>
 
-</div></div></div></div>
+<div id="estadoEstrella" class="resultado">🔴 Motor detenido</div>
 
-<!-- 🔄 REVERSIBLE -->
-<div class="modal fade" id="reversible">
-<div class="modal-dialog modal-dialog-centered">
-<div class="modal-content bg-dark text-white">
-
-<div class="modal-header"><h5>Motor Reversible</h5></div>
-
-<div class="modal-body text-center">
-
-<div>
-<span id="luzAdelante" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
-<span id="luzAtras" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
 </div>
 
-<button class="btn btn-success btn-pro" onclick="adelante()">ADELANTE</button>
-<button class="btn btn-warning btn-pro" onclick="atras()">ATRÁS</button>
-<button class="btn btn-danger btn-pro" onclick="paro()">PARO</button>
-
-<div id="estadoRev" class="resultado">🔴 PARADO</div>
-
-</div></div></div></div>
+</div>
+</div>
+</div>
 
 <script>
 
-let ultimoPresupuesto="";
-
 function calcular(){
-let v=parseFloat(document.getElementById("voltaje").value);
-let p=parseFloat(document.getElementById("potencia").value);
-let m=parseFloat(document.getElementById("materiales").value)||0;
-let mo=parseFloat(document.getElementById("mano").value)||0;
-
-if(isNaN(v)||isNaN(p)) return;
-
-let i=p/v;
-let total=m+mo;
-
-document.getElementById("resultado").innerHTML="Corriente: "+i.toFixed(2)+"A";
-document.getElementById("presupuesto").innerHTML="💰 $"+total;
-
-ultimoPresupuesto="Total: "+total;
+let v=document.getElementById("voltaje").value;
+let p=document.getElementById("potencia").value;
+if(v && p){
+document.getElementById("resultado").innerHTML=(p/v).toFixed(2)+" A";
+}
 }
 
-function guardar(){
-let d=JSON.parse(localStorage.getItem("trabajos"))||[];
-d.push(ultimoPresupuesto);
-localStorage.setItem("trabajos",JSON.stringify(d));
-mostrarHistorial();
+function arrancarEstrella(){
+
+document.getElementById("estadoEstrella").innerHTML="⭐ ARRANCANDO...";
+document.getElementById("luzEstrella").style.background="yellow";
+document.getElementById("luzTriangulo").style.background="#003300";
+
+setTimeout(()=>{
+document.getElementById("estadoEstrella").innerHTML="🔺 EN MARCHA";
+document.getElementById("luzEstrella").style.background="#003300";
+document.getElementById("luzTriangulo").style.background="lime";
+},4000);
 }
 
-function mostrarHistorial(){
-let d=JSON.parse(localStorage.getItem("trabajos"))||[];
-let h="";
-d.forEach(x=>h+="<div>"+x+"</div>");
-document.getElementById("historial").innerHTML=h;
+function detenerEstrella(){
+document.getElementById("estadoEstrella").innerHTML="🔴 DETENIDO";
+document.getElementById("luzEstrella").style.background="#003300";
+document.getElementById("luzTriangulo").style.background="#003300";
 }
-
-function borrarHistorial(){
-localStorage.removeItem("trabajos");
-mostrarHistorial();
-}
-
-function calcularTriangulo(){
-let t=document.getElementById("tipo").value;
-let a=parseFloat(document.getElementById("dato1").value);
-let b=parseFloat(document.getElementById("dato2").value);
-
-if(isNaN(a)||isNaN(b)) return;
-
-let r="";
-if(t=="i") r=(a/b)+" A";
-if(t=="v") r=(a/b)+" V";
-if(t=="p") r=(a*b)+" W";
-
-document.getElementById("resultadoTri").innerHTML=r;
-}
-
-function calcularConsumo(){
-let p=parseFloat(document.getElementById("potenciaConsumo").value);
-let h=parseFloat(document.getElementById("horas").value);
-let d=parseFloat(document.getElementById("dias").value);
-let precio=parseFloat(document.getElementById("tarifa").value);
-
-if(isNaN(p)||isNaN(h)||isNaN(d)) return;
-
-let kwh=(p*h*d)/1000;
-let total=kwh*precio;
-
-document.getElementById("resultadoConsumo").innerHTML=
-kwh.toFixed(2)+" kWh<br>$"+total.toFixed(2);
-}
-
-function encenderMotor(){
-document.getElementById("estadoMotor").innerHTML="🟢 ENCENDIDO";
-document.getElementById("luzVerde").style.background="lime";
-document.getElementById("luzRoja").style.background="#330000";
-}
-
-function apagarMotor(){
-document.getElementById("estadoMotor").innerHTML="🔴 APAGADO";
-document.getElementById("luzVerde").style.background="#003300";
-document.getElementById("luzRoja").style.background="red";
-}
-
-function adelante(){
-document.getElementById("estadoRev").innerHTML="🟢 ADELANTE";
-document.getElementById("luzAdelante").style.background="lime";
-document.getElementById("luzAtras").style.background="#003300";
-}
-
-function atras(){
-document.getElementById("estadoRev").innerHTML="🔵 ATRÁS";
-document.getElementById("luzAdelante").style.background="#003300";
-document.getElementById("luzAtras").style.background="blue";
-}
-
-function paro(){
-document.getElementById("estadoRev").innerHTML="🔴 PARADO";
-document.getElementById("luzAdelante").style.background="#003300";
-document.getElementById("luzAtras").style.background="#003300";
-}
-
-window.onload=mostrarHistorial;
 
 </script>
 
