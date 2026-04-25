@@ -12,7 +12,7 @@ body {background:#000;color:#fff;text-align:center;}
 .btn-pro {width:85%; margin:10px; font-size:18px;}
 .resultado {color:#00eaff; font-size:22px; margin-top:15px;}
 .lista {text-align:left; margin:20px;}
-img {margin:10px 0;}
+pre {background:#111;padding:15px;border-radius:10px;}
 </style>
 </head>
 
@@ -20,7 +20,7 @@ img {margin:10px 0;}
 
 <h2 style="color:#00bcff; margin-top:20px;">⚡ ELÉCTRICA PRO</h2>
 
-<!-- 🔌 BOTONES ESQUEMAS -->
+<!-- BOTONES -->
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
@@ -28,10 +28,10 @@ img {margin:10px 0;}
 
 <hr>
 
-<!-- ⚙ CALCULADORA + PRESUPUESTO -->
+<!-- CALCULADORA -->
 <h4>CALCULADORA + PRESUPUESTO</h4>
 
-<input id="cliente" class="form-control w-75 mx-auto" placeholder="Nombre del cliente">
+<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente">
 <br>
 <input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo">
 <br>
@@ -62,54 +62,88 @@ img {margin:10px 0;}
 
 <button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">🗑 BORRAR TODO</button>
 
-<!-- 🔌 MODALES -->
-
-<!-- ENCHUFE -->
+<!-- 🔌 ENCHUFE -->
 <div class="modal fade" id="enchufe">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Enchufe</h5>
+<h5>Enchufe 220V</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
-<div class="modal-body">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Schuko_plug_and_socket.svg" class="img-fluid">
+<div class="modal-body text-start">
+
+<pre>
+FASE (L) ─────────────┐
+                      │
+                   [ TOMA ]
+                      │
+NEUTRO (N) ───────────┘
+
+TIERRA (⏚) ───────→ PIN CENTRAL
+</pre>
+
+<p>
+🟥 Fase → borne<br>
+🔵 Neutro → borne<br>
+🟢 Tierra → seguridad
+</p>
+
 </div>
 </div>
 </div>
 </div>
 
-<!-- LLAVE -->
+<!-- 💡 LLAVE -->
 <div class="modal fade" id="llave">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Llave</h5>
+<h5>Llave Simple</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
-<div class="modal-body">
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6a/Switch_symbol.svg" class="img-fluid">
+<div class="modal-body text-start">
+
+<pre>
+FASE ────[ LLAVE ]────💡 LÁMPARA
+NEUTRO ───────────────💡
+</pre>
+
+<p>
+🟥 Fase pasa por la llave<br>
+🔵 Neutro directo a la lámpara
+</p>
+
 </div>
 </div>
 </div>
 </div>
 
-<!-- TABLERO -->
+<!-- ⚡ TABLERO -->
 <div class="modal fade" id="tablero">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Tablero</h5>
+<h5>Tablero Básico</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
-<div class="modal-body">
-<img src="https://upload.wikimedia.org/wikipedia/commons/5/5c/Electrical_panel.jpg" class="img-fluid">
+<div class="modal-body text-start">
+
+<pre>
+RED → TÉRMICA → DISYUNTOR → CIRCUITOS
+</pre>
+
+<p>
+⚡ Térmica protege sobrecarga<br>
+⚡ Disyuntor protege fuga<br>
+⚡ Salida a enchufes y luces
+</p>
+
 </div>
 </div>
 </div>
 </div>
 
-<!-- TANQUE -->
+<!-- 💧 TANQUE -->
 <div class="modal fade" id="tanque">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
@@ -117,9 +151,19 @@ img {margin:10px 0;}
 <h5>Tanque + Bomba</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
-<div class="modal-body">
-<img src="https://upload.wikimedia.org/wikipedia/commons/8/8c/Float_switch_diagram.svg" class="img-fluid">
-<p>Flotante controla la bomba automáticamente</p>
+<div class="modal-body text-start">
+
+<pre>
+FASE → FLOTANTE → CONTACTOR → BOMBA
+NEUTRO ─────────────────────→ BOMBA
+</pre>
+
+<p>
+💧 Nivel bajo → prende bomba<br>
+💧 Nivel alto → corta<br>
+⚡ Contactor maneja potencia
+</p>
+
 </div>
 </div>
 </div>
