@@ -29,6 +29,7 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
 <button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#reversible">🔄 REVERSIBLE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#estrella">⚡ ESTRELLA</button>
+<button class="btn btn-light btn-pro" data-bs-toggle="modal" data-bs-target="#cables">🎨 CABLES</button>
 
 <hr>
 
@@ -62,13 +63,19 @@ pre {background:#111;padding:15px;border-radius:10px;}
 
 <!-- MODALES -->
 
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>FASE → TOMA → NEUTRO</pre></div></div></div></div>
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → TOMA → 🔵 NEUTRO
+🟡🟢 TIERRA → PIN CENTRAL</pre></div></div></div></div>
 
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>FASE → LLAVE → LUZ</pre></div></div></div></div>
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → LLAVE → 💡
+🔵 NEUTRO → 💡</pre></div></div></div></div>
 
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>RED → TÉRMICA → DISYUNTOR → CIRCUITOS</pre></div></div></div></div>
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → TÉRMICA → DISYUNTOR
+🔵 NEUTRO → BARRA
+🟡🟢 TIERRA → JABALINA</pre></div></div></div></div>
 
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>FASE → FLOTANTE → BOMBA</pre></div></div></div></div>
+<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → FLOTANTE → BOMBA
+🔵 NEUTRO → BOMBA
+🟡🟢 TIERRA → CARCASA</pre></div></div></div></div>
 
 <div class="modal fade" id="triangulo">
 <div class="modal-dialog"><div class="modal-content bg-dark text-white">
@@ -85,9 +92,9 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <span id="verde" style="width:30px;height:30px;background:#003300;display:inline-block;border-radius:50%"></span>
 <span id="rojo" style="width:30px;height:30px;background:red;display:inline-block;border-radius:50%"></span>
 <br>
-<button onclick="onMotor()">ON</button>
-<button onclick="offMotor()">OFF</button>
-<div id="estadoMotor">OFF</div>
+<button onclick="onMotor()">MARCHA</button>
+<button onclick="offMotor()">PARO</button>
+<div id="estadoMotor">🔴 APAGADO</div>
 </div></div></div></div>
 
 <div class="modal fade" id="reversible">
@@ -96,7 +103,7 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <button onclick="adelante()">ADELANTE</button>
 <button onclick="atras()">ATRÁS</button>
 <button onclick="paro()">PARO</button>
-<div id="rev">PARADO</div>
+<div id="rev">🔴 PARADO</div>
 </div></div></div></div>
 
 <div class="modal fade" id="estrella">
@@ -104,7 +111,32 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <div class="modal-body text-center">
 <button onclick="estrella()">ARRANCAR</button>
 <button onclick="stopE()">PARO</button>
-<div id="est">DETENIDO</div>
+<div id="est">🔴 DETENIDO</div>
+</div></div></div></div>
+
+<!-- 🎨 CABLES -->
+<div class="modal fade" id="cables">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+🔴 FASE → energía
+🔵 NEUTRO → retorno
+🟡🟢 TIERRA → seguridad
+
+ENCHUFE:
+🔴 derecha / 🔵 izquierda / 🟡🟢 centro
+
+LLAVE:
+🔴 corta fase
+
+TABLERO:
+🔴 térmica
+🔵 barra neutro
+🟡🟢 tierra
+
+MOTOR:
+🟡🟢 siempre a carcasa
+</pre>
 </div></div></div></div>
 
 <script>
@@ -150,25 +182,25 @@ if(t=="p")resTri.innerHTML=(a*b);
 }
 
 function onMotor(){
-estadoMotor.innerHTML="ON";
+estadoMotor.innerHTML="🟢 ENCENDIDO";
 verde.style.background="lime";rojo.style.background="#330000";
 }
 
 function offMotor(){
-estadoMotor.innerHTML="OFF";
+estadoMotor.innerHTML="🔴 APAGADO";
 verde.style.background="#003300";rojo.style.background="red";
 }
 
-function adelante(){rev.innerHTML="ADELANTE";}
-function atras(){rev.innerHTML="ATRÁS";}
-function paro(){rev.innerHTML="PARADO";}
+function adelante(){rev.innerHTML="🟢 ADELANTE";}
+function atras(){rev.innerHTML="🔵 ATRÁS";}
+function paro(){rev.innerHTML="🔴 PARADO";}
 
 function estrella(){
 est.innerHTML="⭐ → 🔺";
-setTimeout(()=>{est.innerHTML="EN MARCHA"},3000);
+setTimeout(()=>{est.innerHTML="🟢 EN MARCHA"},3000);
 }
 
-function stopE(){est.innerHTML="DETENIDO";}
+function stopE(){est.innerHTML="🔴 DETENIDO";}
 
 window.onload=mostrar;
 </script>
