@@ -18,27 +18,28 @@ pre {background:#111;padding:15px;border-radius:10px;}
 
 <body>
 
-<h2 style="color:#00bcff; margin-top:20px;">⚡ ELÉCTRICA PRO</h2>
+<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO</h2>
 
 <!-- BOTONES -->
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
+<button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#triangulo">📐 TRIÁNGULO</button>
 
 <hr>
 
 <!-- CALCULADORA -->
-<h4>CALCULADORA + PRESUPUESTO</h4>
+<h4>⚙ CALCULADORA + PRESUPUESTO</h4>
 
 <input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
 <input id="trabajo" class="form-control w-75 mx-auto" placeholder="Trabajo"><br>
-<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje (220)"><br>
+<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
 <input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
 <input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales ($)"><br>
 <input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra ($)"><br>
 
-<button class="btn btn-primary btn-pro" onclick="calcular()">⚙ CALCULAR</button>
+<button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
 
 <div id="resultado" class="resultado"></div>
 
@@ -46,232 +47,179 @@ pre {background:#111;padding:15px;border-radius:10px;}
 
 <h4>📄 PRESUPUESTO</h4>
 <div id="presupuesto" class="lista"></div>
-
-<button class="btn btn-success btn-pro" onclick="guardar()">💾 GUARDAR</button>
+<button class="btn btn-success btn-pro" onclick="guardar()">GUARDAR</button>
 
 <hr>
 
 <h4>📂 HISTORIAL</h4>
 <div id="historial" class="lista"></div>
+<button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">BORRAR TODO</button>
 
-<button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">🗑 BORRAR TODO</button>
+<hr>
+
+<!-- 💡 CONSUMO -->
+<h4>💡 CONSUMO (REFSA)</h4>
+
+<input id="potenciaConsumo" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
+<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
+<input id="dias" class="form-control w-75 mx-auto" placeholder="Días"><br>
+
+<select id="tarifa" class="form-control w-75 mx-auto">
+<option value="80">Bajo ($80)</option>
+<option value="120">Medio ($120)</option>
+<option value="180">Alto ($180)</option>
+</select><br>
+
+<button class="btn btn-warning btn-pro" onclick="calcularConsumo()">CALCULAR COSTO</button>
+<div id="resultadoConsumo" class="resultado"></div>
 
 <!-- 🔌 ENCHUFE -->
 <div class="modal fade" id="enchufe">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Enchufe 220V</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body text-start">
-<pre>
-FASE (L) ─────────────┐
-                      │
-                   [ TOMA ]
-                      │
-NEUTRO (N) ───────────┘
-
-TIERRA (⏚) ───────→ PIN CENTRAL
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-header"><h5>Enchufe</h5></div>
+<div class="modal-body"><pre>
+FASE ────┐
+         │
+      [TOMA]
+         │
+NEUTRO ──┘
+TIERRA → ⏚
+</pre></div></div></div></div>
 
 <!-- 💡 LLAVE -->
 <div class="modal fade" id="llave">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Llave Simple</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-<div class="modal-body text-start">
-<pre>
-FASE ────[ LLAVE ]────💡
-NEUTRO ───────────────💡
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-header"><h5>Llave</h5></div>
+<div class="modal-body"><pre>
+FASE ──[LLAVE]──💡
+NEUTRO ─────────💡
+</pre></div></div></div></div>
 
-<!-- ⚡ TABLERO PROFESIONAL -->
+<!-- ⚡ TABLERO -->
 <div class="modal fade" id="tablero">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Tablero Profesional</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
+<div class="modal-header"><h5>Tablero</h5></div>
+<div class="modal-body"><pre>
+RED → TÉRMICA → DISYUNTOR → LUCES
+                              → TOMAS
+                              → AIRE
+</pre></div></div></div></div>
 
-<div class="modal-body">
-
-<svg width="100%" height="320">
-
-<!-- RED -->
-<text x="10" y="20" fill="white">RED</text>
-<line x1="50" y1="20" x2="120" y2="20" stroke="red" stroke-width="3"/>
-
-<!-- TERMICA -->
-<rect x="120" y="5" width="80" height="30" stroke="white" fill="none"/>
-<text x="125" y="25" fill="white">TÉRMICA</text>
-
-<!-- DISYUNTOR -->
-<rect x="220" y="5" width="100" height="30" stroke="white" fill="none"/>
-<text x="225" y="25" fill="white">DISYUNTOR</text>
-
-<!-- SALIDAS -->
-<line x1="320" y1="20" x2="420" y2="20" stroke="red" stroke-width="3"/>
-<text x="420" y="20" fill="white">LUCES</text>
-
-<line x1="320" y1="70" x2="420" y2="70" stroke="red" stroke-width="3"/>
-<text x="420" y="70" fill="white">TOMAS</text>
-
-<line x1="320" y1="120" x2="420" y2="120" stroke="red" stroke-width="3"/>
-<text x="420" y="120" fill="white">AIRE SPLIT</text>
-
-</svg>
-
-<p>
-⚡ Instalación correcta:<br>
-• Línea separada para luces<br>
-• Línea separada para tomas<br>
-• Aire acondicionado con circuito exclusivo
-</p>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- 💧 TANQUE PROFESIONAL -->
+<!-- 💧 TANQUE -->
 <div class="modal fade" id="tanque">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
-<div class="modal-header">
-<h5>Tanque + Bomba + Contactor</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
+<div class="modal-header"><h5>Tanque</h5></div>
+<div class="modal-body"><pre>
+FASE → FLOTANTE → CONTACTOR → BOMBA
+NEUTRO ───────────────→ BOMBA
+</pre></div></div></div></div>
+
+<!-- 📐 TRIANGULO -->
+<div class="modal fade" id="triangulo">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header"><h5>Triángulo PVI</h5></div>
 
 <div class="modal-body">
 
-<svg width="100%" height="300">
+<select id="tipo" class="form-control">
+<option value="i">Corriente (A)</option>
+<option value="v">Voltaje (V)</option>
+<option value="p">Potencia (W)</option>
+</select><br>
 
-<!-- FASE -->
-<line x1="20" y1="40" x2="120" y2="40" stroke="red" stroke-width="3"/>
-<text x="5" y="40" fill="white">F</text>
+<input id="dato1" class="form-control" placeholder="Dato 1"><br>
+<input id="dato2" class="form-control" placeholder="Dato 2"><br>
 
-<!-- FLOTANTE -->
-<rect x="120" y="20" width="100" height="40" stroke="white" fill="none"/>
-<text x="125" y="45" fill="white">FLOTANTE</text>
+<button class="btn btn-success btn-pro" onclick="calcularTriangulo()">CALCULAR</button>
 
-<!-- CONTACTOR -->
-<rect x="250" y="20" width="100" height="40" stroke="white" fill="none"/>
-<text x="255" y="45" fill="white">CONTACTOR</text>
+<div id="resultadoTri" class="resultado"></div>
 
-<!-- BOMBA -->
-<circle cx="420" cy="40" r="20" stroke="white" fill="none"/>
-<text x="405" y="45" fill="white">BOMBA</text>
-
-<!-- CONEXIONES -->
-<line x1="220" y1="40" x2="250" y2="40" stroke="red" stroke-width="3"/>
-<line x1="350" y1="40" x2="400" y2="40" stroke="red" stroke-width="3"/>
-
-<!-- NEUTRO -->
-<line x1="20" y1="100" x2="400" y2="100" stroke="blue" stroke-width="3"/>
-<text x="5" y="100" fill="white">N</text>
-
-</svg>
-
-<p>
-💧 Sistema automático:<br>
-• Flotante controla<br>
-• Contactor ejecuta<br>
-• Bomba trabaja<br><br>
-
-✔ Nivel bajo → prende<br>
-✔ Nivel alto → corta
-</p>
-
-</div>
-</div>
-</div>
-</div>
+</div></div></div></div>
 
 <script>
+
 let ultimoPresupuesto = "";
 
-window.onload = function(){
-mostrarHistorial();
-}
-
 function calcular(){
-let cliente = document.getElementById("cliente").value;
-let trabajo = document.getElementById("trabajo").value;
-let v = parseFloat(document.getElementById("voltaje").value);
-let p = parseFloat(document.getElementById("potencia").value);
-let mat = parseFloat(document.getElementById("materiales").value) || 0;
-let mano = parseFloat(document.getElementById("mano").value) || 0;
+let c=document.getElementById("cliente").value;
+let t=document.getElementById("trabajo").value;
+let v=parseFloat(document.getElementById("voltaje").value);
+let p=parseFloat(document.getElementById("potencia").value);
+let m=parseFloat(document.getElementById("materiales").value)||0;
+let mo=parseFloat(document.getElementById("mano").value)||0;
 
-if(cliente=="" || trabajo=="" || isNaN(v) || isNaN(p)){
-document.getElementById("resultado").innerHTML="⚠️ Completar datos";
-return;
-}
+if(!c||!t||isNaN(v)||isNaN(p)) return alert("Completar");
 
-let i = p / v;
-let total = mat + mano;
-let fecha = new Date().toLocaleDateString();
+let i=p/v;
+let total=m+mo;
 
-document.getElementById("resultado").innerHTML = "Corriente: " + i.toFixed(2) + " A";
+let txt=`${c} | ${t}<br>⚡ ${i.toFixed(2)}A<br>💰 $${total}`;
 
-let texto = `
-📅 ${fecha}<br>
-👤 ${cliente}<br>
-🔧 ${trabajo}<br>
-⚡ ${i.toFixed(2)} A<br>
-💰 Materiales: $${mat}<br>
-👷 Mano de obra: $${mano}<br>
-💵 TOTAL: $${total}
-`;
+document.getElementById("resultado").innerHTML="Corriente: "+i.toFixed(2)+"A";
+document.getElementById("presupuesto").innerHTML=txt;
 
-document.getElementById("presupuesto").innerHTML = texto;
-ultimoPresupuesto = texto;
+ultimoPresupuesto=txt;
 }
 
 function guardar(){
-if(ultimoPresupuesto==""){
-alert("Primero calcular");
-return;
-}
-
-let datos = JSON.parse(localStorage.getItem("trabajos")) || [];
-datos.push(ultimoPresupuesto);
-localStorage.setItem("trabajos", JSON.stringify(datos));
-
+let d=JSON.parse(localStorage.getItem("trabajos"))||[];
+d.push(ultimoPresupuesto);
+localStorage.setItem("trabajos",JSON.stringify(d));
 mostrarHistorial();
 }
 
 function mostrarHistorial(){
-let lista = JSON.parse(localStorage.getItem("trabajos")) || [];
-let html = "";
-
-lista.forEach((item)=>{
-html += "<div style='border-bottom:1px solid #555;padding:10px;'>" + item + "</div>";
-});
-
-document.getElementById("historial").innerHTML = html;
+let d=JSON.parse(localStorage.getItem("trabajos"))||[];
+let h="";
+d.forEach(x=>h+="<div>"+x+"</div>");
+document.getElementById("historial").innerHTML=h;
 }
 
 function borrarHistorial(){
 localStorage.removeItem("trabajos");
 mostrarHistorial();
 }
+
+function calcularTriangulo(){
+let t=document.getElementById("tipo").value;
+let a=parseFloat(document.getElementById("dato1").value);
+let b=parseFloat(document.getElementById("dato2").value);
+
+if(isNaN(a)||isNaN(b)) return;
+
+let r="";
+if(t=="i") r=(a/b)+" A";
+if(t=="v") r=(a/b)+" V";
+if(t=="p") r=(a*b)+" W";
+
+document.getElementById("resultadoTri").innerHTML=r;
+}
+
+function calcularConsumo(){
+let p=parseFloat(document.getElementById("potenciaConsumo").value);
+let h=parseFloat(document.getElementById("horas").value);
+let d=parseFloat(document.getElementById("dias").value);
+let precio=parseFloat(document.getElementById("tarifa").value);
+
+if(isNaN(p)||isNaN(h)||isNaN(d)) return;
+
+let kwh=(p*h*d)/1000;
+let total=kwh*precio;
+
+document.getElementById("resultadoConsumo").innerHTML=
+kwh.toFixed(2)+" kWh<br>$"+total.toFixed(2);
+}
+
+window.onload=mostrarHistorial;
+
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
-</html>
 </html>
