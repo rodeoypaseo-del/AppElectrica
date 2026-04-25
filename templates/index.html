@@ -26,6 +26,7 @@ pre {background:#111;padding:15px;border-radius:10px;}
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
 <button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#triangulo">📐 TRIÁNGULO</button>
+<button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
 
 <hr>
 
@@ -57,7 +58,7 @@ pre {background:#111;padding:15px;border-radius:10px;}
 
 <hr>
 
-<!-- 💡 CONSUMO -->
+<!-- CONSUMO -->
 <h4>💡 CONSUMO (REFSA)</h4>
 
 <input id="potenciaConsumo" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
@@ -141,29 +142,48 @@ NEUTRO ───────────────→ BOMBA
 
 </div></div></div></div>
 
+<!-- 🏭 MOTOR -->
+<div class="modal fade" id="motor">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+
+<div class="modal-header"><h5>Motor Marcha/Paro</h5></div>
+
+<div class="modal-body"><pre>
+FASE ──[PARO]──[MARCHA]──(KM)
+            │
+            └──[KM AUX]
+
+POTENCIA:
+FASE → TÉRMICA → CONTACTOR → RELÉ → MOTOR
+</pre>
+
+<button class="btn btn-success btn-pro" onclick="encenderMotor()">ENCENDER</button>
+<button class="btn btn-danger btn-pro" onclick="apagarMotor()">APAGAR</button>
+
+<div id="estadoMotor" class="resultado">Motor apagado</div>
+
+</div></div></div></div>
+
 <script>
 
-let ultimoPresupuesto = "";
+let ultimoPresupuesto="";
 
 function calcular(){
-let c=document.getElementById("cliente").value;
-let t=document.getElementById("trabajo").value;
 let v=parseFloat(document.getElementById("voltaje").value);
 let p=parseFloat(document.getElementById("potencia").value);
 let m=parseFloat(document.getElementById("materiales").value)||0;
 let mo=parseFloat(document.getElementById("mano").value)||0;
 
-if(!c||!t||isNaN(v)||isNaN(p)) return alert("Completar");
+if(isNaN(v)||isNaN(p)) return;
 
 let i=p/v;
 let total=m+mo;
 
-let txt=`${c} | ${t}<br>⚡ ${i.toFixed(2)}A<br>💰 $${total}`;
-
 document.getElementById("resultado").innerHTML="Corriente: "+i.toFixed(2)+"A";
-document.getElementById("presupuesto").innerHTML=txt;
+document.getElementById("presupuesto").innerHTML="💰 $"+total;
 
-ultimoPresupuesto=txt;
+ultimoPresupuesto="Total: "+total;
 }
 
 function guardar(){
@@ -213,6 +233,14 @@ let total=kwh*precio;
 
 document.getElementById("resultadoConsumo").innerHTML=
 kwh.toFixed(2)+" kWh<br>$"+total.toFixed(2);
+}
+
+function encenderMotor(){
+document.getElementById("estadoMotor").innerHTML="🟢 ENCENDIDO";
+}
+
+function apagarMotor(){
+document.getElementById("estadoMotor").innerHTML="🔴 APAGADO";
 }
 
 window.onload=mostrarHistorial;
