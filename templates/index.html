@@ -12,6 +12,7 @@ body {background:#000;color:#fff;text-align:center;}
 .btn-pro {width:85%; margin:10px; font-size:18px;}
 .resultado {color:#00eaff; font-size:22px; margin-top:15px;}
 .lista {text-align:left; margin:20px;}
+img {margin:10px 0;}
 </style>
 </head>
 
@@ -23,6 +24,7 @@ body {background:#000;color:#fff;text-align:center;}
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
 
 <hr>
 
@@ -42,57 +44,77 @@ body {background:#000;color:#fff;text-align:center;}
 
 <hr>
 
-<!-- HISTORIAL -->
 <h4>📂 HISTORIAL DE TRABAJOS</h4>
 <div id="historial" class="lista"></div>
 
 <button class="btn btn-outline-danger btn-pro" onclick="borrarHistorial()">🗑 BORRAR TODO</button>
 
-<!-- MODALES -->
+<!-- MODAL ENCHUFE -->
 <div class="modal fade" id="enchufe">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Esquema Enchufe</h5>
+<h5>Esquemas Enchufe</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
-<img src="https://via.placeholder.com/300" class="img-fluid">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3c/Schuko_plug_and_socket.svg" class="img-fluid">
+<img src="https://via.placeholder.com/300">
 </div>
 </div>
 </div>
 </div>
 
+<!-- MODAL LLAVE -->
 <div class="modal fade" id="llave">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Esquema Llave</h5>
+<h5>Esquemas Llave</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
-<img src="https://via.placeholder.com/300" class="img-fluid">
+<img src="https://via.placeholder.com/300">
+<img src="https://via.placeholder.com/300">
 </div>
 </div>
 </div>
 </div>
 
+<!-- MODAL TABLERO -->
 <div class="modal fade" id="tablero">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-header">
-<h5>Esquema Tablero</h5>
+<h5>Esquemas Tablero</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
 <div class="modal-body">
-<img src="https://via.placeholder.com/300" class="img-fluid">
+<img src="https://via.placeholder.com/300">
+<img src="https://via.placeholder.com/300">
+</div>
+</div>
+</div>
+</div>
+
+<!-- MODAL TANQUE -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>Automático de Tanque</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body">
+<p>Controla la bomba según el nivel de agua</p>
+<img src="https://via.placeholder.com/300">
+<img src="https://via.placeholder.com/300">
 </div>
 </div>
 </div>
 </div>
 
 <script>
-// CARGAR HISTORIAL AL INICIAR
 window.onload = function(){
 mostrarHistorial();
 }
@@ -108,23 +130,17 @@ return;
 }
 
 let i = p / v;
-
-// FECHA
 let fecha = new Date().toLocaleDateString();
-
-// TEXTO FINAL
 let texto = fecha + " | " + cliente + " → " + i.toFixed(2) + " A";
 
 document.getElementById("resultado").innerHTML = "Corriente: " + i.toFixed(2) + " A";
 
-// GUARDAR
 let datos = JSON.parse(localStorage.getItem("trabajos")) || [];
 datos.push(texto);
 localStorage.setItem("trabajos", JSON.stringify(datos));
 
 mostrarHistorial();
 
-// LIMPIAR CAMPOS
 document.getElementById("cliente").value = "";
 document.getElementById("voltaje").value = "";
 document.getElementById("potencia").value = "";
@@ -132,7 +148,6 @@ document.getElementById("potencia").value = "";
 
 function mostrarHistorial(){
 let lista = JSON.parse(localStorage.getItem("trabajos")) || [];
-
 let html = "";
 
 lista.forEach((item)=>{
