@@ -142,26 +142,36 @@ NEUTRO ───────────────→ BOMBA
 
 </div></div></div></div>
 
-<!-- 🏭 MOTOR -->
+<!-- 🏭 MOTOR PRO -->
 <div class="modal fade" id="motor">
 <div class="modal-dialog modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 
-<div class="modal-header"><h5>Motor Marcha/Paro</h5></div>
+<div class="modal-header">
+<h5>🏭 Motor Tablero Real</h5>
+</div>
 
-<div class="modal-body"><pre>
-FASE ──[PARO]──[MARCHA]──(KM)
-            │
-            └──[KM AUX]
+<div class="modal-body text-center">
 
-POTENCIA:
+<pre style="text-align:left;">
+FASE ──[PARO NC]──[MARCHA NO]──(KM)
+             │
+             └──[KM AUX]
+
 FASE → TÉRMICA → CONTACTOR → RELÉ → MOTOR
 </pre>
 
-<button class="btn btn-success btn-pro" onclick="encenderMotor()">ENCENDER</button>
-<button class="btn btn-danger btn-pro" onclick="apagarMotor()">APAGAR</button>
+<h5>🔘 TABLERO</h5>
 
-<div id="estadoMotor" class="resultado">Motor apagado</div>
+<div>
+<span id="luzVerde" style="width:40px;height:40px;border-radius:50%;background:#003300;display:inline-block;margin:10px;"></span>
+<span id="luzRoja" style="width:40px;height:40px;border-radius:50%;background:red;display:inline-block;margin:10px;"></span>
+</div>
+
+<button class="btn btn-success btn-pro" onclick="encenderMotor()">MARCHA</button>
+<button class="btn btn-danger btn-pro" onclick="apagarMotor()">PARO</button>
+
+<div id="estadoMotor" class="resultado">🔴 APAGADO</div>
 
 </div></div></div></div>
 
@@ -237,10 +247,14 @@ kwh.toFixed(2)+" kWh<br>$"+total.toFixed(2);
 
 function encenderMotor(){
 document.getElementById("estadoMotor").innerHTML="🟢 ENCENDIDO";
+document.getElementById("luzVerde").style.background="lime";
+document.getElementById("luzRoja").style.background="#330000";
 }
 
 function apagarMotor(){
 document.getElementById("estadoMotor").innerHTML="🔴 APAGADO";
+document.getElementById("luzVerde").style.background="#003300";
+document.getElementById("luzRoja").style.background="red";
 }
 
 window.onload=mostrarHistorial;
