@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eléctrica PRO DEFINITIVO</title>
+<title>Eléctrica PRO FINAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -21,7 +21,7 @@ pre {background:#111;padding:10px;border-radius:10px;}
 
 <body>
 
-<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO DEFINITIVO</h2>
+<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO FINAL</h2>
 
 <!-- BOTONES -->
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#plano">🎨 PLANO</button>
@@ -47,32 +47,16 @@ pre {background:#111;padding:10px;border-radius:10px;}
 
 <hr>
 
-<!-- MODALES -->
-
 <!-- PLANO -->
 <div class="modal fade" id="plano">
 <div class="modal-dialog modal-lg">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body">
-
-<h5>🎨 Plano Real</h5>
-
-<p>🔴 FASE</p>
-<div class="linea rojo"></div>
-
-<p>🔵 NEUTRO</p>
-<div class="linea azul"></div>
-
-<p>🟡🟢 TIERRA</p>
-<div class="linea tierra"></div>
-
-<pre>
-TABLERO → LLAVE → LÁMPARA
-FASE pasa por llave
-NEUTRO directo
-TIERRA protección
-</pre>
-
+<h5>🎨 Plano</h5>
+<p>🔴 Fase</p><div class="linea rojo"></div>
+<p>🔵 Neutro</p><div class="linea azul"></div>
+<p>🟡🟢 Tierra</p><div class="linea tierra"></div>
+<pre>Fase pasa por llave / neutro directo</pre>
 </div>
 </div>
 </div>
@@ -80,164 +64,110 @@ TIERRA protección
 
 <!-- ENCHUFE -->
 <div class="modal fade" id="enchufe">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-🔴 Derecha
-🔵 Izquierda
-🟡🟢 Centro
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-body"><pre>🔴 derecha
+🔵 izquierda
+🟡🟢 centro</pre></div></div></div></div>
 
 <!-- LLAVE -->
 <div class="modal fade" id="llave">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-🔴 Fase corta
-🔵 Neutro directo
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-body"><pre>🔴 fase corta
+🔵 neutro directo</pre></div></div></div></div>
 
 <!-- TABLERO -->
 <div class="modal fade" id="tablero">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-FASE → térmica → disyuntor
-NEUTRO → barra
-TIERRA → jabalina
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-body"><pre>fase → térmica → disyuntor</pre></div></div></div></div>
 
 <!-- TANQUE -->
 <div class="modal fade" id="tanque">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-FASE → flotante → bomba
-NEUTRO directo
-TIERRA carcasa
-</pre>
-</div>
-</div>
-</div>
-</div>
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-body"><pre>fase → flotante → bomba</pre></div></div></div></div>
 
 <!-- MOTOR -->
 <div class="modal fade" id="motor">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-<button onclick="onM()">MARCHA</button>
-<button onclick="offM()">PARO</button>
-<div id="m">OFF</div>
-</div>
-</div>
-</div>
-</div>
+<button onclick="m='ON';estadoMotor()">MARCHA</button>
+<button onclick="m='OFF';estadoMotor()">PARO</button>
+<div id="motorEstado">OFF</div>
+</div></div></div></div>
 
 <!-- REVERSIBLE -->
 <div class="modal fade" id="reversible">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-<button onclick="adel()">ADELANTE</button>
-<button onclick="atr()">ATRÁS</button>
-<div id="r">PARADO</div>
-</div>
-</div>
-</div>
-</div>
+<button onclick="rev('ADELANTE')">ADELANTE</button>
+<button onclick="rev('ATRÁS')">ATRÁS</button>
+<div id="revEstado">PARADO</div>
+</div></div></div></div>
 
 <!-- ESTRELLA -->
 <div class="modal fade" id="estrella">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-<button onclick="est()">ARRANCAR</button>
-<div id="e">DETENIDO</div>
-</div>
-</div>
-</div>
-</div>
+<button onclick="est()">ARRANQUE</button>
+<div id="estEstado">DETENIDO</div>
+</div></div></div></div>
 
 <!-- PLC -->
 <div class="modal fade" id="plc">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 <button onclick="plc()">INICIAR</button>
-<div id="p">OFF</div>
-</div>
-</div>
-</div>
-</div>
+<div id="plcEstado">OFF</div>
+</div></div></div></div>
 
 <!-- CABLE -->
 <div class="modal fade" id="cable">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body">
-<input id="c" class="form-control" placeholder="Amperes"><br>
-<button onclick="cab()">CALC</button>
-<div id="cr"></div>
-</div>
-</div>
-</div>
-</div>
+<input id="amp" class="form-control" placeholder="Amperes"><br>
+<button onclick="calcCable()">CALCULAR</button>
+<div id="cableRes"></div>
+</div></div></div></div>
 
-<!-- IMÁGENES -->
+<!-- IMÁGENES (ARREGLADO) -->
 <div class="modal fade" id="imagenes">
 <div class="modal-dialog modal-fullscreen">
 <div class="modal-content bg-dark text-white">
 
 <div class="modal-header">
-<h5>📷 Instalaciones Reales</h5>
+<h5>📷 Instalaciones</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
 
 <div class="modal-body text-center">
 
-<img src="https://images.unsplash.com/photo-1581092588429-5a2b2b3f1c5d" 
-style="width:100%;margin-bottom:20px;">
-
-<img src="https://images.unsplash.com/photo-1581091012184-5c2d8c5c0d6d" 
-style="width:100%;">in;">
+<img src="https://images.unsplash.com/photo-1581092588429-5a2b2b3f1c5d" style="width:100%;margin-bottom:20px;">
+<img src="https://images.unsplash.com/photo-1581091012184-5c2d8c5c0d6d" style="width:100%;">
 
 </div>
+
 </div>
 </div>
 </div>
 
 <script>
 function calc(){res.innerHTML=(potencia.value/voltaje.value).toFixed(2)+" A";}
-function onM(){m.innerHTML="ON";}
-function offM(){m.innerHTML="OFF";}
-function adel(){r.innerHTML="ADELANTE";}
-function atr(){r.innerHTML="ATRÁS";}
-function est(){e.innerHTML="⭐ → 🔺";}
-function plc(){p.innerHTML="AUTOMÁTICO";}
-function cab(){
-let i=c.value;
+
+let m="OFF";
+function estadoMotor(){motorEstado.innerHTML=m;}
+
+function rev(x){revEstado.innerHTML=x;}
+
+function est(){estEstado.innerHTML="⭐ → 🔺";}
+
+function plc(){plcEstado.innerHTML="AUTO";}
+
+function calcCable(){
+let i=amp.value;
 let s="1.5";
 if(i>10)s="2.5";
 if(i>16)s="4";
 if(i>25)s="6";
-cr.innerHTML=s+" mm²";
+cableRes.innerHTML=s+" mm²";
 }
 </script>
 
