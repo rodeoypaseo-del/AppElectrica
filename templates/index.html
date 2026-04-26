@@ -32,6 +32,7 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#plc">🧠 PLC</button>
 <button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#cablesCalc">📊 CABLE</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#imagenes">📷 IMÁGENES</button>
+<button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#conexionReal">⚡ CONEXIÓN REAL</button>
 
 <hr>
 
@@ -65,15 +66,20 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <div id="historial" class="lista"></div>
 <button class="btn btn-danger btn-pro" onclick="borrarHistorial()">BORRAR</button>
 
-<!-- MODALES BÁSICOS -->
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → TOMA → 🔵 NEUTRO
-🟡🟢 TIERRA → CENTRO</pre></div></div></div></div>
+<!-- MODALES -->
 
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → LLAVE → 💡</pre></div></div></div></div>
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → derecha
+🔵 NEUTRO → izquierda
+🟡🟢 TIERRA → centro</pre></div></div></div></div>
 
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → TÉRMICA → DISYUNTOR</pre></div></div></div></div>
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → llave → 💡
+🔵 NEUTRO → 💡</pre></div></div></div></div>
 
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → FLOTANTE → BOMBA</pre></div></div></div></div>
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → térmica → disyuntor
+🔵 NEUTRO → barra
+🟡🟢 TIERRA → jabalina</pre></div></div></div></div>
+
+<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → flotante → bomba</pre></div></div></div></div>
 
 <!-- MOTOR -->
 <div class="modal fade" id="motor">
@@ -84,49 +90,19 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <div id="estadoMotor">🔴 APAGADO</div>
 </div></div></div></div>
 
-<!-- REVERSIBLE -->
-<div class="modal fade" id="reversible">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-<button onclick="adelante()">ADELANTE</button>
-<button onclick="atras()">ATRÁS</button>
-<button onclick="paro()">PARO</button>
-<div id="rev">🔴 PARADO</div>
-</div></div></div></div>
-
-<!-- ESTRELLA -->
-<div class="modal fade" id="estrella">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-<button onclick="estrella()">ARRANCAR</button>
-<button onclick="stopE()">PARO</button>
-<div id="est">🔴 DETENIDO</div>
-</div></div></div></div>
-
-<!-- CABLES -->
-<div class="modal fade" id="cables">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-🔴 FASE
-🔵 NEUTRO
-🟡🟢 TIERRA
-</pre>
-</div></div></div></div>
-
 <!-- PLC -->
 <div class="modal fade" id="plc">
 <div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-<span id="k1" style="width:30px;height:30px;background:#330000;border-radius:50%;display:inline-block"></span>
-<span id="k2" style="width:30px;height:30px;background:#330000;border-radius:50%;display:inline-block"></span>
+<span id="k1" style="width:30px;height:30px;background:#330000;border-radius:50%"></span>
+<span id="k2" style="width:30px;height:30px;background:#330000;border-radius:50%"></span>
 <br><br>
 <button onclick="startPLC()">INICIAR</button>
 <button onclick="stopPLC()">PARO</button>
 <div id="estadoPLC">DETENIDO</div>
 </div></div></div></div>
 
-<!-- CABLE CALC -->
+<!-- CABLE -->
 <div class="modal fade" id="cablesCalc">
 <div class="modal-dialog"><div class="modal-content bg-dark text-white">
 <div class="modal-body">
@@ -138,12 +114,48 @@ pre {background:#111;padding:10px;border-radius:10px;}
 
 <!-- IMÁGENES -->
 <div class="modal fade" id="imagenes">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
+<div class="modal-dialog modal-xl modal-dialog-centered">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>📷 Instalaciones Reales</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
 <div class="modal-body text-center">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg" class="img-fluid">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg" style="width:100%;max-height:400px;object-fit:contain;">
 <br><br>
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg" class="img-fluid">
-</div></div></div></div>
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg" style="width:100%;max-height:400px;object-fit:contain;">
+</div>
+</div></div></div>
+
+<!-- CONEXION REAL -->
+<div class="modal fade" id="conexionReal">
+<div class="modal-dialog modal-lg">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+TABLERO:
+🔴 FASE → térmica → disyuntor
+🔵 NEUTRO → barra
+🟡🟢 TIERRA → jabalina
+
+LLAVE:
+🔴 corta fase
+🔵 neutro directo
+
+TOMA:
+🔴 derecha
+🔵 izquierda
+🟡🟢 centro
+
+BOCA:
+🔴 pasa
+🔵 directo
+🟡🟢 continuo
+</pre>
+</div>
+</div>
+</div>
+</div>
 
 <script>
 let ult="";
@@ -156,7 +168,7 @@ let i=p/v;
 let t=m+mo;
 resultado.innerHTML=i.toFixed(2)+" A";
 presupuesto.innerHTML="💰 $"+t;
-ult="Presupuesto $"+t+" | "+i.toFixed(2)+"A";
+ult="Presupuesto $"+t;
 }
 
 function enviarWhatsApp(){
@@ -194,24 +206,12 @@ mostrar();
 function onMotor(){estadoMotor.innerHTML="ENCENDIDO";}
 function offMotor(){estadoMotor.innerHTML="APAGADO";}
 
-function adelante(){rev.innerHTML="ADELANTE";}
-function atras(){rev.innerHTML="ATRÁS";}
-function paro(){rev.innerHTML="PARADO";}
-
-function estrella(){
-est.innerHTML="⭐...";
-setTimeout(()=>{est.innerHTML="🔺"},3000);
-}
-function stopE(){est.innerHTML="DETENIDO";}
-
 function startPLC(){
 estadoPLC.innerHTML="KM1";
 k1.style.background="lime";
-setTimeout(()=>{
-estadoPLC.innerHTML="KM1+KM2";
-k2.style.background="yellow";
-},2000);
+setTimeout(()=>{estadoPLC.innerHTML="KM1+KM2";k2.style.background="yellow";},2000);
 }
+
 function stopPLC(){
 estadoPLC.innerHTML="DETENIDO";
 k1.style.background="#330000";
@@ -221,11 +221,11 @@ k2.style.background="#330000";
 function calcCable(){
 let i=parseFloat(corrienteCable.value);
 let r="1.5 mm²";
-if(i>10) r="2.5 mm²";
-if(i>16) r="4 mm²";
-if(i>25) r="6 mm²";
-if(i>32) r="10 mm²";
-resCable.innerHTML="Sección: "+r;
+if(i>10) r="2.5";
+if(i>16) r="4";
+if(i>25) r="6";
+if(i>32) r="10";
+resCable.innerHTML="Sección: "+r+" mm²";
 }
 
 window.onload=mostrar;
