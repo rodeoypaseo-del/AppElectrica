@@ -23,7 +23,7 @@ body {background:#000;color:#fff;text-align:center;}
 <h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO TOTAL</h2>
 
 <!-- BOTONES -->
-<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">🧠 SIMULADOR</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">🧠 SIMULADOR</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#planocasa">🏠 CASA</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tableroprof">⚡ TABLERO PRO</button>
 
@@ -74,8 +74,8 @@ body {background:#000;color:#fff;text-align:center;}
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<button onclick="energia()">⚡ ENERGIZAR</button>
-<button onclick="corte()">⛔ CORTAR</button>
+<button class="btn btn-success" onclick="energia()">⚡ ENERGIZAR</button>
+<button class="btn btn-danger" onclick="corte()">⛔ CORTAR</button>
 
 <h5>💡 Luz</h5>
 <button onclick="llave()">LLAVE</button>
@@ -97,29 +97,60 @@ body {background:#000;color:#fff;text-align:center;}
 </div>
 
 <!-- CASA -->
-<div class="modal fade" id="planocasa"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-TABLERO → LUZ / TOMAS / TIERRA
+<div class="modal fade" id="planocasa">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+TABLERO
+ │
+ ├─ 🔴 → LLAVE → 💡 LUZ
+ ├─ 🔴 → 🔌 TOMAS
+ ├─ 🔵 ─────────────┘
+ └─ 🟡🟢 → TIERRA
+</pre>
 </div></div></div></div>
 
 <!-- TABLERO PRO -->
-<div class="modal fade" id="tableroprof"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+<div class="modal fade" id="tableroprof">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+TÉRMICA GENERAL
+DISYUNTOR
 LUZ / TOMAS / AIRE / BOMBA
+</pre>
 </div></div></div></div>
 
 <!-- TANQUE -->
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-FASE → contactor → flotante → bomba
+<div class="modal fade" id="tanque">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+FASE → térmica → contactor → flotante → bomba
+NEUTRO → directo
+TIERRA → carcasa
+</pre>
 </div></div></div></div>
 
 <!-- MOTOR -->
-<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+<div class="modal fade" id="motor">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
 FASE → contactor → motor
+NEUTRO → motor
+TIERRA → carcasa
+</pre>
 </div></div></div></div>
 
 <!-- BASICOS -->
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">enchufe</div></div></div></div>
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">llave</div></div></div></div>
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">tablero</div></div></div></div>
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 derecha / 🔵 izquierda / 🟡🟢 centro</div></div></div></div>
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 fase corta</div></div></div></div>
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">fase → térmica → disyuntor</div></div></div></div>
 
 <script>
 let energiaOn=false,luzOn=false,flotanteOn=false,ultimo="";
@@ -129,7 +160,7 @@ energiaOn=true;
 fase.style.background="red";
 neutro.style.background="cyan";
 tierra.style.background="yellow";
-estado.innerHTML="ENERGIZADO";
+estado.innerHTML="⚡ ENERGIZADO";
 update();
 }
 
@@ -138,7 +169,7 @@ energiaOn=false;
 fase.style.background="gray";
 neutro.style.background="gray";
 tierra.style.background="gray";
-estado.innerHTML="OFF";
+estado.innerHTML="⛔ SIN ENERGÍA";
 luz.style.background="#222";
 bomba.innerHTML="OFF";
 }
@@ -148,7 +179,7 @@ function flotante(){flotanteOn=!flotanteOn;update();}
 
 function update(){
 luz.style.background=(energiaOn && luzOn)?"yellow":"#222";
-bomba.innerHTML=(energiaOn && flotanteOn)?"BOMBA ON":"OFF";
+bomba.innerHTML=(energiaOn && flotanteOn)?"💧 BOMBA ON":"OFF";
 }
 
 function calcular(){
