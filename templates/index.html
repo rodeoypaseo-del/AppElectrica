@@ -39,19 +39,19 @@ body {background:#000;color:#fff;text-align:center;}
 
 <!-- ===== MODALES ===== -->
 
-<!-- PLANO REAL (CORREGIDO) -->
+<!-- PLANO REAL -->
 <div class="modal fade" id="planoreal">
 <div class="modal-dialog modal-xl">
 <div class="modal-content bg-dark text-white">
 
 <div class="modal-header">
-<h5>🎨 Plano eléctrico real (cableado)</h5>
+<h5>🎨 Plano eléctrico real</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
 
 <div class="modal-body text-center">
 
-<svg width="100%" height="420" style="background:#111;border:2px solid #444;border-radius:10px;">
+<svg width="100%" height="420" style="background:#111;border-radius:10px;">
 
 <rect x="30" y="160" width="120" height="100" fill="black" stroke="white"/>
 <text x="40" y="150" fill="white">TABLERO</text>
@@ -62,6 +62,7 @@ body {background:#000;color:#fff;text-align:center;}
 <rect x="550" y="270" width="60" height="40" fill="#222" stroke="white"/>
 <text x="520" y="330" fill="white">TOMA</text>
 
+<!-- CABLES -->
 <line x1="150" y1="190" x2="550" y2="90" stroke="red" stroke-width="4"/>
 <line x1="150" y1="190" x2="550" y2="270" stroke="red" stroke-width="4"/>
 
@@ -72,8 +73,8 @@ body {background:#000;color:#fff;text-align:center;}
 
 </svg>
 
-<br><br>
-<div>🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA</div>
+<br>
+🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
 
 </div>
 </div>
@@ -131,13 +132,9 @@ body {background:#000;color:#fff;text-align:center;}
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
 <pre>
-🔴 FASE → LLAVE → 💡 LUZ
-🔴 FASE → 🔌 TOMAS
+🔴 FASE → LLAVE → LUZ
+🔴 FASE → TOMAS
 🔵 NEUTRO → directo
 🟡🟢 TIERRA → general
 </pre>
@@ -147,8 +144,40 @@ body {background:#000;color:#fff;text-align:center;}
 </div>
 </div>
 
-<!-- RESTO IGUAL -->
-<!-- (enchufe, llave, tablero, tanque, motor ya están bien, no los toqué) -->
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+🔴 Derecha | 🔵 Izquierda | 🟡🟢 Tierra
+</div></div></div>
+</div>
+
+<!-- LLAVE -->
+<div class="modal fade" id="llave">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+Fase entra y sale a lámpara
+</div></div></div>
+</div>
+
+<!-- TABLERO -->
+<div class="modal fade" id="tablero">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+Fase → térmica → disyuntor
+</div></div></div>
+</div>
+
+<!-- TANQUE -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+Fase → contactor → flotante → bomba
+</div></div></div>
+</div>
+
+<!-- MOTOR -->
+<div class="modal fade" id="motor">
+<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+Fase → contactor → motor
+</div></div></div>
+</div>
 
 <script>
 let energiaOn=false,luzOn=false,flotanteOn=false,motorOn=false;
@@ -164,39 +193,31 @@ update();
 
 function corte(){
 energiaOn=false;
-motorOn=false;
 fase.style.background="gray";
 neutro.style.background="gray";
 tierra.style.background="gray";
 estado.innerHTML="⛔ SIN ENERGÍA";
 luz.style.background="#222";
 bomba.innerHTML="OFF";
-lineaMotor.style.background="gray";
-motorEstado.innerHTML="MOTOR APAGADO";
 }
 
 function llave(){luzOn=!luzOn;update();}
 function flotante(){flotanteOn=!flotanteOn;update();}
 
 function marcha(){
-if(!energiaOn){
-motorEstado.innerHTML="⚠️ SIN ENERGÍA";
-return;
-}
-motorOn=true;
+if(!energiaOn){motorEstado.innerHTML="⚠️ SIN ENERGÍA";return;}
 lineaMotor.style.background="red";
-motorEstado.innerHTML="🟢 MOTOR EN MARCHA";
+motorEstado.innerHTML="MOTOR EN MARCHA";
 }
 
 function parada(){
-motorOn=false;
 lineaMotor.style.background="gray";
-motorEstado.innerHTML="🔴 MOTOR PARADO";
+motorEstado.innerHTML="MOTOR PARADO";
 }
 
 function update(){
 luz.style.background=(energiaOn && luzOn)?"yellow":"#222";
-bomba.innerHTML=(energiaOn && flotanteOn)?"💧 BOMBA ON":"OFF";
+bomba.innerHTML=(energiaOn && flotanteOn)?"BOMBA ON":"OFF";
 }
 </script>
 
