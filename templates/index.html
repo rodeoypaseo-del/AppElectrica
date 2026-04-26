@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eléctrica PRO TOTAL</title>
+<title>Eléctrica PRO TOTAL FINAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -16,7 +16,7 @@ body {background:#000;color:#fff;text-align:center;}
 .resultado{color:#00eaff;margin-top:10px;}
 .lista{text-align:left;margin:20px;}
 
-/* ANIMACIÓN */
+/* ANIMACIÓN ENERGÍA */
 .energia {
 background: linear-gradient(90deg, red, yellow, red);
 background-size: 200% 100%;
@@ -27,6 +27,7 @@ animation: flujo 1s linear infinite;
 100% {background-position: 200%;}
 }
 
+/* EFECTOS */
 .luz-on {
 background: radial-gradient(circle, yellow 0%, orange 60%, #222 100%);
 box-shadow: 0 0 25px yellow;
@@ -36,6 +37,12 @@ box-shadow: 0 0 25px yellow;
 background:#0f0;
 color:#000;
 font-weight:bold;
+box-shadow:0 0 10px #0f0;
+}
+
+.motor-on {
+background:red !important;
+box-shadow:0 0 10px red;
 }
 </style>
 </head>
@@ -59,7 +66,40 @@ font-weight:bold;
 
 <hr>
 
-<!-- ===== MODALES ===== -->
+<!-- CALCULADORA -->
+<h4>⚙ CALCULADORA + PRESUPUESTO</h4>
+<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
+<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
+<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
+<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales"><br>
+<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra"><br>
+
+<button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
+
+<div id="resultado" class="resultado"></div>
+<div id="presupuesto" class="resultado"></div>
+
+<button class="btn btn-success btn-pro" onclick="guardar()">💰 Guardar</button>
+<button class="btn btn-success btn-pro" onclick="whatsapp()">📲 WhatsApp</button>
+<button class="btn btn-light btn-pro" onclick="pdf()">🧾 PDF</button>
+
+<hr>
+
+<!-- CONSUMO -->
+<h4>📊 CONSUMO</h4>
+<input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
+<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
+<button class="btn btn-warning btn-pro" onclick="consumo()">CALCULAR</button>
+<div id="consumoRes" class="resultado"></div>
+
+<hr>
+
+<!-- HISTORIAL -->
+<h4>📂 HISTORIAL</h4>
+<div id="historial" class="lista"></div>
+<button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
+
+<!-- ================= MODALES ================= -->
 
 <!-- SIMULADOR -->
 <div class="modal fade" id="simulador">
@@ -130,67 +170,94 @@ font-weight:bold;
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-
 <pre>
 🔴 FASE → LLAVE → LUZ
-🔵 NEUTRO → directo
-🟡🟢 TIERRA → general
+🔵 NEUTRO → DIRECTO
+🟡🟢 TIERRA → GENERAL
 </pre>
-
 </div>
 </div>
 </div>
 </div>
 
-<!-- TABLERO PRO -->
-<div class="modal fade" id="tableroprof">
+<!-- TABLERO -->
+<div class="modal fade" id="tablero">
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-🔴 FASE → TÉRMICA → DISYUNTOR  
-🔵 NEUTRO → barra  
-🟡🟢 TIERRA → jabalina  
+<div id="faseTab" class="linea"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+
+<pre>
+FASE → TÉRMICA → DISYUNTOR
+NEUTRO → BARRA
+TIERRA → PROTECCIÓN
+</pre>
+
+<button class="btn btn-success" onclick="activarTablero()">ENERGIZAR TABLERO</button>
 
 </div>
 </div>
 </div>
 </div>
-
-<!-- ENCHUFE -->
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-🔴 derecha | 🔵 izquierda | 🟡🟢 tierra
-</div></div></div></div>
-
-<!-- LLAVE -->
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-🔴 fase entra y sale | 🔵 neutro directo
-</div></div></div></div>
-
-<!-- TABLERO -->
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-fase → térmica → disyuntor
-</div></div></div></div>
 
 <!-- TANQUE -->
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-fase → térmica → contactor → flotante → bomba
-</div></div></div></div>
+<div class="modal fade" id="tanque">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<div id="faseTanque" class="linea"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+
+<pre>
+FASE → CONTACTOR → FLOTANTE → BOMBA
+NEUTRO → DIRECTO
+TIERRA → CARCASA
+</pre>
+
+<button class="btn btn-success" onclick="activarTanque()">ACTIVAR BOMBA</button>
+
+</div>
+</div>
+</div>
+</div>
 
 <!-- MOTOR -->
-<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-fase → térmica → contactor → motor
-</div></div></div></div>
+<div class="modal fade" id="motor">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<div id="faseMotor" class="linea"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+
+<pre>
+FASE → CONTACTOR → MOTOR
+NEUTRO → MOTOR
+TIERRA → CARCASA
+</pre>
+
+<button class="btn btn-success" onclick="activarMotor()">ENCENDER MOTOR</button>
+
+</div>
+</div>
+</div>
+</div>
 
 <script>
-let energiaOn=false,luzOn=false,flotanteOn=false;
+let energiaOn=false,luzOn=false,flotanteOn=false,ultimo="";
 
 function energia(){
 energiaOn=true;
 fase.classList.add("energia");
 neutro.style.background="cyan";
 tierra.style.background="yellow";
-estado.innerHTML="ENERGÍA ACTIVA";
+estado.innerHTML="⚡ ENERGÍA ACTIVA";
 update();
 }
 
@@ -203,23 +270,18 @@ tierra.style.background="gray";
 estado.innerHTML="SIN ENERGÍA";
 luz.classList.remove("luz-on");
 bomba.classList.remove("bomba-on");
-luz.style.background="#222";
-bomba.innerHTML="OFF";
 }
 
 function llaveSim(){luzOn=!luzOn;update();}
 function flotante(){flotanteOn=!flotanteOn;update();}
 
 function update(){
-if(energiaOn && luzOn){
-luz.classList.add("luz-on");
-}else{
-luz.classList.remove("luz-on");
-}
+if(energiaOn && luzOn){luz.classList.add("luz-on");}
+else{luz.classList.remove("luz-on");}
 
 if(energiaOn && flotanteOn){
 bomba.classList.add("bomba-on");
-bomba.innerHTML="BOMBA ON";
+bomba.innerHTML="💧 BOMBA ON";
 }else{
 bomba.classList.remove("bomba-on");
 bomba.innerHTML="OFF";
@@ -228,14 +290,34 @@ bomba.innerHTML="OFF";
 
 function marcha(){
 if(!energiaOn){motorEstado.innerHTML="SIN ENERGÍA";return;}
-lineaMotor.style.background="red";
+lineaMotor.classList.add("motor-on");
 motorEstado.innerHTML="MOTOR EN MARCHA";
 }
 
 function parada(){
-lineaMotor.style.background="gray";
+lineaMotor.classList.remove("motor-on");
 motorEstado.innerHTML="MOTOR PARADO";
 }
+
+function activarTablero(){faseTab.classList.add("energia");}
+function activarTanque(){faseTanque.classList.add("energia");}
+function activarMotor(){faseMotor.classList.add("energia");}
+
+function calcular(){
+let i=potencia.value/voltaje.value;
+let total=(+materiales.value||0)+(+mano.value||0);
+resultado.innerHTML=i.toFixed(2)+" A";
+presupuesto.innerHTML="$"+total;
+ultimo=cliente.value+" $"+total;
+}
+
+function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
+function pdf(){let w=window.open("");w.document.write(ultimo);w.print();}
+function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";}
+function guardar(){let d=JSON.parse(localStorage.getItem("h"))||[];d.push(ultimo);localStorage.setItem("h",JSON.stringify(d));mostrar();}
+function mostrar(){let d=JSON.parse(localStorage.getItem("h"))||[];historial.innerHTML=d.join("<br>");}
+function borrar(){localStorage.removeItem("h");mostrar();}
+window.onload=mostrar;
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
