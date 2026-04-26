@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eléctrica PRO TOTAL</title>
+<title>Eléctrica PRO INDUSTRIAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -20,10 +20,11 @@ body {background:#000;color:#fff;text-align:center;}
 
 <body>
 
-<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO TOTAL</h2>
+<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO INDUSTRIAL</h2>
 
 <!-- BOTONES -->
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">🧠 SIMULADOR</button>
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#industrial">🏭 TABLERO INDUSTRIAL</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#planocasa">🏠 CASA</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tableroprof">⚡ TABLERO PRO</button>
 
@@ -96,64 +97,47 @@ body {background:#000;color:#fff;text-align:center;}
 </div>
 </div>
 
-<!-- CASA -->
-<div class="modal fade" id="planocasa">
+<!-- TABLERO INDUSTRIAL -->
+<div class="modal fade" id="industrial">
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-TABLERO
- │
- ├─ 🔴 → LLAVE → 💡 LUZ
- ├─ 🔴 → 🔌 TOMAS
- ├─ 🔵 ─────────────┘
- └─ 🟡🟢 → TIERRA
-</pre>
-</div></div></div></div>
 
-<!-- TABLERO PRO -->
-<div class="modal fade" id="tableroprof">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-TÉRMICA GENERAL
-DISYUNTOR
-LUZ / TOMAS / AIRE / BOMBA
-</pre>
-</div></div></div></div>
+<div class="modal-header">
+<h5>🏭 Tablero Industrial (Enclavamiento)</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
 
-<!-- TANQUE -->
-<div class="modal fade" id="tanque">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-FASE → térmica → contactor → flotante → bomba
-NEUTRO → directo
-TIERRA → carcasa
-</pre>
-</div></div></div></div>
+<div class="modal-body text-center">
 
-<!-- MOTOR -->
-<div class="modal fade" id="motor">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<pre>
-FASE → contactor → motor
-NEUTRO → motor
-TIERRA → carcasa
-</pre>
-</div></div></div></div>
+<button class="btn btn-success" onclick="marcha()">🟢 MARCHA</button>
+<button class="btn btn-danger" onclick="parada()">🔴 PARADA</button>
 
-<!-- BASICOS -->
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 derecha / 🔵 izquierda / 🟡🟢 centro</div></div></div></div>
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 fase corta</div></div></div></div>
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">fase → térmica → disyuntor</div></div></div></div>
+<br><br>
+
+<div id="motorEstado">MOTOR APAGADO</div>
+
+<br>
+
+<div id="lineaMotor" class="linea"></div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- OTROS -->
+<div class="modal fade" id="planocasa"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Plano casa</div></div></div></div>
+<div class="modal fade" id="tableroprof"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Tablero pro</div></div></div></div>
+<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Tanque con contactor</div></div></div></div>
+<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Motor</div></div></div></div>
+
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Enchufe</div></div></div></div>
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Llave</div></div></div></div>
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">Tablero</div></div></div></div>
 
 <script>
-let energiaOn=false,luzOn=false,flotanteOn=false,ultimo="";
+let energiaOn=false,luzOn=false,flotanteOn=false,motorOn=false,ultimo="";
 
 function energia(){
 energiaOn=true;
@@ -166,16 +150,36 @@ update();
 
 function corte(){
 energiaOn=false;
+motorOn=false;
 fase.style.background="gray";
 neutro.style.background="gray";
 tierra.style.background="gray";
 estado.innerHTML="⛔ SIN ENERGÍA";
 luz.style.background="#222";
 bomba.innerHTML="OFF";
+lineaMotor.style.background="gray";
+motorEstado.innerHTML="MOTOR APAGADO";
 }
 
 function llave(){luzOn=!luzOn;update();}
 function flotante(){flotanteOn=!flotanteOn;update();}
+
+// ENCLAVAMIENTO REAL
+function marcha(){
+if(!energiaOn){
+motorEstado.innerHTML="⚠️ SIN ENERGÍA";
+return;
+}
+motorOn=true;
+lineaMotor.style.background="red";
+motorEstado.innerHTML="🟢 MOTOR EN MARCHA";
+}
+
+function parada(){
+motorOn=false;
+lineaMotor.style.background="gray";
+motorEstado.innerHTML="🔴 MOTOR PARADO";
+}
 
 function update(){
 luz.style.background=(energiaOn && luzOn)?"yellow":"#222";
