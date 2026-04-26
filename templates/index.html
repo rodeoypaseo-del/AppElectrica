@@ -72,6 +72,92 @@ body {background:#000;color:#fff;text-align:center;}
 
 <!-- ===== MODALES ===== -->
 
+<!-- SIMULADOR -->
+<div class="modal fade" id="simulador">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<button class="btn btn-success" onclick="energia()">⚡ ENERGIZAR</button>
+<button class="btn btn-danger" onclick="corte()">⛔ CORTAR</button>
+
+<h5>💡 Luz</h5>
+<button onclick="llaveSim()">LLAVE</button>
+<div id="luz" class="luz"></div>
+
+<h5>💧 Bomba</h5>
+<button onclick="flotante()">FLOTANTE</button>
+<div id="bomba" class="bomba">OFF</div>
+
+<div id="fase" class="linea"></div>
+<div id="neutro" class="linea"></div>
+<div id="tierra" class="linea"></div>
+
+<div id="estado">SIN ENERGÍA</div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- INDUSTRIAL -->
+<div class="modal fade" id="industrial">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<button class="btn btn-success" onclick="marcha()">🟢 MARCHA</button>
+<button class="btn btn-danger" onclick="parada()">🔴 PARADA</button>
+
+<div id="motorEstado">MOTOR APAGADO</div>
+<div id="lineaMotor" class="linea"></div>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- PLANO REAL -->
+<div class="modal fade" id="planoreal">
+<div class="modal-dialog modal-xl">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<svg width="100%" height="400" style="background:#111">
+
+<line x1="100" y1="200" x2="500" y2="100" stroke="red" stroke-width="4"/>
+<line x1="100" y1="220" x2="500" y2="100" stroke="cyan" stroke-width="4"/>
+<line x1="100" y1="240" x2="500" y2="300" stroke="yellow" stroke-width="4"/>
+
+<circle cx="500" cy="100" r="20" fill="#222"/>
+<rect x="500" y="280" width="50" height="30" fill="#222"/>
+
+</svg>
+
+🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- CASA -->
+<div class="modal fade" id="planocasa">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<pre>
+🔴 FASE → LLAVE → LUZ
+🔵 NEUTRO → directo
+🟡🟢 TIERRA → general
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
 <!-- TABLERO PRO -->
 <div class="modal fade" id="tableroprof">
 <div class="modal-dialog">
@@ -83,10 +169,8 @@ body {background:#000;color:#fff;text-align:center;}
 <div style="height:6px;background:yellow;"></div>
 
 <pre>
-🔴 FASE → TÉRMICA → DISYUNTOR
-🔴 → LUZ / TOMAS / AIRE / BOMBA
-🔵 NEUTRO → barra
-🟡🟢 TIERRA → jabalina
+FASE → TÉRMICA → DISYUNTOR
+CIRCUITOS SEPARADOS
 </pre>
 
 </div>
@@ -99,14 +183,14 @@ body {background:#000;color:#fff;text-align:center;}
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
-<pre>🔴 Derecha | 🔵 Izquierda | 🟡🟢 Tierra</pre>
+🔴 derecha | 🔵 izquierda | 🟡🟢 tierra
 </div></div></div></div>
 
 <!-- LLAVE -->
 <div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
-<pre>🔴 Fase entra y sale a lámpara | 🔵 neutro directo</pre>
+fase entra y sale
 </div></div></div></div>
 
 <!-- TABLERO -->
@@ -114,7 +198,7 @@ body {background:#000;color:#fff;text-align:center;}
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
-<pre>🔴 fase → térmica → disyuntor | 🔵 neutro barra | 🟡🟢 tierra</pre>
+fase → térmica → disyuntor
 </div></div></div></div>
 
 <!-- TANQUE -->
@@ -122,9 +206,7 @@ body {background:#000;color:#fff;text-align:center;}
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
-<pre>🔴 fase → contactor → flotante → bomba
-🔵 neutro directo
-🟡🟢 tierra carcasa</pre>
+bomba automática
 </div></div></div></div>
 
 <!-- MOTOR -->
@@ -132,15 +214,49 @@ body {background:#000;color:#fff;text-align:center;}
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
-<pre>🔴 fase → contactor → motor
-🔵 neutro motor
-🟡🟢 tierra carcasa</pre>
+motor eléctrico
 </div></div></div></div>
 
-<!-- (los otros modales como simulador, industrial, plano real y casa quedan como ya los tenías bien) -->
-
 <script>
-let energiaOn=false,luzOn=false,flotanteOn=false,motorOn=false,ultimo="";
+let energiaOn=false,luzOn=false,flotanteOn=false;
+
+function energia(){
+energiaOn=true;
+fase.style.background="red";
+neutro.style.background="cyan";
+tierra.style.background="yellow";
+estado.innerHTML="⚡ ENERGIZADO";
+update();
+}
+
+function corte(){
+energiaOn=false;
+fase.style.background="gray";
+neutro.style.background="gray";
+tierra.style.background="gray";
+estado.innerHTML="SIN ENERGÍA";
+luz.style.background="#222";
+bomba.innerHTML="OFF";
+}
+
+function llaveSim(){luzOn=!luzOn;update();}
+function flotante(){flotanteOn=!flotanteOn;update();}
+
+function update(){
+luz.style.background=(energiaOn && luzOn)?"yellow":"#222";
+bomba.innerHTML=(energiaOn && flotanteOn)?"BOMBA ON":"OFF";
+}
+
+function marcha(){
+if(!energiaOn){motorEstado.innerHTML="SIN ENERGÍA";return;}
+lineaMotor.style.background="red";
+motorEstado.innerHTML="MOTOR EN MARCHA";
+}
+
+function parada(){
+lineaMotor.style.background="gray";
+motorEstado.innerHTML="MOTOR PARADO";
+}
 
 function calcular(){
 let i=potencia.value/voltaje.value;
@@ -152,28 +268,10 @@ ultimo=cliente.value+" $"+total;
 
 function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
 function pdf(){let w=window.open("");w.document.write(ultimo);w.print();}
-
-function consumo(){
-consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";
-}
-
-function guardar(){
-let d=JSON.parse(localStorage.getItem("h"))||[];
-d.push(ultimo);
-localStorage.setItem("h",JSON.stringify(d));
-mostrar();
-}
-
-function mostrar(){
-let d=JSON.parse(localStorage.getItem("h"))||[];
-historial.innerHTML=d.join("<br>");
-}
-
-function borrar(){
-localStorage.removeItem("h");
-mostrar();
-}
-
+function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";}
+function guardar(){let d=JSON.parse(localStorage.getItem("h"))||[];d.push(ultimo);localStorage.setItem("h",JSON.stringify(d));mostrar();}
+function mostrar(){let d=JSON.parse(localStorage.getItem("h"))||[];historial.innerHTML=d.join("<br>");}
+function borrar(){localStorage.removeItem("h");mostrar();}
 window.onload=mostrar;
 </script>
 
