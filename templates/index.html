@@ -70,7 +70,37 @@ body {background:#000;color:#fff;text-align:center;}
 <div id="historial" class="lista"></div>
 <button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
 
-<!-- MODALES -->
+<!-- ===== MODALES ===== -->
+
+<!-- PLANO -->
+<div class="modal fade" id="plano">
+<div class="modal-dialog modal-lg">
+<div class="modal-content bg-dark text-white">
+<div class="modal-header">
+<h5>🎨 Plano instalación</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+<div class="modal-body text-center">
+
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<div class="linea tierra"></div>
+
+<pre>
+TABLERO
+  │
+  ├─ 🔴 FASE → LLAVE → LÁMPARA
+  ├─ 🔵 NEUTRO ────────────────┘
+  └─ 🟡🟢 TIERRA → PROTECCIÓN
+
+ENCHUFE:
+🔴 derecha / 🔵 izquierda / 🟡🟢 centro
+</pre>
+
+</div>
+</div>
+</div>
+</div>
 
 <!-- ENCHUFE -->
 <div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
@@ -78,9 +108,9 @@ body {background:#000;color:#fff;text-align:center;}
 <div class="linea rojo"></div>
 <div class="linea azul"></div>
 <div class="linea tierra"></div>
-<pre>🔴 Derecha (fase)
-🔵 Izquierda (neutro)
-🟡🟢 Centro (tierra)</pre>
+<pre>🔴 Derecha
+🔵 Izquierda
+🟡🟢 Centro</pre>
 </div></div></div></div>
 
 <!-- LLAVE -->
@@ -88,7 +118,7 @@ body {background:#000;color:#fff;text-align:center;}
 <h5>💡 Llave</h5>
 <div class="linea rojo"></div>
 <div class="linea azul"></div>
-<pre>🔴 Fase → llave → lámpara
+<pre>🔴 Fase corta
 🔵 Neutro directo</pre>
 </div></div></div></div>
 
@@ -103,15 +133,20 @@ body {background:#000;color:#fff;text-align:center;}
 🟡🟢 Tierra → jabalina</pre>
 </div></div></div></div>
 
-<!-- TANQUE -->
+<!-- TANQUE CON CONTACTOR -->
 <div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-<h5>💧 Bomba / Tanque</h5>
+<h5>💧 Tanque PRO</h5>
 <div class="linea rojo"></div>
 <div class="linea azul"></div>
 <div class="linea tierra"></div>
-<pre>🔴 Fase → flotante → bomba
+<pre>
+🔴 Fase → térmica → contactor → flotante → bomba
 🔵 Neutro → directo
-🟡🟢 Tierra → carcasa</pre>
+🟡🟢 Tierra → carcasa
+
+Control:
+flotante activa contactor
+</pre>
 </div></div></div></div>
 
 <!-- MOTOR -->
@@ -120,12 +155,14 @@ body {background:#000;color:#fff;text-align:center;}
 <div class="linea rojo"></div>
 <div class="linea azul"></div>
 <div class="linea tierra"></div>
-<pre>🔴 Fase → contactor → motor
+<pre>
+🔴 Fase → contactor → motor
 🔵 Neutro → motor
-🟡🟢 Tierra → carcasa</pre>
+🟡🟢 Tierra → carcasa
+</pre>
 </div></div></div></div>
 
-<!-- OTROS SIMPLES -->
+<!-- OTROS -->
 <div class="modal fade" id="reversible"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">🔄 Adelante / Atrás</div></div></div></div>
 <div class="modal fade" id="estrella"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">⭐ → 🔺</div></div></div></div>
 <div class="modal fade" id="plc"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">🧠 Automático</div></div></div></div>
