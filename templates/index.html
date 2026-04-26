@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eléctrica PRO MAX FINAL</title>
+<title>Eléctrica PRO FINAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -12,7 +12,7 @@ body {background:#000;color:#fff;text-align:center;}
 .btn-pro {width:90%; margin:6px;}
 .resultado {color:#00eaff;margin-top:10px;}
 .lista {text-align:left;margin:20px;}
-.linea{height:4px;margin:5px;}
+.linea{height:6px;margin:6px;border-radius:5px;}
 .rojo{background:red;}
 .azul{background:cyan;}
 .tierra{background:yellow;}
@@ -21,7 +21,7 @@ body {background:#000;color:#fff;text-align:center;}
 
 <body>
 
-<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO MAX FINAL</h2>
+<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO FINAL</h2>
 
 <!-- BOTONES -->
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#plano">🎨 PLANO</button>
@@ -58,7 +58,6 @@ body {background:#000;color:#fff;text-align:center;}
 
 <hr>
 
-<!-- CONSUMO -->
 <h4>📊 CONSUMO</h4>
 <input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
 <input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
@@ -67,45 +66,78 @@ body {background:#000;color:#fff;text-align:center;}
 
 <hr>
 
-<!-- HISTORIAL -->
 <h4>📂 HISTORIAL</h4>
 <div id="historial" class="lista"></div>
 <button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
 
 <!-- MODALES -->
 
-<!-- PLANO -->
-<div class="modal fade" id="plano">
-<div class="modal-dialog modal-lg">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<h5>🎨 Plano</h5>
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>🔌 Enchufe</h5>
 <div class="linea rojo"></div>
 <div class="linea azul"></div>
 <div class="linea tierra"></div>
-<pre>Fase → llave → carga
-Neutro directo
-Tierra protección</pre>
+<pre>🔴 Derecha (fase)
+🔵 Izquierda (neutro)
+🟡🟢 Centro (tierra)</pre>
 </div></div></div></div>
 
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 derecha<br>🔵 izquierda<br>🟡🟢 centro</div></div></div></div>
+<!-- LLAVE -->
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>💡 Llave</h5>
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<pre>🔴 Fase → llave → lámpara
+🔵 Neutro directo</pre>
+</div></div></div></div>
 
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">🔴 corta fase</div></div></div></div>
+<!-- TABLERO -->
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>⚡ Tablero</h5>
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<div class="linea tierra"></div>
+<pre>🔴 Fase → térmica → disyuntor
+🔵 Neutro → barra
+🟡🟢 Tierra → jabalina</pre>
+</div></div></div></div>
 
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">fase → térmica → disyuntor</div></div></div></div>
+<!-- TANQUE -->
+<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>💧 Bomba / Tanque</h5>
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<div class="linea tierra"></div>
+<pre>🔴 Fase → flotante → bomba
+🔵 Neutro → directo
+🟡🟢 Tierra → carcasa</pre>
+</div></div></div></div>
 
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">flotante → bomba</div></div></div></div>
+<!-- MOTOR -->
+<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>🏭 Motor</h5>
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<div class="linea tierra"></div>
+<pre>🔴 Fase → contactor → motor
+🔵 Neutro → motor
+🟡🟢 Tierra → carcasa</pre>
+</div></div></div></div>
 
-<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center"><button onclick="motor='ON';update()">ON</button><button onclick="motor='OFF';update()">OFF</button><div id="m">OFF</div></div></div></div></div>
+<!-- OTROS SIMPLES -->
+<div class="modal fade" id="reversible"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">🔄 Adelante / Atrás</div></div></div></div>
+<div class="modal fade" id="estrella"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">⭐ → 🔺</div></div></div></div>
+<div class="modal fade" id="plc"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">🧠 Automático</div></div></div></div>
 
-<div class="modal fade" id="reversible"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center"><button onclick="rev('ADELANTE')">ADELANTE</button><button onclick="rev('ATRAS')">ATRAS</button><div id="r">PARADO</div></div></div></div></div>
+<!-- CABLE -->
+<div class="modal fade" id="cable"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+<input id="amp" class="form-control"><br>
+<button onclick="cab()">CALCULAR</button>
+<div id="cr"></div>
+</div></div></div></div>
 
-<div class="modal fade" id="estrella"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center"><button onclick="est()">ARRANCAR</button><div id="e">DETENIDO</div></div></div></div></div>
-
-<div class="modal fade" id="plc"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center"><button onclick="plc()">INICIAR</button><div id="p">OFF</div></div></div></div></div>
-
-<div class="modal fade" id="cable"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><input id="amp" class="form-control"><br><button onclick="cab()">CALC</button><div id="cr"></div></div></div></div></div>
-
+<!-- IMAGENES -->
 <div class="modal fade" id="imagenes">
 <div class="modal-dialog modal-fullscreen">
 <div class="modal-content bg-dark text-white">
@@ -115,7 +147,7 @@ Tierra protección</pre>
 </div></div></div></div>
 
 <script>
-let ultimo="",motor="OFF";
+let ultimo="";
 
 function calcular(){
 let i=potencia.value/voltaje.value;
@@ -126,23 +158,12 @@ ultimo=cliente.value+" $"+total;
 }
 
 function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
-
 function pdf(){let w=window.open("");w.document.write(ultimo);w.print();}
-
 function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";}
-
 function guardar(){let d=JSON.parse(localStorage.getItem("h"))||[];d.push(ultimo);localStorage.setItem("h",JSON.stringify(d));mostrar();}
-
 function mostrar(){let d=JSON.parse(localStorage.getItem("h"))||[];historial.innerHTML=d.join("<br>");}
-
 function borrar(){localStorage.removeItem("h");mostrar();}
-
-function update(){m.innerHTML=motor;}
-function rev(x){r.innerHTML=x;}
-function est(){e.innerHTML="⭐→🔺";}
-function plc(){p.innerHTML="AUTO";}
 function cab(){let i=amp.value;let s="1.5";if(i>10)s="2.5";if(i>16)s="4";if(i>25)s="6";cr.innerHTML=s+" mm²";}
-
 window.onload=mostrar;
 </script>
 
