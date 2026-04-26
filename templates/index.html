@@ -3,33 +3,37 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Eléctrica PRO MAX</title>
+<title>Eléctrica PRO DEFINITIVO</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
 body {background:#000;color:#fff;text-align:center;}
-.btn-pro {width:85%; margin:10px; font-size:18px;}
-.resultado {color:#00eaff; font-size:20px; margin-top:10px;}
-.lista {text-align:left; margin:20px;}
+.btn-pro {width:90%; margin:8px; font-size:16px;}
+.resultado {color:#00eaff; font-size:18px; margin-top:10px;}
 pre {background:#111;padding:10px;border-radius:10px;}
 .linea {height:4px;margin:5px;}
 .rojo {background:red;}
 .azul {background:cyan;}
 .tierra {background:yellow;}
-.caja {border:1px solid #00bcff;padding:10px;margin:10px;border-radius:10px;}
 </style>
 </head>
 
 <body>
 
-<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO MAX</h2>
+<h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO DEFINITIVO</h2>
 
 <!-- BOTONES -->
-<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#plano">🎨 PLANO REAL</button>
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#plano">🎨 PLANO</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
+<button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
+<button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#reversible">🔄 REVERSIBLE</button>
+<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#estrella">⚡ ESTRELLA</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#plc">🧠 PLC</button>
+<button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#cable">📊 CABLE</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#imagenes">📷 IMÁGENES</button>
 
 <hr>
@@ -38,52 +42,38 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <h4>⚙ CALCULADORA</h4>
 <input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
 <input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
-<div id="resultado" class="resultado"></div>
+<button class="btn btn-primary btn-pro" onclick="calc()">CALCULAR</button>
+<div id="res" class="resultado"></div>
 
 <hr>
 
 <!-- MODALES -->
 
-<!-- PLANO REAL -->
+<!-- PLANO -->
 <div class="modal fade" id="plano">
-<div class="modal-dialog modal-lg modal-dialog-centered">
+<div class="modal-dialog modal-lg">
 <div class="modal-content bg-dark text-white">
-
-<div class="modal-header">
-<h5>🎨 Plano Real (Colores)</h5>
-<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-</div>
-
 <div class="modal-body">
 
-<div class="caja">
-<strong>⚡ TABLERO</strong>
+<h5>🎨 Plano Real</h5>
+
+<p>🔴 FASE</p>
 <div class="linea rojo"></div>
+
+<p>🔵 NEUTRO</p>
 <div class="linea azul"></div>
+
+<p>🟡🟢 TIERRA</p>
 <div class="linea tierra"></div>
-</div>
 
-<div class="caja">
-<strong>💡 LLAVE</strong>
-<div class="linea rojo"></div>
-<p>🔴 Fase entra y sale a lámpara</p>
-<div class="linea azul"></div>
-<p>🔵 Neutro directo</p>
-</div>
-
-<div class="caja">
-<strong>🔌 ENCHUFE</strong>
-<p>🔴 Derecha</p>
-<div class="linea rojo"></div>
-<p>🔵 Izquierda</p>
-<div class="linea azul"></div>
-<p>🟡🟢 Tierra</p>
-<div class="linea tierra"></div>
-</div>
+<pre>
+TABLERO → LLAVE → LÁMPARA
+FASE pasa por llave
+NEUTRO directo
+TIERRA protección
+</pre>
 
 </div>
-
 </div>
 </div>
 </div>
@@ -94,9 +84,9 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <div class="modal-content bg-dark text-white">
 <div class="modal-body">
 <pre>
-🔴 FASE → derecha
-🔵 NEUTRO → izquierda
-🟡🟢 TIERRA → centro
+🔴 Derecha
+🔵 Izquierda
+🟡🟢 Centro
 </pre>
 </div>
 </div>
@@ -109,8 +99,8 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <div class="modal-content bg-dark text-white">
 <div class="modal-body">
 <pre>
-🔴 FASE → llave → lámpara
-🔵 NEUTRO directo
+🔴 Fase corta
+🔵 Neutro directo
 </pre>
 </div>
 </div>
@@ -123,10 +113,88 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <div class="modal-content bg-dark text-white">
 <div class="modal-body">
 <pre>
-🔴 FASE → térmica → disyuntor
-🔵 NEUTRO → barra
-🟡🟢 TIERRA → jabalina
+FASE → térmica → disyuntor
+NEUTRO → barra
+TIERRA → jabalina
 </pre>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TANQUE -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+FASE → flotante → bomba
+NEUTRO directo
+TIERRA carcasa
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<!-- MOTOR -->
+<div class="modal fade" id="motor">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<button onclick="onM()">MARCHA</button>
+<button onclick="offM()">PARO</button>
+<div id="m">OFF</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- REVERSIBLE -->
+<div class="modal fade" id="reversible">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<button onclick="adel()">ADELANTE</button>
+<button onclick="atr()">ATRÁS</button>
+<div id="r">PARADO</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ESTRELLA -->
+<div class="modal fade" id="estrella">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<button onclick="est()">ARRANCAR</button>
+<div id="e">DETENIDO</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- PLC -->
+<div class="modal fade" id="plc">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<button onclick="plc()">INICIAR</button>
+<div id="p">OFF</div>
+</div>
+</div>
+</div>
+</div>
+
+<!-- CABLE -->
+<div class="modal fade" id="cable">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<input id="c" class="form-control" placeholder="Amperes"><br>
+<button onclick="cab()">CALC</button>
+<div id="cr"></div>
 </div>
 </div>
 </div>
@@ -134,16 +202,13 @@ pre {background:#111;padding:10px;border-radius:10px;}
 
 <!-- IMÁGENES -->
 <div class="modal fade" id="imagenes">
-<div class="modal-dialog modal-xl">
+<div class="modal-dialog modal-xl modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg"
-style="width:100%;max-height:400px;object-fit:contain;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg" style="width:100%;max-height:400px;object-fit:contain;">
 <br><br>
-
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg"
-style="width:100%;max-height:400px;object-fit:contain;">
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg" style="width:100%;max-height:400px;object-fit:contain;">
 
 </div>
 </div>
@@ -151,11 +216,20 @@ style="width:100%;max-height:400px;object-fit:contain;">
 </div>
 
 <script>
-function calcular(){
-let v=voltaje.value;
-let p=potencia.value;
-let i=p/v;
-resultado.innerHTML="Corriente: "+i.toFixed(2)+" A";
+function calc(){res.innerHTML=(potencia.value/voltaje.value).toFixed(2)+" A";}
+function onM(){m.innerHTML="ON";}
+function offM(){m.innerHTML="OFF";}
+function adel(){r.innerHTML="ADELANTE";}
+function atr(){r.innerHTML="ATRÁS";}
+function est(){e.innerHTML="⭐ → 🔺";}
+function plc(){p.innerHTML="AUTOMÁTICO";}
+function cab(){
+let i=c.value;
+let s="1.5";
+if(i>10)s="2.5";
+if(i>16)s="4";
+if(i>25)s="6";
+cr.innerHTML=s+" mm²";
 }
 </script>
 
