@@ -201,21 +201,76 @@ fase entra y sale
 fase → térmica → disyuntor
 </div></div></div></div>
 
-<!-- TANQUE -->
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-bomba automática
-</div></div></div></div>
+<!-- TANQUE (CORREGIDO PRO) -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
 
-<!-- MOTOR -->
-<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+<h5>💧 SISTEMA BOMBA AUTOMÁTICA</h5>
+
 <div style="height:6px;background:red;"></div>
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
-motor eléctrico
-</div></div></div></div>
+
+<pre>
+🔴 FASE →
+TÉRMICA →
+CONTACTOR →
+FLOTANTE →
+BOMBA
+
+🔵 NEUTRO →
+DIRECTO A BOMBA
+
+🟡🟢 TIERRA →
+CARCASA BOMBA
+
+⚠️ IMPORTANTE:
+✔ El contactor protege y permite automatizar
+✔ El flotante controla nivel de agua
+✔ La térmica protege sobrecarga
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- MOTOR (CORREGIDO PRO) -->
+<div class="modal fade" id="motor">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<h5>🏭 MOTOR ELÉCTRICO CONTROLADO</h5>
+
+<div style="height:6px;background:red;"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+
+<pre>
+🔴 FASE →
+TÉRMICA →
+CONTACTOR →
+MOTOR
+
+🔵 NEUTRO →
+MOTOR (monofásico)
+
+🟡🟢 TIERRA →
+CARCASA MOTOR
+
+⚠️ IMPORTANTE:
+✔ Contactor permite arranque/parada
+✔ Térmica protege el motor
+✔ Siempre conectar tierra
+</pre>
+
+</div>
+</div>
+</div>
+</div>
 
 <script>
 let energiaOn=false,luzOn=false,flotanteOn=false;
