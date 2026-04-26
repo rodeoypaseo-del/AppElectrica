@@ -16,7 +16,7 @@ body {background:#000;color:#fff;text-align:center;}
 .resultado{color:#00eaff;margin-top:10px;}
 .lista{text-align:left;margin:20px;}
 
-/* ANIMACIÓN ENERGÍA */
+/* ANIMACIÓN */
 .energia {
 background: linear-gradient(90deg, red, yellow, red);
 background-size: 200% 100%;
@@ -27,18 +27,15 @@ animation: flujo 1s linear infinite;
 100% {background-position: 200%;}
 }
 
-/* LUZ REAL */
 .luz-on {
 background: radial-gradient(circle, yellow 0%, orange 60%, #222 100%);
 box-shadow: 0 0 25px yellow;
 }
 
-/* BOMBA ACTIVA */
 .bomba-on {
 background:#0f0;
 color:#000;
 font-weight:bold;
-box-shadow:0 0 10px #0f0;
 }
 </style>
 </head>
@@ -62,40 +59,9 @@ box-shadow:0 0 10px #0f0;
 
 <hr>
 
-<!-- CALCULADORA -->
-<h4>⚙ CALCULADORA + PRESUPUESTO</h4>
-<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
-<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
-<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales"><br>
-<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra"><br>
+<!-- ===== MODALES ===== -->
 
-<button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
-
-<div id="resultado" class="resultado"></div>
-<div id="presupuesto" class="resultado"></div>
-
-<button class="btn btn-success btn-pro" onclick="guardar()">💰 Guardar</button>
-<button class="btn btn-success btn-pro" onclick="whatsapp()">📲 WhatsApp</button>
-<button class="btn btn-light btn-pro" onclick="pdf()">🧾 PDF</button>
-
-<hr>
-
-<!-- CONSUMO -->
-<h4>📊 CONSUMO</h4>
-<input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
-<button class="btn btn-warning btn-pro" onclick="consumo()">CALCULAR</button>
-<div id="consumoRes" class="resultado"></div>
-
-<hr>
-
-<!-- HISTORIAL -->
-<h4>📂 HISTORIAL</h4>
-<div id="historial" class="lista"></div>
-<button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
-
-<!-- ===== SIMULADOR ===== -->
+<!-- SIMULADOR -->
 <div class="modal fade" id="simulador">
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
@@ -140,16 +106,91 @@ box-shadow:0 0 10px #0f0;
 </div>
 </div>
 
-<!-- FUNCIONES -->
+<!-- PLANO REAL -->
+<div class="modal fade" id="planoreal">
+<div class="modal-dialog modal-xl">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<svg width="100%" height="400" style="background:#111">
+<line x1="100" y1="200" x2="500" y2="100" stroke="red" stroke-width="4"/>
+<line x1="100" y1="220" x2="500" y2="100" stroke="cyan" stroke-width="4"/>
+<line x1="100" y1="240" x2="500" y2="300" stroke="yellow" stroke-width="4"/>
+</svg>
+
+🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- CASA -->
+<div class="modal fade" id="planocasa">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<pre>
+🔴 FASE → LLAVE → LUZ
+🔵 NEUTRO → directo
+🟡🟢 TIERRA → general
+</pre>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- TABLERO PRO -->
+<div class="modal fade" id="tableroprof">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+🔴 FASE → TÉRMICA → DISYUNTOR  
+🔵 NEUTRO → barra  
+🟡🟢 TIERRA → jabalina  
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+🔴 derecha | 🔵 izquierda | 🟡🟢 tierra
+</div></div></div></div>
+
+<!-- LLAVE -->
+<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+🔴 fase entra y sale | 🔵 neutro directo
+</div></div></div></div>
+
+<!-- TABLERO -->
+<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+fase → térmica → disyuntor
+</div></div></div></div>
+
+<!-- TANQUE -->
+<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+fase → térmica → contactor → flotante → bomba
+</div></div></div></div>
+
+<!-- MOTOR -->
+<div class="modal fade" id="motor"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
+fase → térmica → contactor → motor
+</div></div></div></div>
+
 <script>
-let energiaOn=false,luzOn=false,flotanteOn=false,ultimo="";
+let energiaOn=false,luzOn=false,flotanteOn=false;
 
 function energia(){
 energiaOn=true;
 fase.classList.add("energia");
 neutro.style.background="cyan";
 tierra.style.background="yellow";
-estado.innerHTML="⚡ ENERGÍA ACTIVA";
+estado.innerHTML="ENERGÍA ACTIVA";
 update();
 }
 
@@ -178,7 +219,7 @@ luz.classList.remove("luz-on");
 
 if(energiaOn && flotanteOn){
 bomba.classList.add("bomba-on");
-bomba.innerHTML="💧 BOMBA ON";
+bomba.innerHTML="BOMBA ON";
 }else{
 bomba.classList.remove("bomba-on");
 bomba.innerHTML="OFF";
@@ -195,22 +236,6 @@ function parada(){
 lineaMotor.style.background="gray";
 motorEstado.innerHTML="MOTOR PARADO";
 }
-
-function calcular(){
-let i=potencia.value/voltaje.value;
-let total=(+materiales.value||0)+(+mano.value||0);
-resultado.innerHTML=i.toFixed(2)+" A";
-presupuesto.innerHTML="$"+total;
-ultimo=cliente.value+" $"+total;
-}
-
-function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
-function pdf(){let w=window.open("");w.document.write(ultimo);w.print();}
-function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";}
-function guardar(){let d=JSON.parse(localStorage.getItem("h"))||[];d.push(ultimo);localStorage.setItem("h",JSON.stringify(d));mostrar();}
-function mostrar(){let d=JSON.parse(localStorage.getItem("h"))||[];historial.innerHTML=d.join("<br>");}
-function borrar(){localStorage.removeItem("h");mostrar();}
-window.onload=mostrar;
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
