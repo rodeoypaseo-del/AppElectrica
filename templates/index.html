@@ -13,6 +13,11 @@ body {background:#000;color:#fff;text-align:center;}
 .resultado {color:#00eaff; font-size:20px; margin-top:10px;}
 .lista {text-align:left; margin:20px;}
 pre {background:#111;padding:10px;border-radius:10px;}
+.linea {height:4px;margin:5px;}
+.rojo {background:red;}
+.azul {background:cyan;}
+.tierra {background:yellow;}
+.caja {border:1px solid #00bcff;padding:10px;margin:10px;border-radius:10px;}
 </style>
 </head>
 
@@ -21,214 +26,137 @@ pre {background:#111;padding:10px;border-radius:10px;}
 <h2 style="color:#00bcff;">⚡ ELÉCTRICA PRO MAX</h2>
 
 <!-- BOTONES -->
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#plano">🎨 PLANO REAL</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#enchufe">🔌 ENCHUFE</button>
 <button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#llave">💡 LLAVE</button>
 <button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">⚡ TABLERO</button>
-<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">💧 TANQUE</button>
-<button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">🏭 MOTOR</button>
-<button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#reversible">🔄 REVERSIBLE</button>
-<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#estrella">⚡ ESTRELLA</button>
-<button class="btn btn-light btn-pro" data-bs-toggle="modal" data-bs-target="#cables">🎨 CABLES</button>
-<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#plc">🧠 PLC</button>
-<button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#cablesCalc">📊 CABLE</button>
 <button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#imagenes">📷 IMÁGENES</button>
-<button class="btn btn-primary btn-pro" data-bs-toggle="modal" data-bs-target="#conexionReal">⚡ CONEXIÓN REAL</button>
 
 <hr>
 
 <!-- CALCULADORA -->
-<h4>⚙ CALCULADORA + PRESUPUESTO</h4>
+<h4>⚙ CALCULADORA</h4>
 <input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
 <input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales ($)"><br>
-<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra ($)"><br>
-
 <button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
-
 <div id="resultado" class="resultado"></div>
-<div id="presupuesto" class="lista"></div>
-
-<button class="btn btn-success btn-pro" onclick="guardar()">GUARDAR</button>
-<button class="btn btn-success btn-pro" onclick="enviarWhatsApp()">📲 WhatsApp</button>
-<button class="btn btn-light btn-pro" onclick="generarPDF()">🧾 PDF</button>
 
 <hr>
-
-<h4>📊 CONSUMO MENSUAL</h4>
-<input id="potenciaConsumo" class="form-control w-75 mx-auto" placeholder="Potencia (W)"><br>
-<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
-<button class="btn btn-warning btn-pro" onclick="calcularConsumo()">CALCULAR</button>
-<div id="resultadoConsumo" class="resultado"></div>
-
-<hr>
-
-<h4>📂 HISTORIAL</h4>
-<div id="historial" class="lista"></div>
-<button class="btn btn-danger btn-pro" onclick="borrarHistorial()">BORRAR</button>
 
 <!-- MODALES -->
 
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → derecha
-🔵 NEUTRO → izquierda
-🟡🟢 TIERRA → centro</pre></div></div></div></div>
-
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → llave → 💡
-🔵 NEUTRO → 💡</pre></div></div></div></div>
-
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → térmica → disyuntor
-🔵 NEUTRO → barra
-🟡🟢 TIERRA → jabalina</pre></div></div></div></div>
-
-<div class="modal fade" id="tanque"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body"><pre>🔴 FASE → flotante → bomba</pre></div></div></div></div>
-
-<!-- MOTOR -->
-<div class="modal fade" id="motor">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-<button onclick="onMotor()">MARCHA</button>
-<button onclick="offMotor()">PARO</button>
-<div id="estadoMotor">🔴 APAGADO</div>
-</div></div></div></div>
-
-<!-- PLC -->
-<div class="modal fade" id="plc">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-<span id="k1" style="width:30px;height:30px;background:#330000;border-radius:50%"></span>
-<span id="k2" style="width:30px;height:30px;background:#330000;border-radius:50%"></span>
-<br><br>
-<button onclick="startPLC()">INICIAR</button>
-<button onclick="stopPLC()">PARO</button>
-<div id="estadoPLC">DETENIDO</div>
-</div></div></div></div>
-
-<!-- CABLE -->
-<div class="modal fade" id="cablesCalc">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white">
-<div class="modal-body">
-<input id="corrienteCable" class="form-control" placeholder="Corriente (A)">
-<br>
-<button onclick="calcCable()">CALCULAR</button>
-<div id="resCable"></div>
-</div></div></div></div>
-
-<!-- IMÁGENES -->
-<div class="modal fade" id="imagenes">
-<div class="modal-dialog modal-xl modal-dialog-centered">
+<!-- PLANO REAL -->
+<div class="modal fade" id="plano">
+<div class="modal-dialog modal-lg modal-dialog-centered">
 <div class="modal-content bg-dark text-white">
+
 <div class="modal-header">
-<h5>📷 Instalaciones Reales</h5>
+<h5>🎨 Plano Real (Colores)</h5>
 <button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
 </div>
-<div class="modal-body text-center">
-<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg" style="width:100%;max-height:400px;object-fit:contain;">
-<br><br>
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg" style="width:100%;max-height:400px;object-fit:contain;">
-</div>
-</div></div></div>
 
-<!-- CONEXION REAL -->
-<div class="modal fade" id="conexionReal">
-<div class="modal-dialog modal-lg">
+<div class="modal-body">
+
+<div class="caja">
+<strong>⚡ TABLERO</strong>
+<div class="linea rojo"></div>
+<div class="linea azul"></div>
+<div class="linea tierra"></div>
+</div>
+
+<div class="caja">
+<strong>💡 LLAVE</strong>
+<div class="linea rojo"></div>
+<p>🔴 Fase entra y sale a lámpara</p>
+<div class="linea azul"></div>
+<p>🔵 Neutro directo</p>
+</div>
+
+<div class="caja">
+<strong>🔌 ENCHUFE</strong>
+<p>🔴 Derecha</p>
+<div class="linea rojo"></div>
+<p>🔵 Izquierda</p>
+<div class="linea azul"></div>
+<p>🟡🟢 Tierra</p>
+<div class="linea tierra"></div>
+</div>
+
+</div>
+
+</div>
+</div>
+</div>
+
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe">
+<div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body">
 <pre>
-TABLERO:
-🔴 FASE → térmica → disyuntor
-🔵 NEUTRO → barra
-🟡🟢 TIERRA → jabalina
-
-LLAVE:
-🔴 corta fase
-🔵 neutro directo
-
-TOMA:
-🔴 derecha
-🔵 izquierda
-🟡🟢 centro
-
-BOCA:
-🔴 pasa
-🔵 directo
-🟡🟢 continuo
+🔴 FASE → derecha
+🔵 NEUTRO → izquierda
+🟡🟢 TIERRA → centro
 </pre>
 </div>
 </div>
 </div>
 </div>
 
+<!-- LLAVE -->
+<div class="modal fade" id="llave">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+🔴 FASE → llave → lámpara
+🔵 NEUTRO directo
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<!-- TABLERO -->
+<div class="modal fade" id="tablero">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+<pre>
+🔴 FASE → térmica → disyuntor
+🔵 NEUTRO → barra
+🟡🟢 TIERRA → jabalina
+</pre>
+</div>
+</div>
+</div>
+</div>
+
+<!-- IMÁGENES -->
+<div class="modal fade" id="imagenes">
+<div class="modal-dialog modal-xl">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/3/3f/Electrical_panel.jpg"
+style="width:100%;max-height:400px;object-fit:contain;">
+<br><br>
+
+<img src="https://upload.wikimedia.org/wikipedia/commons/6/6f/Power_socket.jpg"
+style="width:100%;max-height:400px;object-fit:contain;">
+
+</div>
+</div>
+</div>
+</div>
+
 <script>
-let ult="";
-
 function calcular(){
-let v=voltaje.value,p=potencia.value;
-let m=parseFloat(materiales.value)||0;
-let mo=parseFloat(mano.value)||0;
+let v=voltaje.value;
+let p=potencia.value;
 let i=p/v;
-let t=m+mo;
-resultado.innerHTML=i.toFixed(2)+" A";
-presupuesto.innerHTML="💰 $"+t;
-ult="Presupuesto $"+t;
+resultado.innerHTML="Corriente: "+i.toFixed(2)+" A";
 }
-
-function enviarWhatsApp(){
-window.open("https://wa.me/549XXXXXXXXXX?text="+encodeURIComponent(ult));
-}
-
-function generarPDF(){
-let w=window.open("");
-w.document.write("<h2>Presupuesto</h2><hr><p>"+ult+"</p>");
-w.print();
-}
-
-function calcularConsumo(){
-let k=(potenciaConsumo.value*horas.value*30)/1000;
-resultadoConsumo.innerHTML=k.toFixed(2)+" kWh";
-}
-
-function guardar(){
-let d=JSON.parse(localStorage.getItem("t"))||[];
-d.push(ult);
-localStorage.setItem("t",JSON.stringify(d));
-mostrar();
-}
-
-function mostrar(){
-let d=JSON.parse(localStorage.getItem("t"))||[];
-historial.innerHTML=d.join("<br>");
-}
-
-function borrarHistorial(){
-localStorage.removeItem("t");
-mostrar();
-}
-
-function onMotor(){estadoMotor.innerHTML="ENCENDIDO";}
-function offMotor(){estadoMotor.innerHTML="APAGADO";}
-
-function startPLC(){
-estadoPLC.innerHTML="KM1";
-k1.style.background="lime";
-setTimeout(()=>{estadoPLC.innerHTML="KM1+KM2";k2.style.background="yellow";},2000);
-}
-
-function stopPLC(){
-estadoPLC.innerHTML="DETENIDO";
-k1.style.background="#330000";
-k2.style.background="#330000";
-}
-
-function calcCable(){
-let i=parseFloat(corrienteCable.value);
-let r="1.5 mm²";
-if(i>10) r="2.5";
-if(i>16) r="4";
-if(i>25) r="6";
-if(i>32) r="10";
-resCable.innerHTML="Sección: "+r+" mm²";
-}
-
-window.onload=mostrar;
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
