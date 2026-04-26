@@ -15,6 +15,31 @@ body {background:#000;color:#fff;text-align:center;}
 .bomba{padding:10px;background:#222;margin:10px;}
 .resultado{color:#00eaff;margin-top:10px;}
 .lista{text-align:left;margin:20px;}
+
+/* ANIMACIÓN ENERGÍA */
+.energia {
+background: linear-gradient(90deg, red, yellow, red);
+background-size: 200% 100%;
+animation: flujo 1s linear infinite;
+}
+@keyframes flujo {
+0% {background-position: 0%;}
+100% {background-position: 200%;}
+}
+
+/* LUZ REAL */
+.luz-on {
+background: radial-gradient(circle, yellow 0%, orange 60%, #222 100%);
+box-shadow: 0 0 25px yellow;
+}
+
+/* BOMBA ACTIVA */
+.bomba-on {
+background:#0f0;
+color:#000;
+font-weight:bold;
+box-shadow:0 0 10px #0f0;
+}
 </style>
 </head>
 
@@ -70,9 +95,7 @@ body {background:#000;color:#fff;text-align:center;}
 <div id="historial" class="lista"></div>
 <button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
 
-<!-- ===== MODALES ===== -->
-
-<!-- SIMULADOR -->
+<!-- ===== SIMULADOR ===== -->
 <div class="modal fade" id="simulador">
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
@@ -117,179 +140,28 @@ body {background:#000;color:#fff;text-align:center;}
 </div>
 </div>
 
-<!-- PLANO REAL -->
-<div class="modal fade" id="planoreal">
-<div class="modal-dialog modal-xl">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-
-<svg width="100%" height="400" style="background:#111">
-
-<line x1="100" y1="200" x2="500" y2="100" stroke="red" stroke-width="4"/>
-<line x1="100" y1="220" x2="500" y2="100" stroke="cyan" stroke-width="4"/>
-<line x1="100" y1="240" x2="500" y2="300" stroke="yellow" stroke-width="4"/>
-
-<circle cx="500" cy="100" r="20" fill="#222"/>
-<rect x="500" y="280" width="50" height="30" fill="#222"/>
-
-</svg>
-
-🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- CASA -->
-<div class="modal fade" id="planocasa">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-
-<pre>
-🔴 FASE → LLAVE → LUZ
-🔵 NEUTRO → directo
-🟡🟢 TIERRA → general
-</pre>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- TABLERO PRO -->
-<div class="modal fade" id="tableroprof">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
-<pre>
-FASE → TÉRMICA → DISYUNTOR
-CIRCUITOS SEPARADOS
-</pre>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- ENCHUFE -->
-<div class="modal fade" id="enchufe"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-🔴 derecha | 🔵 izquierda | 🟡🟢 tierra
-</div></div></div></div>
-
-<!-- LLAVE -->
-<div class="modal fade" id="llave"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-fase entra y sale
-</div></div></div></div>
-
-<!-- TABLERO -->
-<div class="modal fade" id="tablero"><div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body text-center">
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-fase → térmica → disyuntor
-</div></div></div></div>
-
-<!-- TANQUE (CORREGIDO PRO) -->
-<div class="modal fade" id="tanque">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-
-<h5>💧 SISTEMA BOMBA AUTOMÁTICA</h5>
-
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
-<pre>
-🔴 FASE →
-TÉRMICA →
-CONTACTOR →
-FLOTANTE →
-BOMBA
-
-🔵 NEUTRO →
-DIRECTO A BOMBA
-
-🟡🟢 TIERRA →
-CARCASA BOMBA
-
-⚠️ IMPORTANTE:
-✔ El contactor protege y permite automatizar
-✔ El flotante controla nivel de agua
-✔ La térmica protege sobrecarga
-</pre>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- MOTOR (CORREGIDO PRO) -->
-<div class="modal fade" id="motor">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body text-center">
-
-<h5>🏭 MOTOR ELÉCTRICO CONTROLADO</h5>
-
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
-<pre>
-🔴 FASE →
-TÉRMICA →
-CONTACTOR →
-MOTOR
-
-🔵 NEUTRO →
-MOTOR (monofásico)
-
-🟡🟢 TIERRA →
-CARCASA MOTOR
-
-⚠️ IMPORTANTE:
-✔ Contactor permite arranque/parada
-✔ Térmica protege el motor
-✔ Siempre conectar tierra
-</pre>
-
-</div>
-</div>
-</div>
-</div>
-
+<!-- FUNCIONES -->
 <script>
-let energiaOn=false,luzOn=false,flotanteOn=false;
+let energiaOn=false,luzOn=false,flotanteOn=false,ultimo="";
 
 function energia(){
 energiaOn=true;
-fase.style.background="red";
+fase.classList.add("energia");
 neutro.style.background="cyan";
 tierra.style.background="yellow";
-estado.innerHTML="⚡ ENERGIZADO";
+estado.innerHTML="⚡ ENERGÍA ACTIVA";
 update();
 }
 
 function corte(){
 energiaOn=false;
+fase.classList.remove("energia");
 fase.style.background="gray";
 neutro.style.background="gray";
 tierra.style.background="gray";
 estado.innerHTML="SIN ENERGÍA";
+luz.classList.remove("luz-on");
+bomba.classList.remove("bomba-on");
 luz.style.background="#222";
 bomba.innerHTML="OFF";
 }
@@ -298,8 +170,19 @@ function llaveSim(){luzOn=!luzOn;update();}
 function flotante(){flotanteOn=!flotanteOn;update();}
 
 function update(){
-luz.style.background=(energiaOn && luzOn)?"yellow":"#222";
-bomba.innerHTML=(energiaOn && flotanteOn)?"BOMBA ON":"OFF";
+if(energiaOn && luzOn){
+luz.classList.add("luz-on");
+}else{
+luz.classList.remove("luz-on");
+}
+
+if(energiaOn && flotanteOn){
+bomba.classList.add("bomba-on");
+bomba.innerHTML="💧 BOMBA ON";
+}else{
+bomba.classList.remove("bomba-on");
+bomba.innerHTML="OFF";
+}
 }
 
 function marcha(){
