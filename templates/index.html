@@ -225,7 +225,166 @@ function pdf(){let w=window.open("");w.document.write(ultimo);w.print()}
 function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh"}
 window.onload=mostrar
 </script>
+<script>
 
+// ===== ESTADOS =====
+let energiaOn=false;
+let luzEncendida=false;
+let bombaActiva=false;
+let A=false,B=false,fallo=false;
+
+// ===== SIMULADOR =====
+function energia(){
+energiaOn=true;
+fase.classList.add("energia");
+updateSimulador();
+}
+
+function corte(){
+energiaOn=false;
+luzEncendida=false;
+bombaActiva=false;
+
+fase.classList.remove("energia");
+luz.style.background="#222";
+bomba.innerHTML="OFF";
+}
+
+function luzOn(){
+if(!energiaOn)return;
+luzEncendida=!luzEncendida;
+updateSimulador();
+}
+
+function bombaOn(){
+if(!energiaOn)return;
+bombaActiva=!bombaActiva;
+updateSimulador();
+}
+
+function updateSimulador(){
+luz.style.background=(energiaOn && luzEncendida)?"yellow":"#222";
+bomba.innerHTML=(energiaOn && bombaActiva)?"💧 ON":"OFF";
+}
+
+// ===== INDUSTRIAL =====
+function marcha(){
+if(!energiaOn)return;
+lineaMotor.classList.add("energia");
+}
+
+function parada(){
+lineaMotor.classList.remove("energia");
+}
+
+// ===== TABLERO PRO =====
+function toggle(id){
+document.getElementById(id).classList.toggle("energia");
+}
+
+function sobrecarga(){
+estadoTablero.innerHTML="🔥 SOBRECARGA - TODO CORTADO";
+
+["luzLinea","tomaLinea","aireLinea","bombaLinea"].forEach(id=>{
+document.getElementById(id).classList.remove("energia");
+});
+}
+
+// ===== CONTACTORES =====
+function activarA(){
+if(fallo || B)return;
+A=true;
+contA.classList.add("energia");
+contB.classList.remove("energia");
+}
+
+function activarB(){
+if(fallo || A)return;
+B=true;
+contB.classList.add("energia");
+contA.classList.remove("energia");
+}
+
+function falla(){
+fallo=true;
+contA.classList.remove("energia");
+contB.classList.remove("energia");
+}
+
+function reset(){
+fallo=false;
+A=false;
+B=false;
+contA.classList.remove("energia");
+contB.classList.remove("energia");
+estadoCont.innerHTML="RESET OK";
+}
+
+// ===== TANQUE =====
+function activarTanque(){
+tanqueLinea.classList.add("energia");
+}
+
+function apagarTanque(){
+tanqueLinea.classList.remove("energia");
+}
+
+// ===== MOTOR =====
+function activarMotor(){
+motorLinea.classList.add("energia");
+}
+
+function apagarMotor(){
+motorLinea.classList.remove("energia");
+}
+
+// ===== CALCULADORA =====
+let ultimo="";
+
+function calcular(){
+let i=potencia.value/voltaje.value;
+let total=(+materiales.value||0)+(+mano.value||0);
+
+resultado.innerHTML=i.toFixed(2)+" A";
+presupuesto.innerHTML="$"+total;
+
+ultimo=cliente.value+" $"+total;
+}
+
+function guardar(){
+let h=JSON.parse(localStorage.getItem("h"))||[];
+h.push(ultimo);
+localStorage.setItem("h",JSON.stringify(h));
+mostrar();
+}
+
+function mostrar(){
+let h=JSON.parse(localStorage.getItem("h"))||[];
+historial.innerHTML=h.join("<br>");
+}
+
+function borrar(){
+localStorage.removeItem("h");
+mostrar();
+}
+
+function whatsapp(){
+window.open("https://wa.me/?text="+encodeURIComponent(ultimo));
+}
+
+function pdf(){
+let w=window.open("");
+w.document.write(ultimo);
+w.print();
+}
+
+function consumo(){
+consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";
+}
+
+window.onload=mostrar;
+
+</script>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
