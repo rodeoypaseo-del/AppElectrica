@@ -13,37 +13,20 @@ body {background:#000;color:#fff;text-align:center;}
 .linea{height:6px;margin:6px;border-radius:5px;background:gray;}
 .luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
 .bomba{padding:10px;background:#222;margin:10px;}
-.resultado{color:#00eaff;margin-top:10px;}
-.lista{text-align:left;margin:20px;}
 
-/* ANIMACIÓN ENERGÍA */
 .energia {
 background: linear-gradient(90deg, red, yellow, red);
 background-size: 200% 100%;
 animation: flujo 1s linear infinite;
 }
 @keyframes flujo {
-0% {background-position: 0%;}
-100% {background-position: 200%;}
+0% {background-position:0%;}
+100% {background-position:200%;}
 }
 
-/* EFECTOS */
-.luz-on {
-background: radial-gradient(circle, yellow 0%, orange 60%, #222 100%);
-box-shadow: 0 0 25px yellow;
-}
-
-.bomba-on {
-background:#0f0;
-color:#000;
-font-weight:bold;
-box-shadow:0 0 10px #0f0;
-}
-
-.motor-on {
-background:red !important;
-box-shadow:0 0 10px red;
-}
+.luz-on {background:yellow; box-shadow:0 0 20px yellow;}
+.bomba-on {background:#0f0;color:#000;font-weight:bold;}
+.motor-on {background:red !important;}
 </style>
 </head>
 
@@ -76,8 +59,8 @@ box-shadow:0 0 10px red;
 
 <button class="btn btn-primary btn-pro" onclick="calcular()">CALCULAR</button>
 
-<div id="resultado" class="resultado"></div>
-<div id="presupuesto" class="resultado"></div>
+<div id="resultado"></div>
+<div id="presupuesto"></div>
 
 <button class="btn btn-success btn-pro" onclick="guardar()">💰 Guardar</button>
 <button class="btn btn-success btn-pro" onclick="whatsapp()">📲 WhatsApp</button>
@@ -90,13 +73,13 @@ box-shadow:0 0 10px red;
 <input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
 <input id="horas" class="form-control w-75 mx-auto" placeholder="Horas/día"><br>
 <button class="btn btn-warning btn-pro" onclick="consumo()">CALCULAR</button>
-<div id="consumoRes" class="resultado"></div>
+<div id="consumoRes"></div>
 
 <hr>
 
 <!-- HISTORIAL -->
 <h4>📂 HISTORIAL</h4>
-<div id="historial" class="lista"></div>
+<div id="historial"></div>
 <button class="btn btn-danger btn-pro" onclick="borrar()">BORRAR</button>
 
 <!-- ================= MODALES ================= -->
@@ -107,15 +90,13 @@ box-shadow:0 0 10px red;
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<button class="btn btn-success" onclick="energia()">⚡ ENERGIZAR</button>
-<button class="btn btn-danger" onclick="corte()">⛔ CORTAR</button>
+<button class="btn btn-success" onclick="energia()">ENERGIZAR</button>
+<button class="btn btn-danger" onclick="corte()">CORTAR</button>
 
-<h5>💡 Luz</h5>
-<button onclick="llaveSim()">LLAVE</button>
+<button onclick="llaveSim()">LUZ</button>
 <div id="luz" class="luz"></div>
 
-<h5>💧 Bomba</h5>
-<button onclick="flotante()">FLOTANTE</button>
+<button onclick="flotante()">BOMBA</button>
 <div id="bomba" class="bomba">OFF</div>
 
 <div id="fase" class="linea"></div>
@@ -135,10 +116,10 @@ box-shadow:0 0 10px red;
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<button class="btn btn-success" onclick="marcha()">🟢 MARCHA</button>
-<button class="btn btn-danger" onclick="parada()">🔴 PARADA</button>
+<button onclick="marcha()">MARCHA</button>
+<button onclick="parada()">PARADA</button>
 
-<div id="motorEstado">MOTOR APAGADO</div>
+<div id="motorEstado">APAGADO</div>
 <div id="lineaMotor" class="linea"></div>
 
 </div>
@@ -152,13 +133,30 @@ box-shadow:0 0 10px red;
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
 
-<svg width="100%" height="400" style="background:#111">
-<line x1="100" y1="200" x2="500" y2="100" stroke="red" stroke-width="4"/>
-<line x1="100" y1="220" x2="500" y2="100" stroke="cyan" stroke-width="4"/>
-<line x1="100" y1="240" x2="500" y2="300" stroke="yellow" stroke-width="4"/>
-</svg>
+<svg width="100%" height="420" style="background:#111">
 
-🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
+<rect x="40" y="150" width="120" height="100" fill="black" stroke="white"/>
+<text x="50" y="140" fill="white">TABLERO</text>
+
+<rect x="300" y="100" width="50" height="50" fill="#222" stroke="white"/>
+<text x="290" y="90" fill="white">LLAVE</text>
+
+<circle cx="550" cy="80" r="25" fill="#222" stroke="white"/>
+<text x="520" y="40" fill="white">LUZ</text>
+
+<rect x="550" y="260" width="60" height="40" fill="#222" stroke="white"/>
+<text x="520" y="320" fill="white">TOMA</text>
+
+<line x1="160" y1="180" x2="300" y2="120" stroke="red" stroke-width="4"/>
+<line x1="350" y1="120" x2="550" y2="80" stroke="red" stroke-width="4"/>
+<line x1="160" y1="180" x2="550" y2="260" stroke="red" stroke-width="4"/>
+
+<line x1="160" y1="210" x2="550" y2="80" stroke="cyan" stroke-width="4"/>
+<line x1="160" y1="210" x2="550" y2="260" stroke="cyan" stroke-width="4"/>
+
+<line x1="160" y1="240" x2="550" y2="260" stroke="yellow" stroke-width="4"/>
+
+</svg>
 
 </div>
 </div>
@@ -170,11 +168,37 @@ box-shadow:0 0 10px red;
 <div class="modal-dialog">
 <div class="modal-content bg-dark text-white">
 <div class="modal-body text-center">
-<pre>
-🔴 FASE → LLAVE → LUZ
-🔵 NEUTRO → DIRECTO
+🔴 FASE → LLAVE → LUZ  
+🔵 NEUTRO → DIRECTO  
 🟡🟢 TIERRA → GENERAL
-</pre>
+</div>
+</div>
+</div>
+</div>
+
+<!-- ENCHUFE -->
+<div class="modal fade" id="enchufe">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<div style="height:6px;background:red;"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
+</div>
+</div>
+</div>
+</div>
+
+<!-- LLAVE -->
+<div class="modal fade" id="llave">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body text-center">
+<div style="height:6px;background:red;"></div>
+<div style="height:6px;background:cyan;"></div>
+🔴 FASE → LUZ  
+🔵 NEUTRO DIRECTO
 </div>
 </div>
 </div>
@@ -190,13 +214,7 @@ box-shadow:0 0 10px red;
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
 
-<pre>
-FASE → TÉRMICA → DISYUNTOR
-NEUTRO → BARRA
-TIERRA → PROTECCIÓN
-</pre>
-
-<button class="btn btn-success" onclick="activarTablero()">ENERGIZAR TABLERO</button>
+<button onclick="activarTablero()">ENERGIZAR</button>
 
 </div>
 </div>
@@ -210,16 +228,9 @@ TIERRA → PROTECCIÓN
 <div class="modal-body text-center">
 
 <div id="faseTanque" class="linea"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
 
-<pre>
-FASE → CONTACTOR → FLOTANTE → BOMBA
-NEUTRO → DIRECTO
-TIERRA → CARCASA
-</pre>
-
-<button class="btn btn-success" onclick="activarTanque()">ACTIVAR BOMBA</button>
+<button onclick="activarTanque()">ENCENDER</button>
+<button onclick="apagarTanque()">APAGAR</button>
 
 </div>
 </div>
@@ -233,16 +244,9 @@ TIERRA → CARCASA
 <div class="modal-body text-center">
 
 <div id="faseMotor" class="linea"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
 
-<pre>
-FASE → CONTACTOR → MOTOR
-NEUTRO → MOTOR
-TIERRA → CARCASA
-</pre>
-
-<button class="btn btn-success" onclick="activarMotor()">ENCENDER MOTOR</button>
+<button onclick="activarMotor()">ENCENDER</button>
+<button onclick="apagarMotor()">APAGAR</button>
 
 </div>
 </div>
@@ -257,7 +261,7 @@ energiaOn=true;
 fase.classList.add("energia");
 neutro.style.background="cyan";
 tierra.style.background="yellow";
-estado.innerHTML="⚡ ENERGÍA ACTIVA";
+estado.innerHTML="ENERGÍA ACTIVA";
 update();
 }
 
@@ -268,40 +272,24 @@ fase.style.background="gray";
 neutro.style.background="gray";
 tierra.style.background="gray";
 estado.innerHTML="SIN ENERGÍA";
-luz.classList.remove("luz-on");
-bomba.classList.remove("bomba-on");
 }
 
 function llaveSim(){luzOn=!luzOn;update();}
 function flotante(){flotanteOn=!flotanteOn;update();}
 
 function update(){
-if(energiaOn && luzOn){luz.classList.add("luz-on");}
-else{luz.classList.remove("luz-on");}
-
-if(energiaOn && flotanteOn){
-bomba.classList.add("bomba-on");
-bomba.innerHTML="💧 BOMBA ON";
-}else{
-bomba.classList.remove("bomba-on");
-bomba.innerHTML="OFF";
-}
+luz.style.background=(energiaOn&&luzOn)?"yellow":"#222";
+bomba.innerHTML=(energiaOn&&flotanteOn)?"BOMBA ON":"OFF";
 }
 
-function marcha(){
-if(!energiaOn){motorEstado.innerHTML="SIN ENERGÍA";return;}
-lineaMotor.classList.add("motor-on");
-motorEstado.innerHTML="MOTOR EN MARCHA";
-}
-
-function parada(){
-lineaMotor.classList.remove("motor-on");
-motorEstado.innerHTML="MOTOR PARADO";
-}
+function marcha(){lineaMotor.classList.add("motor-on");}
+function parada(){lineaMotor.classList.remove("motor-on");}
 
 function activarTablero(){faseTab.classList.add("energia");}
 function activarTanque(){faseTanque.classList.add("energia");}
+function apagarTanque(){faseTanque.classList.remove("energia");}
 function activarMotor(){faseMotor.classList.add("energia");}
+function apagarMotor(){faseMotor.classList.remove("energia");}
 
 function calcular(){
 let i=potencia.value/voltaje.value;
