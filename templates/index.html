@@ -176,6 +176,42 @@ animation: flujo 1s linear infinite;
 </div>
 </div>
 
+<!-- TABLERO PRO -->
+<div class="modal fade" id="tableroprof">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+
+<div class="modal-header">
+<h5>⚡ TABLERO PRO</h5>
+<button class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+</div>
+
+<div class="modal-body text-center">
+
+<div id="fasePro" class="linea"></div>
+<div style="height:6px;background:cyan;"></div>
+<div style="height:6px;background:yellow;"></div>
+
+<pre>
+🔴 FASE → TÉRMICA → DISYUNTOR
+
+💡 Iluminación
+🔌 Tomas
+❄ Aire
+💧 Bomba
+
+🔵 NEUTRO → barra
+🟡🟢 TIERRA → jabalina
+</pre>
+
+<button onclick="activarTableroPro()">ENCENDER</button>
+<button onclick="apagarTableroPro()">APAGAR</button>
+
+</div>
+</div>
+</div>
+</div>
+
 <!-- ENCHUFE -->
 <div class="modal fade" id="enchufe">
 <div class="modal-dialog">
@@ -214,7 +250,7 @@ animation: flujo 1s linear infinite;
 <div style="height:6px;background:cyan;"></div>
 <div style="height:6px;background:yellow;"></div>
 
-<button onclick="activarTablero()">ENERGIZAR</button>
+<button onclick="activarTablero()">ENCENDER</button>
 
 </div>
 </div>
@@ -290,6 +326,9 @@ function activarTanque(){faseTanque.classList.add("energia");}
 function apagarTanque(){faseTanque.classList.remove("energia");}
 function activarMotor(){faseMotor.classList.add("energia");}
 function apagarMotor(){faseMotor.classList.remove("energia");}
+
+function activarTableroPro(){fasePro.classList.add("energia");}
+function apagarTableroPro(){fasePro.classList.remove("energia");}
 
 function calcular(){
 let i=potencia.value/voltaje.value;
