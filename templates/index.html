@@ -70,7 +70,73 @@ animation:flujo 1s linear infinite;
 <div id="resultado"></div>
 
 <script>
+<!-- ===== FUNCIONES PRO NUEVAS ===== -->
 
+<script>
+
+// ===== CORRIENTE REAL =====
+function corrienteOn(id){
+let el=document.getElementById(id)
+if(el) el.classList.add("energia")
+}
+
+function corrienteOff(id){
+let el=document.getElementById(id)
+if(el) el.classList.remove("energia")
+}
+
+// ===== FALLAS =====
+function fallaLinea(id){
+let el=document.getElementById(id)
+if(el){
+el.style.background="red"
+alert("⚠️ Falla detectada en línea")
+}
+}
+
+function resetLinea(id){
+let el=document.getElementById(id)
+if(el){
+el.style.background="gray"
+}
+}
+
+// ===== TABLERO INTELIGENTE =====
+function disparoAutomatico(){
+alert("🔥 Sobrecarga - tablero cortado")
+
+let lineas=["luzLinea","tomaLinea","aireLinea","bombaLinea"]
+
+lineas.forEach(id=>{
+let el=document.getElementById(id)
+if(el) el.classList.remove("energia")
+})
+}
+
+// ===== CALCULO PROFESIONAL =====
+function calculoPro(){
+let P=parseFloat(document.getElementById("potencia")?.value || 0)
+let V=parseFloat(document.getElementById("voltaje")?.value || 220)
+
+if(P===0){alert("Cargar potencia");return;}
+
+let I=P/V
+
+let cable="1.5 mm"
+let termica="10A"
+
+if(I>10){cable="2.5 mm";termica="16A"}
+if(I>16){cable="4 mm";termica="20A"}
+if(I>20){cable="6 mm";termica="32A"}
+
+alert(
+"⚡ Corriente: "+I.toFixed(2)+" A\n"+
+"🔌 Cable: "+cable+"\n"+
+"⚡ Térmica: "+termica
+)
+}
+
+</script>
 let energiaOn=false
 let falla=false
 
@@ -149,7 +215,9 @@ resultado.innerHTML=
 "Cable recomendado: "+cable+"<br>"+
 "Térmica: "+termica
 }
-
+<button onclick="disparoAutomatico()">🔥 Sobrecarga</button>
+<button onclick="calculoPro()">📏 Calculo PRO</button>
+<button onclick="fallaLinea('fase')">⚠️ Falla fase</button>
 </script>
 
 </body>
