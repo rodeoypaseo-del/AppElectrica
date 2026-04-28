@@ -17,13 +17,13 @@ background:linear-gradient(90deg, red, yellow, red);
 background-size:200% 100%;
 animation:flujo 1s linear infinite;
 }
+
 @keyframes flujo{
 0%{background-position:0%}
 100%{background-position:200%}
 }
 
 .falla{background:red !important;}
-
 </style>
 </head>
 
@@ -62,84 +62,26 @@ animation:flujo 1s linear infinite;
 <hr>
 
 <h4>📏 CÁLCULO PROFESIONAL</h4>
-<input id="potencia" placeholder="Potencia (W)"><br><br>
-<input id="voltaje" placeholder="Voltaje"><br><br>
+<input id="potencia" placeholder="Potencia (W)" class="form-control w-50 mx-auto"><br>
+<input id="voltaje" placeholder="Voltaje" class="form-control w-50 mx-auto"><br>
 
-<button onclick="calculoPro()">CALCULAR</button>
+<button onclick="calculoPro()" class="btn btn-primary">CALCULAR</button>
 
 <div id="resultado"></div>
 
-<script>
-<!-- ===== FUNCIONES PRO NUEVAS ===== -->
+<hr>
+
+<h4>⚡ ACCIONES RÁPIDAS</h4>
+<button onclick="disparoAutomatico()">🔥 Disparo automático</button>
+<button onclick="fallaLinea('fase')">⚠️ Falla fase directa</button>
 
 <script>
 
-// ===== CORRIENTE REAL =====
-function corrienteOn(id){
-let el=document.getElementById(id)
-if(el) el.classList.add("energia")
-}
-
-function corrienteOff(id){
-let el=document.getElementById(id)
-if(el) el.classList.remove("energia")
-}
-
-// ===== FALLAS =====
-function fallaLinea(id){
-let el=document.getElementById(id)
-if(el){
-el.style.background="red"
-alert("⚠️ Falla detectada en línea")
-}
-}
-
-function resetLinea(id){
-let el=document.getElementById(id)
-if(el){
-el.style.background="gray"
-}
-}
-
-// ===== TABLERO INTELIGENTE =====
-function disparoAutomatico(){
-alert("🔥 Sobrecarga - tablero cortado")
-
-let lineas=["luzLinea","tomaLinea","aireLinea","bombaLinea"]
-
-lineas.forEach(id=>{
-let el=document.getElementById(id)
-if(el) el.classList.remove("energia")
-})
-}
-
-// ===== CALCULO PROFESIONAL =====
-function calculoPro(){
-let P=parseFloat(document.getElementById("potencia")?.value || 0)
-let V=parseFloat(document.getElementById("voltaje")?.value || 220)
-
-if(P===0){alert("Cargar potencia");return;}
-
-let I=P/V
-
-let cable="1.5 mm"
-let termica="10A"
-
-if(I>10){cable="2.5 mm";termica="16A"}
-if(I>16){cable="4 mm";termica="20A"}
-if(I>20){cable="6 mm";termica="32A"}
-
-alert(
-"⚡ Corriente: "+I.toFixed(2)+" A\n"+
-"🔌 Cable: "+cable+"\n"+
-"⚡ Térmica: "+termica
-)
-}
-
-</script>
+// ===== ESTADOS =====
 let energiaOn=false
 let falla=false
 
+// ===== ENERGÍA =====
 function energia(){
 energiaOn=true
 updateCorriente()
@@ -152,6 +94,7 @@ neutro.classList.remove("corriente")
 tierra.classList.remove("corriente")
 }
 
+// ===== CORRIENTE =====
 function updateCorriente(){
 if(!energiaOn || falla)return
 
@@ -160,7 +103,7 @@ neutro.classList.add("corriente")
 tierra.classList.add("corriente")
 }
 
-// FALLAS
+// ===== FALLAS =====
 function fallaFase(){
 falla=true
 fase.classList.add("falla")
@@ -189,17 +132,35 @@ tierra.classList.remove("falla")
 estadoFalla.innerHTML="OK"
 }
 
-// TABLERO
+// ===== TABLERO =====
 function consumoAlto(){
 lineaTablero.classList.add("falla")
 estadoTablero.innerHTML="🔥 SOBRECARGA - CORTE AUTOMÁTICO"
 corte()
 }
 
-// CALCULO PRO
+function disparoAutomatico(){
+consumoAlto()
+}
+
+// ===== FALLA DIRECTA =====
+function fallaLinea(id){
+let el=document.getElementById(id)
+if(el){
+el.classList.add("falla")
+alert("⚠️ Falla en línea")
+}
+}
+
+// ===== CÁLCULO PROFESIONAL =====
 function calculoPro(){
-let P=potencia.value
-let V=voltaje.value
+let P=parseFloat(potencia.value || 0)
+let V=parseFloat(voltaje.value || 220)
+
+if(P===0){
+alert("Ingresar potencia")
+return
+}
 
 let I=P/V
 
@@ -211,13 +172,11 @@ if(I>16){cable="4 mm";termica="20A"}
 if(I>20){cable="6 mm";termica="32A"}
 
 resultado.innerHTML=
-"Corriente: "+I.toFixed(2)+" A<br>"+
-"Cable recomendado: "+cable+"<br>"+
-"Térmica: "+termica
+"⚡ Corriente: "+I.toFixed(2)+" A<br>"+
+"🔌 Cable: "+cable+"<br>"+
+"⚡ Térmica: "+termica
 }
-<button onclick="disparoAutomatico()">🔥 Sobrecarga</button>
-<button onclick="calculoPro()">📏 Calculo PRO</button>
-<button onclick="fallaLinea('fase')">⚠️ Falla fase</button>
+
 </script>
 
 </body>
