@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>⚡ ELÉCTRICA PRO INDUSTRIAL REAL</title>
+<title>⚡ ULTRA NIVEL PRO REAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -17,43 +17,29 @@ background:linear-gradient(90deg, red, yellow, red);
 background-size:200% 100%;
 animation:flujo 1s linear infinite;
 }
-
 @keyframes flujo{
 0%{background-position:0%}
 100%{background-position:200%}
 }
 
 .falla{background:red !important;}
+.ok{color:#00ffcc}
+.alerta{color:red}
 
 .luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
-.bomba{padding:10px;background:#222;margin:10px;}
 </style>
 </head>
 
 <body>
 
-<h2>⚡ ELÉCTRICA PRO INDUSTRIAL REAL</h2>
+<h2>⚡ ULTRA NIVEL PRO REAL ⚡</h2>
 
-<!-- BOTONES -->
-<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">SIMULADOR</button>
-<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#industrial">INDUSTRIAL</button>
-<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#planoreal">PLANO REAL</button>
-<button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">TABLERO PRO</button>
-<button class="btn btn-secondary btn-pro" data-bs-toggle="modal" data-bs-target="#contactores">CONTACTORES</button>
-<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">TANQUE</button>
-<button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">MOTOR</button>
+<button class="btn btn-success btn-pro" onclick="energia()">ENERGIZAR</button>
+<button class="btn btn-danger btn-pro" onclick="corte()">CORTAR</button>
 
 <hr>
 
-<!-- ================= SIMULADOR ================= -->
-<div class="modal fade" id="simulador">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-
-<button onclick="energia()">ENERGIZAR</button>
-<button onclick="corte()">CORTAR</button>
-
+<h4>⚡ SIMULADOR</h4>
 <div id="fase" class="linea"></div>
 <div id="neutro" class="linea"></div>
 <div id="tierra" class="linea"></div>
@@ -61,139 +47,63 @@ animation:flujo 1s linear infinite;
 <button onclick="toggleLuz()">LUZ</button>
 <div id="luz" class="luz"></div>
 
-<button onclick="toggleBomba()">BOMBA</button>
-<div id="bomba" class="bomba">OFF</div>
+<hr>
 
-</div>
-</div>
-</div>
-</div>
+<h4>📟 AMPERÍMETRO</h4>
+<input id="potencia" placeholder="Potencia (W)">
+<input id="voltaje" placeholder="Voltaje" value="220">
+<div id="amp" class="ok"></div>
 
-<!-- ================= INDUSTRIAL ================= -->
-<div class="modal fade" id="industrial">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
+<hr>
 
-<button onclick="marcha()">MARCHA</button>
-<button onclick="parada()">PARADA</button>
+<h4>🧠 PROTECCIONES</h4>
+<button onclick="sobrecarga()">Sobrecarga</button>
+<button onclick="fuga()">Fuga a tierra</button>
+<button onclick="reset()">RESET</button>
+<div id="estadoProt"></div>
 
-<div id="motorLinea" class="linea"></div>
+<hr>
 
-</div>
-</div>
-</div>
-</div>
+<h4>⚡ TABLERO</h4>
+<div id="luzLinea" class="linea"></div>
+<div id="tomaLinea" class="linea"></div>
+<button onclick="toggleLinea('luzLinea')">LUZ</button>
+<button onclick="toggleLinea('tomaLinea')">TOMA</button>
 
-<!-- ================= PLANO REAL ================= -->
-<div class="modal fade" id="planoreal">
-<div class="modal-dialog modal-xl">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
+<hr>
 
-<svg width="100%" height="400" style="background:#111">
-
-<!-- tablero -->
-<rect x="30" y="150" width="120" height="100" fill="black" stroke="white"/>
-<text x="40" y="140" fill="white">TABLERO</text>
-
-<!-- llave -->
-<rect x="250" y="150" width="50" height="50" fill="#333" stroke="white"/>
-<text x="245" y="140" fill="white">LLAVE</text>
-
-<!-- lampara -->
-<circle cx="550" cy="80" r="25" fill="#222" stroke="white"/>
-<text x="520" y="40" fill="white">LUZ</text>
-
-<!-- toma -->
-<rect x="550" y="260" width="60" height="40" fill="#222" stroke="white"/>
-<text x="520" y="320" fill="white">TOMA</text>
-
-<!-- cables -->
-<line x1="150" y1="180" x2="250" y2="175" stroke="red" stroke-width="4"/>
-<line x1="300" y1="175" x2="550" y2="80" stroke="red" stroke-width="4"/>
-<line x1="150" y1="210" x2="550" y2="80" stroke="cyan" stroke-width="4"/>
-<line x1="150" y1="240" x2="550" y2="260" stroke="yellow" stroke-width="4"/>
-
-</svg>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- ================= TABLERO ================= -->
-<div class="modal fade" id="tablero">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-
-<div id="lineaTablero" class="linea"></div>
-
-<button onclick="sobrecarga()">SOBRECARGA</button>
-<div id="estadoTablero"></div>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- ================= CONTACTORES ================= -->
-<div class="modal fade" id="contactores">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-
+<h4>⚙ CONTACTORES (ENCLAVAMIENTO)</h4>
 <div id="contA" class="linea"></div>
 <div id="contB" class="linea"></div>
+<button onclick="Aon()">A</button>
+<button onclick="Bon()">B</button>
 
-<button onclick="activarA()">A</button>
-<button onclick="activarB()">B</button>
-<button onclick="resetCont()">RESET</button>
+<hr>
 
-</div>
-</div>
-</div>
-</div>
+<h4>💧 TANQUE AUTOMÁTICO</h4>
+<div id="tanque" class="linea"></div>
+<button onclick="tanqueOn()">Activar</button>
+<button onclick="tanqueOff()">Desactivar</button>
 
-<!-- ================= TANQUE ================= -->
-<div class="modal fade" id="tanque">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
+<hr>
 
-<div id="tanqueLinea" class="linea"></div>
+<h4>🏭 MOTOR</h4>
+<div id="motor" class="linea"></div>
+<button onclick="motorOn()">Encender</button>
+<button onclick="motorOff()">Apagar</button>
 
-<button onclick="activarTanque()">ON</button>
-<button onclick="apagarTanque()">OFF</button>
+<hr>
 
-</div>
-</div>
-</div>
-</div>
+<h4>📏 CÁLCULO CABLE PRO</h4>
+<input id="distancia" placeholder="Distancia (m)">
+<button onclick="calculoCable()">Calcular</button>
+<div id="cableRes"></div>
 
-<!-- ================= MOTOR ================= -->
-<div class="modal fade" id="motor">
-<div class="modal-dialog">
-<div class="modal-content bg-dark text-white">
-<div class="modal-body">
-
-<div id="motorReal" class="linea"></div>
-
-<button onclick="activarMotor()">ON</button>
-<button onclick="apagarMotor()">OFF</button>
-
-</div>
-</div>
-</div>
-</div>
-
-<!-- ================= JS ================= -->
 <script>
 
 let energiaOn=false
-let luz=false
-let bomba=false
+let fallo=false
+let A=false,B=false
 
 function energia(){
 energiaOn=true
@@ -207,66 +117,83 @@ energiaOn=false
 fase.classList.remove("energia")
 neutro.classList.remove("energia")
 tierra.classList.remove("energia")
+luz.style.background="#222"
 }
 
 function toggleLuz(){
 if(!energiaOn)return
-luz=!luz
-luz?luzOn():luzOff()
+luz.style.background = (luz.style.background=="yellow")?"#222":"yellow"
 }
 
-function luzOn(){document.getElementById("luz").style.background="yellow"}
-function luzOff(){document.getElementById("luz").style.background="#222"}
+// amperímetro
+setInterval(()=>{
+let P=potencia.value||0
+let V=voltaje.value||220
+let I=P/V
+amp.innerHTML="Corriente: "+I.toFixed(2)+" A"
+},500)
 
-function toggleBomba(){
-if(!energiaOn)return
-bomba=!bomba
-document.getElementById("bomba").innerHTML=bomba?"ON":"OFF"
-}
-
-function marcha(){
-if(!energiaOn)return
-motorLinea.classList.add("energia")
-}
-
-function parada(){
-motorLinea.classList.remove("energia")
-}
-
+// protecciones
 function sobrecarga(){
-lineaTablero.classList.add("falla")
-estadoTablero.innerHTML="🔥 CORTE AUTOMÁTICO"
+estadoProt.innerHTML="🔥 SOBRECARGA - CORTE"
 corte()
 }
 
-let A=false,B=false
-function activarA(){
+function fuga(){
+estadoProt.innerHTML="⚠️ FUGA A TIERRA - DISYUNTOR"
+corte()
+}
+
+function reset(){
+estadoProt.innerHTML="OK"
+}
+
+// tablero
+function toggleLinea(id){
+if(!energiaOn)return
+document.getElementById(id).classList.toggle("energia")
+}
+
+// contactores enclavamiento
+function Aon(){
 if(B)return
 contA.classList.add("energia")
 contB.classList.remove("energia")
 A=true;B=false
 }
-function activarB(){
+
+function Bon(){
 if(A)return
 contB.classList.add("energia")
 contA.classList.remove("energia")
 B=true;A=false
 }
-function resetCont(){
-contA.classList.remove("energia")
-contB.classList.remove("energia")
-A=false;B=false
+
+// tanque
+function tanqueOn(){tanque.classList.add("energia")}
+function tanqueOff(){tanque.classList.remove("energia")}
+
+// motor
+function motorOn(){motor.classList.add("energia")}
+function motorOff(){motor.classList.remove("energia")}
+
+// cálculo cable
+function calculoCable(){
+let P=potencia.value||0
+let V=voltaje.value||220
+let D=distancia.value||10
+
+let I=P/V
+
+let cable="1.5 mm"
+if(I>10 || D>20) cable="2.5 mm"
+if(I>16 || D>30) cable="4 mm"
+if(I>25) cable="6 mm"
+
+cableRes.innerHTML="Cable recomendado: "+cable
 }
 
-function activarTanque(){tanqueLinea.classList.add("energia")}
-function apagarTanque(){tanqueLinea.classList.remove("energia")}
-
-function activarMotor(){motorReal.classList.add("energia")}
-function apagarMotor(){motorReal.classList.remove("energia")}
-
 </script>
-
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
