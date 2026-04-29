@@ -2,7 +2,8 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>ELÉCTRICA PRO MAX</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELÉCTRICA PRO MAX FINAL</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -12,172 +13,295 @@ body{background:#000;color:#fff;text-align:center;}
 
 .linea{height:6px;margin:6px;border-radius:5px;background:gray;}
 
-.corriente{
+.energia{
 background:linear-gradient(90deg, red, yellow, red);
 background-size:200% 100%;
 animation:flujo 1s linear infinite;
 }
-
 @keyframes flujo{
 0%{background-position:0%}
 100%{background-position:200%}
 }
 
-.falla{background:red !important;}
+.luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
+.bomba{padding:10px;background:#222;margin:10px;}
 </style>
 </head>
 
 <body>
 
-<h2>⚡ ELÉCTRICA PRO MAX</h2>
+<h2>⚡ ELÉCTRICA PRO MAX FINAL</h2>
 
-<button class="btn btn-success btn-pro" onclick="energia()">ENERGIZAR</button>
-<button class="btn btn-danger btn-pro" onclick="corte()">CORTAR</button>
+<!-- BOTONES -->
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">SIMULADOR</button>
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#industrial">INDUSTRIAL</button>
+<button class="btn btn-warning btn-pro" data-bs-toggle="modal" data-bs-target="#planoreal">PLANO REAL</button>
+<button class="btn btn-success btn-pro" data-bs-toggle="modal" data-bs-target="#planocasa">CASA</button>
+<button class="btn btn-danger btn-pro" data-bs-toggle="modal" data-bs-target="#tablero">TABLERO</button>
+<button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#tanque">TANQUE</button>
+<button class="btn btn-dark btn-pro" data-bs-toggle="modal" data-bs-target="#motor">MOTOR</button>
 
 <hr>
 
-<h4>⚡ SIMULACIÓN CORRIENTE</h4>
+<!-- PRESUPUESTO -->
+<h4>💰 PRESUPUESTO</h4>
+<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
+<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
+<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
+<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales"><br>
+<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra"><br>
+
+<button onclick="calcular()" class="btn btn-primary btn-pro">CALCULAR</button>
+
+<div id="resultado"></div>
+<div id="presupuesto"></div>
+
+<button onclick="guardar()" class="btn btn-success btn-pro">Guardar</button>
+<button onclick="whatsapp()" class="btn btn-success btn-pro">WhatsApp</button>
+<button onclick="pdf()" class="btn btn-light btn-pro">PDF</button>
+
+<hr>
+
+<h4>📊 CONSUMO</h4>
+<input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
+<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas"><br>
+<button onclick="consumo()" class="btn btn-warning btn-pro">CALCULAR</button>
+<div id="consumoRes"></div>
+
+<hr>
+
+<h4>📂 HISTORIAL</h4>
+<div id="historial"></div>
+<button onclick="borrar()" class="btn btn-danger btn-pro">BORRAR</button>
+
+<!-- ================= MODALES ================= -->
+
+<!-- SIMULADOR -->
+<div class="modal fade" id="simulador">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
+<button onclick="energia()">ENERGIZAR</button>
+<button onclick="corte()">CORTAR</button>
+
+<button onclick="toggleLuz()">LUZ</button>
+<div id="luz" class="luz"></div>
+
+<button onclick="toggleBomba()">BOMBA</button>
+<div id="bomba" class="bomba">OFF</div>
+
 <div id="fase" class="linea"></div>
 <div id="neutro" class="linea"></div>
 <div id="tierra" class="linea"></div>
 
-<hr>
+</div>
+</div>
+</div>
+</div>
 
-<h4>🔥 FALLAS</h4>
-<button onclick="fallaFase()">Fase cortada</button>
-<button onclick="fallaNeutro()">Neutro cortado</button>
-<button onclick="fallaTierra()">Sin tierra</button>
-<button onclick="resetFalla()">Reset</button>
+<!-- INDUSTRIAL -->
+<div class="modal fade" id="industrial">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
-<div id="estadoFalla"></div>
+<button onclick="marcha()">MARCHA</button>
+<button onclick="parada()">PARADA</button>
 
-<hr>
+<div id="lineaMotor" class="linea"></div>
 
-<h4>⚡ TABLERO INTELIGENTE</h4>
+</div>
+</div>
+</div>
+</div>
+
+<!-- PLANO REAL -->
+<div class="modal fade" id="planoreal">
+<div class="modal-dialog modal-xl">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
+<svg width="100%" height="300" style="background:#111">
+<line x1="50" y1="150" x2="500" y2="80" stroke="red" stroke-width="4"/>
+<line x1="50" y1="180" x2="500" y2="80" stroke="cyan" stroke-width="4"/>
+<line x1="50" y1="210" x2="500" y2="250" stroke="yellow" stroke-width="4"/>
+</svg>
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- CASA -->
+<div class="modal fade" id="planocasa">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
+🔴 FASE → LLAVE → LUZ<br>
+🔵 NEUTRO DIRECTO<br>
+🟡🟢 TIERRA
+
+</div>
+</div>
+</div>
+</div>
+
+<!-- TABLERO -->
+<div class="modal fade" id="tablero">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
 <div id="lineaTablero" class="linea"></div>
-<button onclick="consumoAlto()">Simular sobrecarga</button>
-
+<button onclick="sobrecarga()">SOBRECARGA</button>
 <div id="estadoTablero"></div>
 
-<hr>
+</div>
+</div>
+</div>
+</div>
 
-<h4>📏 CÁLCULO PROFESIONAL</h4>
-<input id="potencia" placeholder="Potencia (W)" class="form-control w-50 mx-auto"><br>
-<input id="voltaje" placeholder="Voltaje" class="form-control w-50 mx-auto"><br>
+<!-- TANQUE -->
+<div class="modal fade" id="tanque">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
-<button onclick="calculoPro()" class="btn btn-primary">CALCULAR</button>
+<div id="tanqueLinea" class="linea"></div>
+<button onclick="activarTanque()">ON</button>
+<button onclick="apagarTanque()">OFF</button>
 
-<div id="resultado"></div>
+</div>
+</div>
+</div>
+</div>
 
-<hr>
+<!-- MOTOR -->
+<div class="modal fade" id="motor">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
-<h4>⚡ ACCIONES RÁPIDAS</h4>
-<button onclick="disparoAutomatico()">🔥 Disparo automático</button>
-<button onclick="fallaLinea('fase')">⚠️ Falla fase directa</button>
+<div id="motorLinea2" class="linea"></div>
+<button onclick="activarMotor()">ON</button>
+<button onclick="apagarMotor()">OFF</button>
+
+</div>
+</div>
+</div>
+</div>
 
 <script>
 
 // ===== ESTADOS =====
 let energiaOn=false
-let falla=false
+let luz=false
+let bomba=false
+let ultimo=""
 
-// ===== ENERGÍA =====
+// SIMULADOR
 function energia(){
 energiaOn=true
-updateCorriente()
+fase.classList.add("energia")
+neutro.classList.add("energia")
+tierra.classList.add("energia")
 }
 
 function corte(){
 energiaOn=false
-fase.classList.remove("corriente")
-neutro.classList.remove("corriente")
-tierra.classList.remove("corriente")
+fase.classList.remove("energia")
+neutro.classList.remove("energia")
+tierra.classList.remove("energia")
+luzEl.style.background="#222"
+bombaEl.innerHTML="OFF"
 }
 
-// ===== CORRIENTE =====
-function updateCorriente(){
-if(!energiaOn || falla)return
+let luzEl=document.getElementById("luz")
+let bombaEl=document.getElementById("bomba")
 
-fase.classList.add("corriente")
-neutro.classList.add("corriente")
-tierra.classList.add("corriente")
+function toggleLuz(){
+if(!energiaOn)return
+luz=!luz
+luzEl.style.background=luz?"yellow":"#222"
 }
 
-// ===== FALLAS =====
-function fallaFase(){
-falla=true
-fase.classList.add("falla")
-estadoFalla.innerHTML="⚠️ FASE CORTADA"
-corte()
+function toggleBomba(){
+if(!energiaOn)return
+bomba=!bomba
+bombaEl.innerHTML=bomba?"ON":"OFF"
 }
 
-function fallaNeutro(){
-falla=true
-neutro.classList.add("falla")
-estadoFalla.innerHTML="⚠️ NEUTRO CORTADO"
-corte()
+// INDUSTRIAL
+function marcha(){
+if(!energiaOn)return
+lineaMotor.classList.add("energia")
 }
 
-function fallaTierra(){
-falla=true
-tierra.classList.add("falla")
-estadoFalla.innerHTML="⚠️ SIN TIERRA"
+function parada(){
+lineaMotor.classList.remove("energia")
 }
 
-function resetFalla(){
-falla=false
-fase.classList.remove("falla")
-neutro.classList.remove("falla")
-tierra.classList.remove("falla")
-estadoFalla.innerHTML="OK"
+// TABLERO
+function sobrecarga(){
+lineaTablero.classList.remove("energia")
+estadoTablero.innerHTML="🔥 CORTE AUTOMÁTICO"
 }
 
-// ===== TABLERO =====
-function consumoAlto(){
-lineaTablero.classList.add("falla")
-estadoTablero.innerHTML="🔥 SOBRECARGA - CORTE AUTOMÁTICO"
-corte()
+// TANQUE
+function activarTanque(){tanqueLinea.classList.add("energia")}
+function apagarTanque(){tanqueLinea.classList.remove("energia")}
+
+// MOTOR
+function activarMotor(){motorLinea2.classList.add("energia")}
+function apagarMotor(){motorLinea2.classList.remove("energia")}
+
+// CALCULADORA
+function calcular(){
+let i=potencia.value/voltaje.value
+let total=(+materiales.value||0)+(+mano.value||0)
+resultado.innerHTML=i.toFixed(2)+" A"
+presupuesto.innerHTML="$"+total
+ultimo=cliente.value+" $"+total
 }
 
-function disparoAutomatico(){
-consumoAlto()
+function guardar(){
+let h=JSON.parse(localStorage.getItem("h"))||[]
+h.push(ultimo)
+localStorage.setItem("h",JSON.stringify(h))
+mostrar()
 }
 
-// ===== FALLA DIRECTA =====
-function fallaLinea(id){
-let el=document.getElementById(id)
-if(el){
-el.classList.add("falla")
-alert("⚠️ Falla en línea")
-}
+function mostrar(){
+let h=JSON.parse(localStorage.getItem("h"))||[]
+historial.innerHTML=h.join("<br>")
 }
 
-// ===== CÁLCULO PROFESIONAL =====
-function calculoPro(){
-let P=parseFloat(potencia.value || 0)
-let V=parseFloat(voltaje.value || 220)
-
-if(P===0){
-alert("Ingresar potencia")
-return
+function borrar(){
+localStorage.removeItem("h")
+mostrar()
 }
 
-let I=P/V
-
-let cable="1.5 mm"
-let termica="10A"
-
-if(I>10){cable="2.5 mm";termica="16A"}
-if(I>16){cable="4 mm";termica="20A"}
-if(I>20){cable="6 mm";termica="32A"}
-
-resultado.innerHTML=
-"⚡ Corriente: "+I.toFixed(2)+" A<br>"+
-"🔌 Cable: "+cable+"<br>"+
-"⚡ Térmica: "+termica
+function whatsapp(){
+window.open("https://wa.me/?text="+encodeURIComponent(ultimo))
 }
+
+function pdf(){
+let w=window.open("")
+w.document.write(ultimo)
+w.print()
+}
+
+function consumo(){
+consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh"
+}
+
+window.onload=mostrar
 
 </script>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 
 </body>
 </html>
