@@ -2,142 +2,264 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>⚡ ULTRA PRO FX REAL</title>
+<title>⚡ ELÉCTRICA PRO ULTRA FINAL</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
 <style>
-body{background:#000;color:#fff;text-align:center;font-family:Arial;}
-.btn{margin:5px;padding:10px 20px;}
+body{background:#000;color:#fff;text-align:center;}
+.btn-pro{width:90%;margin:5px;}
 
-.cable{
-stroke:gray;
-stroke-width:4;
-}
+.linea{height:6px;margin:6px;border-radius:5px;background:gray;}
 
 .energia{
-stroke:url(#grad);
-stroke-width:5;
-stroke-dasharray:10;
+background:linear-gradient(90deg, red, yellow, red);
+background-size:200% 100%;
 animation:flujo 1s linear infinite;
 }
+@keyframes flujo{0%{background-position:0%}100%{background-position:200%}}
 
-@keyframes flujo{
-0%{stroke-dashoffset:0}
-100%{stroke-dashoffset:20}
-}
+.luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
+.bomba{padding:10px;background:#222;margin:10px;}
 
-.luz{
-fill:#222;
-transition:0.3s;
-}
-
-.on{fill:yellow;}
-
-.spark{
-fill:orange;
-opacity:0;
-animation:spark 0.3s infinite;
-}
-
-@keyframes spark{
-0%{opacity:1;transform:scale(1);}
-100%{opacity:0;transform:scale(2);}
-}
-
+svg{background:#111;border-radius:10px}
 </style>
 </head>
 
 <body>
 
-<h2>⚡ ULTRA PRO FX REAL</h2>
+<h2>⚡ ELÉCTRICA PRO ULTRA FINAL</h2>
 
-<button onclick="energia()">ENERGIZAR</button>
-<button onclick="corte()">CORTAR</button>
-<button onclick="corto()">⚡ CORTOCIRCUITO</button>
+<button class="btn btn-success btn-pro" onclick="energia()">ENERGIZAR</button>
+<button class="btn btn-danger btn-pro" onclick="corte()">CORTAR</button>
 
 <hr>
 
-<svg width="600" height="300" style="background:#111">
+<h4>💡 SIMULADOR</h4>
+<button onclick="toggleLuz()">LUZ</button>
+<div id="luz" class="luz"></div>
 
-<defs>
-<linearGradient id="grad">
-<stop offset="0%" stop-color="red"/>
-<stop offset="50%" stop-color="yellow"/>
-<stop offset="100%" stop-color="red"/>
-</linearGradient>
-</defs>
+<button onclick="toggleBomba()">BOMBA</button>
+<div id="bomba" class="bomba">OFF</div>
 
-<!-- TABLERO -->
-<rect x="20" y="120" width="100" height="80" fill="black" stroke="white"/>
-<text x="25" y="110" fill="white">TABLERO</text>
+<div id="fase" class="linea"></div>
+<div id="neutro" class="linea"></div>
+<div id="tierra" class="linea"></div>
 
-<!-- LLAVE -->
-<rect x="200" y="130" width="40" height="40" fill="#333" stroke="white"/>
-<text x="190" y="120" fill="white">LLAVE</text>
+<hr>
 
-<!-- LUZ -->
-<circle id="luz" cx="450" cy="80" r="25" class="luz" stroke="white"/>
+<h4>🏭 INDUSTRIAL</h4>
+<button onclick="marcha()">MARCHA</button>
+<button onclick="parada()">PARADA</button>
+<div id="lineaMotor" class="linea"></div>
 
-<!-- CABLES -->
-<line id="fase1" x1="120" y1="150" x2="200" y2="150" class="cable"/>
-<line id="fase2" x1="240" y1="150" x2="450" y2="80" class="cable"/>
-<line id="neutro" x1="120" y1="180" x2="450" y2="80" class="cable"/>
+<hr>
 
-<!-- CHISPAS -->
-<circle id="spark" cx="300" cy="140" r="10" class="spark"/>
+<h4>🎨 PLANO REAL</h4>
+<svg width="600" height="250">
+<rect x="20" y="100" width="100" height="80" stroke="white" fill="none"/>
+<text x="25" y="90">TABLERO</text>
 
+<rect x="200" y="110" width="40" height="40" stroke="white" fill="none"/>
+<text x="200" y="100">LLAVE</text>
+
+<circle cx="500" cy="80" r="25" stroke="white" fill="none"/>
+<text x="480" y="50">LÁMPARA</text>
+
+<line id="cable1" x1="120" y1="140" x2="200" y2="130" stroke="gray" stroke-width="4"/>
+<line id="cable2" x1="240" y1="130" x2="500" y2="80" stroke="gray" stroke-width="4"/>
 </svg>
 
 <hr>
 
-<h4>⚙ CONTACTOR</h4>
-<div id="contactor" style="width:200px;height:10px;background:gray;margin:auto;"></div>
-<button onclick="contactorOn()">ACTIVAR</button>
-<button onclick="contactorOff()">DESACTIVAR</button>
+<h4>⚡ TABLERO PRO</h4>
+<div id="luzLinea" class="linea"></div>
+<button onclick="toggleLinea('luzLinea')">LUZ</button>
 
-<audio id="click">
-<source src="https://actions.google.com/sounds/v1/impacts/metal_clank.ogg">
-</audio>
+<div id="tomaLinea" class="linea"></div>
+<button onclick="toggleLinea('tomaLinea')">TOMA</button>
+
+<br>
+<button onclick="sobrecarga()">🔥 SOBRECARGA</button>
+<div id="estadoTablero"></div>
+
+<hr>
+
+<h4>⚙ CONTACTORES</h4>
+<div id="contA" class="linea"></div>
+<div id="contB" class="linea"></div>
+
+<button onclick="activarA()">A</button>
+<button onclick="activarB()">B</button>
+<button onclick="reset()">RESET</button>
+
+<hr>
+
+<h4>💧 TANQUE</h4>
+<div id="tanqueLinea" class="linea"></div>
+<button onclick="activarTanque()">ON</button>
+<button onclick="apagarTanque()">OFF</button>
+
+<hr>
+
+<h4>🏭 MOTOR</h4>
+<div id="motorLinea" class="linea"></div>
+<button onclick="activarMotor()">ON</button>
+<button onclick="apagarMotor()">OFF</button>
+
+<hr>
+
+<h4>💰 CALCULADORA</h4>
+<input id="cliente" placeholder="Cliente"><br>
+<input id="potencia" placeholder="Potencia"><br>
+<input id="voltaje" placeholder="Voltaje"><br>
+<input id="materiales" placeholder="Materiales"><br>
+<input id="mano" placeholder="Mano de obra"><br>
+
+<button onclick="calcular()">CALCULAR</button>
+
+<div id="resultado"></div>
+<div id="presupuesto"></div>
+
+<button onclick="guardar()">Guardar</button>
+<button onclick="whatsapp()">WhatsApp</button>
+<button onclick="pdf()">PDF</button>
+
+<hr>
+
+<h4>📊 CONSUMO</h4>
+<input id="potenciaC" placeholder="Potencia">
+<input id="horas" placeholder="Horas">
+<button onclick="consumo()">CALCULAR</button>
+<div id="consumoRes"></div>
+
+<hr>
+
+<h4>📂 HISTORIAL</h4>
+<div id="historial"></div>
+<button onclick="borrar()">BORRAR</button>
 
 <script>
 
-let energiaOn=false
+// ===== ESTADO =====
+let energiaOn=false,luz=false,bomba=false,A=false,B=false;
+let ultimo="";
 
+// ===== ENERGIA =====
 function energia(){
-energiaOn=true
-fase1.classList.add("energia")
-fase2.classList.add("energia")
-neutro.classList.add("energia")
-luz.classList.add("on")
+energiaOn=true;
+["fase","neutro","tierra","cable1","cable2"].forEach(id=>{
+document.getElementById(id).classList.add("energia");
+});
 }
 
 function corte(){
-energiaOn=false
-fase1.classList.remove("energia")
-fase2.classList.remove("energia")
-neutro.classList.remove("energia")
-luz.classList.remove("on")
-spark.style.opacity=0
+energiaOn=false;
+document.querySelectorAll(".linea").forEach(el=>el.classList.remove("energia"));
+document.getElementById("cable1").classList.remove("energia");
+document.getElementById("cable2").classList.remove("energia");
 }
 
-// ⚡ corto con chispas
-function corto(){
-if(!energiaOn)return
-spark.style.opacity=1
-setTimeout(()=>spark.style.opacity=0,500)
-corte()
-alert("⚠️ CORTOCIRCUITO DETECTADO")
+// ===== SIMULADOR =====
+function toggleLuz(){
+if(!energiaOn)return;
+luz=!luz;
+document.getElementById("luz").style.background=luz?"yellow":"#222";
 }
 
-// contactor sonido real
-function contactorOn(){
-contactor.style.background="lime"
-click.play()
+function toggleBomba(){
+if(!energiaOn)return;
+bomba=!bomba;
+document.getElementById("bomba").innerHTML=bomba?"ON":"OFF";
 }
 
-function contactorOff(){
-contactor.style.background="gray"
-click.play()
+// ===== INDUSTRIAL =====
+function marcha(){
+if(!energiaOn)return;
+lineaMotor.classList.add("energia");
 }
+
+function parada(){
+lineaMotor.classList.remove("energia");
+}
+
+// ===== TABLERO =====
+function toggleLinea(id){
+document.getElementById(id).classList.toggle("energia");
+}
+
+function sobrecarga(){
+estadoTablero.innerHTML="🔥 CORTE AUTOMÁTICO";
+["luzLinea","tomaLinea"].forEach(id=>{
+document.getElementById(id).classList.remove("energia");
+});
+}
+
+// ===== CONTACTORES =====
+function activarA(){
+if(B)return;
+A=true;
+contA.classList.add("energia");
+contB.classList.remove("energia");
+}
+
+function activarB(){
+if(A)return;
+B=true;
+contB.classList.add("energia");
+contA.classList.remove("energia");
+}
+
+function reset(){
+A=false;B=false;
+contA.classList.remove("energia");
+contB.classList.remove("energia");
+}
+
+// ===== TANQUE =====
+function activarTanque(){tanqueLinea.classList.add("energia")}
+function apagarTanque(){tanqueLinea.classList.remove("energia")}
+
+// ===== MOTOR =====
+function activarMotor(){motorLinea.classList.add("energia")}
+function apagarMotor(){motorLinea.classList.remove("energia")}
+
+// ===== CALCULADORA =====
+function calcular(){
+let i=potencia.value/voltaje.value;
+let total=(+materiales.value||0)+(+mano.value||0);
+resultado.innerHTML=i.toFixed(2)+" A";
+presupuesto.innerHTML="$"+total;
+ultimo=cliente.value+" $"+total;
+}
+
+function guardar(){
+let h=JSON.parse(localStorage.getItem("h"))||[];
+h.push(ultimo);
+localStorage.setItem("h",JSON.stringify(h));
+mostrar();
+}
+
+function mostrar(){
+let h=JSON.parse(localStorage.getItem("h"))||[];
+historial.innerHTML=h.join("<br>");
+}
+
+function borrar(){localStorage.removeItem("h");mostrar();}
+
+function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
+
+function pdf(){
+let w=window.open("");
+w.document.write(ultimo);
+w.print();
+}
+
+function consumo(){
+consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";
+}
+
+window.onload=mostrar;
 
 </script>
 
