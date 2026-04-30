@@ -2,249 +2,141 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
-<title>⚡ ULTRA PRO TOTAL FINAL</title>
-
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+<title>⚡ ULTRA PRO FX REAL</title>
 
 <style>
-body{background:#000;color:#fff;text-align:center;}
-.btn-pro{width:90%;margin:5px;}
+body{background:#000;color:#fff;text-align:center;font-family:Arial;}
+.btn{margin:5px;padding:10px 20px;}
 
-.linea{height:6px;margin:6px;border-radius:5px;background:gray;}
+.cable{
+stroke:gray;
+stroke-width:4;
+}
 
 .energia{
-background:linear-gradient(90deg, red, yellow, red);
-background-size:200% 100%;
+stroke:url(#grad);
+stroke-width:5;
+stroke-dasharray:10;
 animation:flujo 1s linear infinite;
 }
 
 @keyframes flujo{
-0%{background-position:0%}
-100%{background-position:200%}
+0%{stroke-dashoffset:0}
+100%{stroke-dashoffset:20}
 }
 
-.luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
-.falla{background:red !important;}
+.luz{
+fill:#222;
+transition:0.3s;
+}
+
+.on{fill:yellow;}
+
+.spark{
+fill:orange;
+opacity:0;
+animation:spark 0.3s infinite;
+}
+
+@keyframes spark{
+0%{opacity:1;transform:scale(1);}
+100%{opacity:0;transform:scale(2);}
+}
+
 </style>
 </head>
 
 <body>
 
-<h2>⚡ ULTRA PRO TOTAL FINAL ⚡</h2>
+<h2>⚡ ULTRA PRO FX REAL</h2>
 
-<button onclick="energia()" class="btn btn-success btn-pro">ENERGIZAR</button>
-<button onclick="corte()" class="btn btn-danger btn-pro">CORTAR</button>
-
-<hr>
-
-<!-- SIMULADOR -->
-<h4>⚡ SIMULADOR</h4>
-<div id="fase" class="linea"></div>
-<div id="neutro" class="linea"></div>
-<div id="tierra" class="linea"></div>
-
-<button onclick="toggleLuz()">LUZ</button>
-<div id="luz" class="luz"></div>
+<button onclick="energia()">ENERGIZAR</button>
+<button onclick="corte()">CORTAR</button>
+<button onclick="corto()">⚡ CORTOCIRCUITO</button>
 
 <hr>
 
-<!-- PLANO REAL -->
-<h4>🎨 PLANO REAL</h4>
-<svg width="100%" height="250" style="background:#111">
+<svg width="600" height="300" style="background:#111">
+
+<defs>
+<linearGradient id="grad">
+<stop offset="0%" stop-color="red"/>
+<stop offset="50%" stop-color="yellow"/>
+<stop offset="100%" stop-color="red"/>
+</linearGradient>
+</defs>
+
+<!-- TABLERO -->
 <rect x="20" y="120" width="100" height="80" fill="black" stroke="white"/>
 <text x="25" y="110" fill="white">TABLERO</text>
 
-<rect x="200" y="120" width="40" height="40" fill="#333" stroke="white"/>
-<text x="195" y="110" fill="white">LLAVE</text>
+<!-- LLAVE -->
+<rect x="200" y="130" width="40" height="40" fill="#333" stroke="white"/>
+<text x="190" y="120" fill="white">LLAVE</text>
 
-<circle cx="400" cy="70" r="20" fill="#222" stroke="white"/>
-<text x="380" y="40" fill="white">LUZ</text>
+<!-- LUZ -->
+<circle id="luz" cx="450" cy="80" r="25" class="luz" stroke="white"/>
 
-<line x1="120" y1="150" x2="200" y2="140" stroke="red" stroke-width="3"/>
-<line x1="240" y1="140" x2="400" y2="70" stroke="red" stroke-width="3"/>
-<line x1="120" y1="170" x2="400" y2="70" stroke="cyan" stroke-width="3"/>
+<!-- CABLES -->
+<line id="fase1" x1="120" y1="150" x2="200" y2="150" class="cable"/>
+<line id="fase2" x1="240" y1="150" x2="450" y2="80" class="cable"/>
+<line id="neutro" x1="120" y1="180" x2="450" y2="80" class="cable"/>
+
+<!-- CHISPAS -->
+<circle id="spark" cx="300" cy="140" r="10" class="spark"/>
+
 </svg>
 
 <hr>
 
-<!-- CASA -->
-<h4>🏠 CASA</h4>
-🔴 FASE → LLAVE → LUZ<br>
-🔵 NEUTRO DIRECTO<br>
-🟡🟢 TIERRA GENERAL
+<h4>⚙ CONTACTOR</h4>
+<div id="contactor" style="width:200px;height:10px;background:gray;margin:auto;"></div>
+<button onclick="contactorOn()">ACTIVAR</button>
+<button onclick="contactorOff()">DESACTIVAR</button>
 
-<hr>
-
-<!-- ENCHUFE -->
-<h4>🔌 ENCHUFE</h4>
-🔴 FASE | 🔵 NEUTRO | 🟡🟢 TIERRA
-
-<hr>
-
-<!-- LLAVE -->
-<h4>💡 LLAVE</h4>
-🔴 FASE entra y sale<br>
-🔵 NEUTRO directo
-
-<hr>
-
-<!-- TABLERO -->
-<h4>⚡ TABLERO</h4>
-🔴 FASE → TÉRMICA → DISYUNTOR<br>
-🔵 NEUTRO → barra<br>
-🟡🟢 TIERRA → jabalina
-
-<hr>
-
-<!-- TABLERO PRO -->
-<h4>⚡ TABLERO PRO</h4>
-<div id="luzLinea" class="linea"></div>
-<div id="tomaLinea" class="linea"></div>
-<button onclick="toggleLinea('luzLinea')">LUZ</button>
-<button onclick="toggleLinea('tomaLinea')">TOMA</button>
-<button onclick="sobrecarga()">SOBRECARGA</button>
-<div id="estadoTablero"></div>
-
-<hr>
-
-<!-- CONTACTORES -->
-<h4>⚙ CONTACTORES</h4>
-<div id="contA" class="linea"></div>
-<div id="contB" class="linea"></div>
-<button onclick="Aon()">A</button>
-<button onclick="Bon()">B</button>
-
-<hr>
-
-<!-- TANQUE -->
-<h4>💧 TANQUE</h4>
-<div id="tanque" class="linea"></div>
-<button onclick="tanqueOn()">ON</button>
-<button onclick="tanqueOff()">OFF</button>
-
-<hr>
-
-<!-- MOTOR -->
-<h4>🏭 MOTOR</h4>
-<div id="motor" class="linea"></div>
-<button onclick="motorOn()">ON</button>
-<button onclick="motorOff()">OFF</button>
-
-<hr>
-
-<!-- AMPERIMETRO -->
-<h4>📟 AMPERÍMETRO</h4>
-<input id="potencia" placeholder="Potencia">
-<input id="voltaje" value="220">
-<div id="amp"></div>
-
-<hr>
-
-<!-- PROTECCIONES -->
-<h4>🧠 PROTECCIONES</h4>
-<button onclick="fuga()">FUGA</button>
-<button onclick="reset()">RESET</button>
-<div id="estadoProt"></div>
-
-<hr>
-
-<!-- CABLE -->
-<h4>📏 CÁLCULO CABLE</h4>
-<input id="distancia" placeholder="Distancia">
-<button onclick="calculoCable()">Calcular</button>
-<div id="cableRes"></div>
+<audio id="click">
+<source src="https://actions.google.com/sounds/v1/impacts/metal_clank.ogg">
+</audio>
 
 <script>
 
 let energiaOn=false
-let A=false,B=false
 
 function energia(){
 energiaOn=true
-fase.classList.add("energia")
+fase1.classList.add("energia")
+fase2.classList.add("energia")
 neutro.classList.add("energia")
-tierra.classList.add("energia")
+luz.classList.add("on")
 }
 
 function corte(){
 energiaOn=false
-fase.classList.remove("energia")
+fase1.classList.remove("energia")
+fase2.classList.remove("energia")
 neutro.classList.remove("energia")
-tierra.classList.remove("energia")
-luz.style.background="#222"
+luz.classList.remove("on")
+spark.style.opacity=0
 }
 
-// luz
-function toggleLuz(){
+// ⚡ corto con chispas
+function corto(){
 if(!energiaOn)return
-luz.style.background=(luz.style.background=="yellow")?"#222":"yellow"
-}
-
-// tablero
-function toggleLinea(id){
-if(!energiaOn)return
-document.getElementById(id).classList.toggle("energia")
-}
-
-function sobrecarga(){
-estadoTablero.innerHTML="🔥 CORTE AUTOMÁTICO"
-luzLinea.classList.remove("energia")
-tomaLinea.classList.remove("energia")
+spark.style.opacity=1
+setTimeout(()=>spark.style.opacity=0,500)
 corte()
+alert("⚠️ CORTOCIRCUITO DETECTADO")
 }
 
-// contactores
-function Aon(){
-if(B)return
-contA.classList.add("energia")
-contB.classList.remove("energia")
-A=true;B=false
+// contactor sonido real
+function contactorOn(){
+contactor.style.background="lime"
+click.play()
 }
 
-function Bon(){
-if(A)return
-contB.classList.add("energia")
-contA.classList.remove("energia")
-B=true;A=false
-}
-
-// tanque
-function tanqueOn(){tanque.classList.add("energia")}
-function tanqueOff(){tanque.classList.remove("energia")}
-
-// motor
-function motorOn(){motor.classList.add("energia")}
-function motorOff(){motor.classList.remove("energia")}
-
-// amperimetro
-setInterval(()=>{
-let P=potencia.value||0
-let V=voltaje.value||220
-amp.innerHTML="Corriente: "+(P/V).toFixed(2)+" A"
-},500)
-
-// protecciones
-function fuga(){
-estadoProt.innerHTML="⚠️ DISYUNTOR ACTIVADO"
-corte()
-}
-function reset(){
-estadoProt.innerHTML="OK"
-}
-
-// cable
-function calculoCable(){
-let P=potencia.value||0
-let V=voltaje.value||220
-let D=distancia.value||10
-let I=P/V
-
-let cable="1.5 mm"
-if(I>10||D>20)cable="2.5 mm"
-if(I>16)cable="4 mm"
-if(I>25)cable="6 mm"
-
-cableRes.innerHTML="Cable: "+cable
+function contactorOff(){
+contactor.style.background="gray"
+click.play()
 }
 
 </script>
