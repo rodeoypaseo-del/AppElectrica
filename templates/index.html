@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ELÉCTRICA PRO TOTAL FINAL REAL</title>
+<title>ELÉCTRICA PRO TOTAL ULTRA</title>
 
 <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 
@@ -21,13 +21,21 @@ animation:flujo 1s linear infinite;
 
 .luz{width:60px;height:60px;border-radius:50%;background:#222;margin:10px auto;}
 .bomba{padding:10px;background:#222;margin:10px;}
-.resultado{color:#00eaff;}
+
+.chispa{
+width:20px;height:20px;background:orange;border-radius:50%;
+position:absolute;animation:chispa 0.3s infinite;
+}
+@keyframes chispa{
+0%{transform:scale(1);opacity:1;}
+100%{transform:scale(2);opacity:0;}
+}
 </style>
 </head>
 
 <body>
 
-<h2>⚡ ELÉCTRICA PRO TOTAL FINAL REAL</h2>
+<h2>⚡ ELÉCTRICA PRO TOTAL ULTRA</h2>
 
 <!-- BOTONES -->
 <button class="btn btn-info btn-pro" data-bs-toggle="modal" data-bs-target="#simulador">SIMULADOR</button>
@@ -39,45 +47,18 @@ animation:flujo 1s linear infinite;
 
 <hr>
 
-<!-- CALCULADORA -->
-<h4>💰 PRESUPUESTO</h4>
-<input id="cliente" class="form-control w-75 mx-auto" placeholder="Cliente"><br>
-<input id="voltaje" class="form-control w-75 mx-auto" placeholder="Voltaje"><br>
-<input id="potencia" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<input id="materiales" class="form-control w-75 mx-auto" placeholder="Materiales"><br>
-<input id="mano" class="form-control w-75 mx-auto" placeholder="Mano de obra"><br>
-
-<button onclick="calcular()" class="btn btn-primary btn-pro">CALCULAR</button>
-
-<div id="resultado" class="resultado"></div>
-<div id="presupuesto" class="resultado"></div>
-
-<button onclick="guardar()" class="btn btn-success btn-pro">Guardar</button>
-<button onclick="whatsapp()" class="btn btn-success btn-pro">WhatsApp</button>
-<button onclick="pdf()" class="btn btn-light btn-pro">PDF</button>
-
-<hr>
-
-<h4>📊 CONSUMO</h4>
-<input id="potenciaC" class="form-control w-75 mx-auto" placeholder="Potencia"><br>
-<input id="horas" class="form-control w-75 mx-auto" placeholder="Horas"><br>
-<button onclick="consumo()" class="btn btn-warning btn-pro">CALCULAR</button>
-<div id="consumoRes"></div>
-
-<hr>
-
-<h4>📂 HISTORIAL</h4>
-<div id="historial"></div>
-<button onclick="borrar()" class="btn btn-danger btn-pro">BORRAR</button>
-
-<!-- ================= MODALES ================= -->
-
 <!-- SIMULADOR -->
 <div class="modal fade" id="simulador">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-<h5>⚡ Simulador</h5>
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
+<h5>⚡ Simulador real</h5>
+
 <button onclick="energia()">ENERGIZAR</button>
 <button onclick="corte()">CORTAR</button>
+
+<button onclick="llave()">LLAVE</button>
 
 <button onclick="toggleLuz()">LUZ</button>
 <div id="luz" class="luz"></div>
@@ -86,19 +67,36 @@ animation:flujo 1s linear infinite;
 <div id="bomba" class="bomba">OFF</div>
 
 <div id="fase" class="linea"></div>
-</div></div></div></div>
+<div id="neutro" class="linea"></div>
+<div id="tierra" class="linea"></div>
+
+<div id="chispa"></div>
+
+</div>
+</div>
+</div>
+</div>
 
 <!-- INDUSTRIAL -->
 <div class="modal fade" id="industrial">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-<h5>🏭 Motor industrial</h5>
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
+
+<h5>🏭 Motor</h5>
+
 <button onclick="marcha()">MARCHA</button>
 <button onclick="parada()">PARADA</button>
+
 <div id="lineaMotor" class="linea"></div>
 <div id="estadoMotor"></div>
-</div></div></div></div>
 
-<!-- PLANO REAL COMPLETO -->
+</div>
+</div>
+</div>
+</div>
+
+<!-- PLANO REAL -->
 <div class="modal fade" id="planoreal">
 <div class="modal-dialog modal-xl">
 <div class="modal-content bg-dark text-white">
@@ -106,105 +104,139 @@ animation:flujo 1s linear infinite;
 
 <svg width="100%" height="420" style="background:#111">
 
-<!-- TABLERO -->
-<rect x="20" y="150" width="120" height="100" fill="black" stroke="white"/>
-<text x="25" y="140" fill="white">TABLERO</text>
+<text x="20" y="50" fill="red">FASE</text>
+<text x="20" y="70" fill="cyan">NEUTRO</text>
+<text x="20" y="90" fill="yellow">TIERRA</text>
 
-<!-- LLAVE -->
-<rect x="300" y="120" width="40" height="40" fill="#222" stroke="white"/>
-<text x="290" y="100" fill="white">LLAVE</text>
-
-<!-- LUZ -->
-<circle cx="550" cy="80" r="25" fill="#222" stroke="white"/>
-<text x="520" y="50" fill="white">LUZ</text>
-
-<!-- ENCHUFE -->
-<rect x="550" y="260" width="60" height="40" fill="#222" stroke="white"/>
-<text x="520" y="320" fill="white">TOMA</text>
-
-<!-- FASE -->
-<line x1="140" y1="180" x2="300" y2="140" stroke="red" stroke-width="4"/>
-<line x1="340" y1="140" x2="550" y2="80" stroke="red" stroke-width="4"/>
-<line x1="140" y1="180" x2="550" y2="260" stroke="red" stroke-width="4"/>
-
-<!-- NEUTRO -->
-<line x1="140" y1="210" x2="550" y2="80" stroke="cyan" stroke-width="4"/>
-<line x1="140" y1="210" x2="550" y2="260" stroke="cyan" stroke-width="4"/>
-
-<!-- TIERRA -->
-<line x1="140" y1="240" x2="550" y2="260" stroke="yellow" stroke-width="4"/>
+<line x1="100" y1="100" x2="500" y2="100" stroke="red" stroke-width="4"/>
+<line x1="100" y1="150" x2="500" y2="150" stroke="cyan" stroke-width="4"/>
+<line x1="100" y1="200" x2="500" y2="200" stroke="yellow" stroke-width="4"/>
 
 </svg>
 
-</div></div></div></div>
+</div>
+</div>
+</div>
+</div>
 
-<!-- TABLERO PRO -->
+<!-- TABLERO -->
 <div class="modal fade" id="tableroprof">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
-<div id="luzLinea" class="linea"></div><button onclick="toggle('luzLinea')">LUZ</button>
-<div id="tomaLinea" class="linea"></div><button onclick="toggle('tomaLinea')">TOMAS</button>
-<div id="aireLinea" class="linea"></div><button onclick="toggle('aireLinea')">AIRE</button>
-<div id="bombaLinea" class="linea"></div><button onclick="toggle('bombaLinea')">BOMBA</button>
+<div id="luzLinea" class="linea"></div>
+<button onclick="toggle('luzLinea')">LUZ</button>
+
+<div id="tomaLinea" class="linea"></div>
+<button onclick="toggle('tomaLinea')">TOMA</button>
 
 <button onclick="sobrecarga()">🔥 SOBRECARGA</button>
 <div id="estadoTablero"></div>
 
-</div></div></div></div>
+</div>
+</div>
+</div>
+</div>
 
 <!-- TANQUE -->
 <div class="modal fade" id="tanque">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
-<pre>
-FASE → TÉRMICA → CONTACTOR → FLOTANTE → BOMBA
-NEUTRO → DIRECTO
-TIERRA → CARCASA
-</pre>
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
 <div id="tanqueLinea" class="linea"></div>
-<button onclick="activarTanque()">ACTIVAR</button>
-<button onclick="apagarTanque()">DESACTIVAR</button>
+<button onclick="activarTanque()">ON</button>
+<button onclick="apagarTanque()">OFF</button>
 
-</div></div></div></div>
+</div>
+</div>
+</div>
+</div>
 
 <!-- MOTOR -->
 <div class="modal fade" id="motor">
-<div class="modal-dialog"><div class="modal-content bg-dark text-white"><div class="modal-body">
-
-<div style="height:6px;background:red;"></div>
-<div style="height:6px;background:cyan;"></div>
-<div style="height:6px;background:yellow;"></div>
-
-<pre>
-FASE → CONTACTOR → MOTOR
-NEUTRO → MOTOR
-TIERRA → CARCASA
-</pre>
+<div class="modal-dialog">
+<div class="modal-content bg-dark text-white">
+<div class="modal-body">
 
 <div id="motorLinea2" class="linea"></div>
-<button onclick="activarMotor()">ENCENDER</button>
-<button onclick="apagarMotor()">APAGAR</button>
+<button onclick="activarMotor()">ON</button>
+<button onclick="apagarMotor()">OFF</button>
 
-</div></div></div></div>
+</div>
+</div>
+</div>
+</div>
 
 <script>
+
+// AUDIO CLICK
+function clickSound(){
+let ctx=new (window.AudioContext||window.webkitAudioContext)();
+let osc=ctx.createOscillator();
+osc.connect(ctx.destination);
+osc.start();
+osc.stop(ctx.currentTime+0.05);
+}
+
+// ESTADOS
 let energiaOn=false;
+let llaveOn=false;
 
-function energia(){energiaOn=true;fase.classList.add("energia");}
-function corte(){energiaOn=false;fase.classList.remove("energia");luz.style.background="#222";bomba.innerHTML="OFF";}
+// ENERGIA
+function energia(){
+energiaOn=true;
+update();
+}
 
-function toggleLuz(){if(!energiaOn)return;luz.style.background=luz.style.background=="yellow"?"#222":"yellow";}
-function toggleBomba(){if(!energiaOn)return;bomba.innerHTML=bomba.innerHTML=="OFF"?"💧 ON":"OFF";}
+function corte(){
+energiaOn=false;
+llaveOn=false;
+update();
+}
 
+// LLAVE (corta solo fase)
+function llave(){
+llaveOn=!llaveOn;
+clickSound();
+update();
+}
+
+// UPDATE GENERAL
+function update(){
+if(energiaOn && llaveOn){
+fase.classList.add("energia");
+}else{
+fase.classList.remove("energia");
+}
+
+if(energiaOn){
+neutro.classList.add("energia");
+tierra.classList.add("energia");
+}else{
+neutro.classList.remove("energia");
+tierra.classList.remove("energia");
+}
+}
+
+// LUZ Y BOMBA
+function toggleLuz(){
+if(!energiaOn || !llaveOn)return;
+luz.style.background=luz.style.background=="yellow"?"#222":"yellow";
+}
+
+function toggleBomba(){
+if(!energiaOn)return;
+bomba.innerHTML=bomba.innerHTML=="OFF"?"💧 ON":"OFF";
+}
+
+// INDUSTRIAL
 function marcha(){
-if(!energiaOn){estadoMotor.innerHTML="⚠️ SIN ENERGÍA";return;}
+if(!energiaOn)return;
+clickSound();
 lineaMotor.classList.add("energia");
-estadoMotor.innerHTML="🟢 MOTOR EN MARCHA";
+estadoMotor.innerHTML="🟢 EN MARCHA";
 }
 
 function parada(){
@@ -212,47 +244,34 @@ lineaMotor.classList.remove("energia");
 estadoMotor.innerHTML="🔴 PARADO";
 }
 
-function toggle(id){document.getElementById(id).classList.toggle("energia");}
-
-function sobrecarga(){
-estadoTablero.innerHTML="🔥 CORTE GENERAL";
-["luzLinea","tomaLinea","aireLinea","bombaLinea"].forEach(id=>document.getElementById(id).classList.remove("energia"));
+// TABLERO
+function toggle(id){
+document.getElementById(id).classList.toggle("energia");
 }
 
+function sobrecarga(){
+estadoTablero.innerHTML="🔥 CORTE";
+["luzLinea","tomaLinea"].forEach(id=>{
+document.getElementById(id).classList.remove("energia");
+});
+chispaCorto();
+}
+
+// CHISPA
+function chispaCorto(){
+let c=document.getElementById("chispa");
+c.className="chispa";
+setTimeout(()=>c.className="",500);
+}
+
+// TANQUE
 function activarTanque(){tanqueLinea.classList.add("energia");}
 function apagarTanque(){tanqueLinea.classList.remove("energia");}
 
+// MOTOR
 function activarMotor(){motorLinea2.classList.add("energia");}
 function apagarMotor(){motorLinea2.classList.remove("energia");}
 
-// CALCULADORA
-let ultimo="";
-function calcular(){
-let i=potencia.value/voltaje.value;
-let total=(+materiales.value||0)+(+mano.value||0);
-resultado.innerHTML=i.toFixed(2)+" A";
-presupuesto.innerHTML="$"+total;
-ultimo=cliente.value+" $"+total;
-}
-
-function guardar(){
-let h=JSON.parse(localStorage.getItem("h"))||[];
-h.push(ultimo);
-localStorage.setItem("h",JSON.stringify(h));
-mostrar();
-}
-
-function mostrar(){
-let h=JSON.parse(localStorage.getItem("h"))||[];
-historial.innerHTML=h.join("<br>");
-}
-
-function borrar(){localStorage.removeItem("h");mostrar();}
-function whatsapp(){window.open("https://wa.me/?text="+encodeURIComponent(ultimo));}
-function pdf(){let w=window.open("");w.document.write(ultimo);w.print();}
-function consumo(){consumoRes.innerHTML=((potenciaC.value*horas.value*30)/1000).toFixed(2)+" kWh";}
-
-window.onload=mostrar;
 </script>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
